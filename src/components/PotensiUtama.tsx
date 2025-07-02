@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 const data = [
@@ -47,7 +48,9 @@ const PotensiUtama = () => {
       <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto px-4">
         {data.map((item, i) => (
           <div key={i} className="bg-white rounded-xl shadow p-6">
-            <img
+            <Image
+              width={400}
+              height={300}
               src={item.image}
               alt={item.title}
               className="w-full h-48 object-cover rounded-lg mb-4"
