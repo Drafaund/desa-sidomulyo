@@ -60,14 +60,14 @@ const Navbar = () => {
             </Link>
 
             <Link
-              href="#village-potential"
+              href="/PotensiDesa"
               className="text-gray-700 hover:text-green-600 font-medium transition-colors"
             >
               Potensi Desa
             </Link>
 
             <Link
-              href="#articles"
+              href="/Artikel"
               className="text-gray-700 hover:text-green-600 font-medium transition-colors"
             >
               Artikel
@@ -105,21 +105,21 @@ const Navbar = () => {
                 Home
               </a>
 
-              <a
-                href="#village-potential"
+              <Link
+                href="/PotensiDesa"
                 className="text-gray-700 hover:text-green-600 font-medium py-2"
               >
-                Village Potential
-              </a>
+                Potensi Desa
+              </Link>
 
               <a
-                href="#articles"
+                href="/Artikel"
                 className="text-gray-700 hover:text-green-600 font-medium py-2"
               >
                 Artikel
               </a>
               <a
-                href="/contact"
+                href="/Contact"
                 className="text-gray-700 hover:text-green-600 font-medium py-2"
               >
                 Kontak

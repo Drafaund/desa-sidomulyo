@@ -4,6 +4,7 @@ import Image from "next/image";
 import TourismAttractions from "@/components/Tourism";
 import InvestmentOpportunities from "@/components/Investment";
 import ArticlesSection from "@/components/Articles";
+import { MessageCircle, Send, MapPin } from "lucide-react";
 
 export default function Home() {
   return (
@@ -97,6 +98,46 @@ export default function Home() {
       <TourismAttractions />
       <InvestmentOpportunities />
       <ArticlesSection />
+
+      {/* Contact Actions */}
+      <div className="bg-gradient-to-r from-green-600 to-blue-600 py-6 w-full">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-6">
+            <h3 className="text-xl font-semibold mb-2">Get in Touch</h3>
+            <p className="text-green-100">
+              Ready to explore investment opportunities or plan your visit?
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
+            {/* WhatsApp Button */}
+            <a
+              href="https://wa.me/62351123456"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center space-x-2 bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full font-medium transition-all duration-200 hover:shadow-lg transform hover:scale-105"
+            >
+              <MessageCircle size={20} />
+              <span>Chat Now</span>
+            </a>
+
+            {/* Email Button */}
+            <a
+              href="mailto:info@sidomulyo-village.id"
+              className="flex items-center space-x-2 bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-full font-medium transition-all duration-200 hover:shadow-lg transform hover:scale-105"
+            >
+              <Send size={20} />
+              <span>Send Email</span>
+            </a>
+
+            {/* Visit Button */}
+            <button className="flex items-center space-x-2 bg-white hover:bg-gray-100 text-gray-800 px-6 py-3 rounded-full font-medium transition-all duration-200 hover:shadow-lg transform hover:scale-105">
+              <MapPin size={20} />
+              <span>Get Directions</span>
+            </button>
+          </div>
+        </div>
+      </div>
     </main>
   );
 }
