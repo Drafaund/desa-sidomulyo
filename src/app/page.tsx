@@ -3,10 +3,15 @@ import React from "react";
 import Image from "next/image";
 import TourismAttractions from "@/components/Tourism";
 import InvestmentOpportunities from "@/components/Investment";
-import ArticlesSection from "@/components/Articles";
+import ArticleCard from "@/components/article/ArticleCard";
 import { MessageCircle, Send, MapPin } from "lucide-react";
+import { articles } from "../../data/article";
+import Link from "next/link";
 
 export default function Home() {
+  // Get the latest 3 articles for the home page
+  const latestArticles = articles.slice(0, 3);
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
       <section className="relative min-w-full flex items-center overflow-hidden">
@@ -97,7 +102,35 @@ export default function Home() {
 
       <TourismAttractions />
       <InvestmentOpportunities />
-      <ArticlesSection />
+
+      {/* Latest Articles Section */}
+      <section className="py-16 bg-gray-50 w-full">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+              Berita & Artikel Terbaru
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Ikuti perkembangan dan cerita inspiratif dari Desa Sidomulyo
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {latestArticles.map((article) => (
+              <ArticleCard key={article.id} article={article} />
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <Link href="/Artikel">
+              <button className="bg-green-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-green-700 transition-all duration-300 inline-flex items-center gap-2">
+                Lihat Semua Artikel
+                <ArrowRight className="h-5 w-5" />
+              </button>
+            </Link>
+          </div>
+        </div>
+      </section>
 
       {/* Contact Actions */}
       <div className="bg-gradient-to-r from-green-600 to-blue-600 py-6 w-full">
