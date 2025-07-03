@@ -34,6 +34,13 @@ const statistikData = [
   },
 ];
 
+const NamaKategoriPotensi = [
+  "Pertanian",
+  "Peternakan",
+  "Wisata",
+  "Industri Pengolahan",
+];
+
 const kategoriPotensi = [
   {
     id: 1,

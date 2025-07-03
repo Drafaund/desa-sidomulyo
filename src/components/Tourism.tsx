@@ -1,6 +1,7 @@
 import React from "react";
 import { ArrowRight, Star } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 const TourismAttractions = () => {
   const attractions = [
@@ -42,7 +43,7 @@ const TourismAttractions = () => {
         {/* Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-            Tourism Attractions
+            Potensi Desa
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Discover the natural beauty and cultural richness that makes
@@ -106,10 +107,12 @@ const TourismAttractions = () => {
 
         {/* View All Button */}
         <div className="text-center mt-12">
-          <button className="group bg-gradient-to-r from-green-500 to-blue-500 text-white px-8 py-4 rounded-full font-semibold hover:from-green-600 hover:to-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
-            View All Attractions
-            <ArrowRight className="ml-2 h-5 w-5 inline group-hover:translate-x-1 transition-transform" />
-          </button>
+          <Link href="/PotensiDesa" className="inline-block">
+            <button className="group bg-gradient-to-r from-green-500 to-blue-500 text-white px-8 py-4 rounded-full font-semibold hover:from-green-600 hover:to-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+              View All Attractions
+              <ArrowRight className="ml-2 h-5 w-5 inline group-hover:translate-x-1 transition-transform" />
+            </button>
+          </Link>
         </div>
       </div>
     </section>

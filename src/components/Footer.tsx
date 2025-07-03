@@ -8,6 +8,7 @@ import {
   Youtube,
   Twitter,
 } from "lucide-react";
+import Link from "next/link";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -74,44 +75,28 @@ const Footer = () => {
             </h4>
             <ul className="space-y-3">
               <li>
-                <a
-                  href="#tourism"
+                <Link
+                  href="/PotensiDesa"
                   className="text-gray-300 hover:text-green-400 transition-colors flex items-center"
                 >
-                  Tourism
-                </a>
+                  Potensi Desa
+                </Link>
               </li>
               <li>
-                <a
-                  href="#village-potential"
+                <Link
+                  href="/Artikel"
                   className="text-gray-300 hover:text-green-400 transition-colors"
                 >
-                  Village Potential
-                </a>
+                  Artikel
+                </Link>
               </li>
               <li>
-                <a
-                  href="#investment"
+                <Link
+                  href="/Contact"
                   className="text-gray-300 hover:text-green-400 transition-colors"
                 >
-                  Investment
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#articles"
-                  className="text-gray-300 hover:text-green-400 transition-colors"
-                >
-                  Articles
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#contact"
-                  className="text-gray-300 hover:text-green-400 transition-colors"
-                >
-                  Contact
-                </a>
+                  Kontak
+                </Link>
               </li>
             </ul>
           </div>
