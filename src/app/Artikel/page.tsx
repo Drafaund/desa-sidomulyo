@@ -2,6 +2,9 @@
 import React, { useState } from "react";
 import { Search, Calendar, User, ChevronRight, Mail } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import { articles } from "../../../data/article"; // Adjust the import path as necessary
+import { Article } from "../../../types/article";
 
 const DesaArticlePage = () => {
   const [activeTab, setActiveTab] = useState("Semua");
@@ -17,88 +20,6 @@ const DesaArticlePage = () => {
     "Pendidikan",
   ];
 
-  const articles = [
-    {
-      id: 1,
-      title:
-        "Inovasi Pertanian Organik di Desa Sidomulyo: Menuju Ketahanan Pangan Berkelanjutan",
-      excerpt:
-        "Desa Sidomulyo mengembangkan sistem pertanian organik yang tidak hanya ramah lingkungan tetapi juga meningkatkan produktivitas hasil panen. Program ini melibatkan seluruh petani lokal...",
-      category: "Agro & Lingkungan",
-      author: "Ahmad Rizki",
-      date: "15 Desember 2024",
-      readTime: "5 min",
-      image: "/api/placeholder/400/250",
-      featured: true,
-    },
-    {
-      id: 2,
-      title: "Program Posyandu Balita: Menurunkan Angka Stunting di Desa",
-      excerpt:
-        "Upaya konsisten dalam program posyandu yang terintegrasi berhasil menurunkan angka stunting pada balita hingga 40% dalam 2 tahun terakhir...",
-      category: "Kesehatan",
-      author: "Dr. Sari Indah",
-      date: "12 Des 2024",
-      readTime: "6 min",
-      image: "/api/placeholder/300/200",
-    },
-    {
-      id: 3,
-      title: "Melestarikan Tari Tradisional Jawa di Era Digital",
-      excerpt:
-        "Generasi muda Desa Sidomulyo aktif mempelajari dan mengembangkan tari tradisional sebagai warisan budaya yang harus dilestarikan...",
-      category: "Budaya & Sejarah",
-      author: "Dewi Kusuma",
-      date: "10 Des 2024",
-      readTime: "7 min",
-      image: "/api/placeholder/300/200",
-    },
-    {
-      id: 4,
-      title: "Pembangunan Infrastruktur Jalan Menuju Desa Wisata",
-      excerpt:
-        "Proyek perbaikan jalan utama dan akses menuju objek wisata berhasil meningkatkan kunjungan wisatawan hingga 150%...",
-      category: "Pembangunan",
-      author: "Budi Santoso",
-      date: "8 Des 2024",
-      readTime: "8 min",
-      image: "/api/placeholder/300/200",
-    },
-    {
-      id: 5,
-      title: "Budidaya Ikan Lele: Alternatif Ekonomi Kreatif Desa",
-      excerpt:
-        "Program budidaya ikan lele sistem bioflok memberikan peluang usaha baru bagi warga dengan modal yang terjangkau...",
-      category: "Agro & Lingkungan",
-      author: "Agus Priyanto",
-      date: "6 Des 2024",
-      readTime: "4 min",
-      image: "/api/placeholder/300/200",
-    },
-    {
-      id: 6,
-      title: "Pemberdayaan Ibu-ibu PKK Melalui Usaha Kerajinan Batik",
-      excerpt:
-        "Kelompok PKK Desa Sidomulyo untuk mendukung usaha kerajinan batik tulis yang menjadi produk unggulan dan sumber pendapatan tambahan...",
-      category: "Pemberdayaan",
-      author: "Ibu Siti Aminah",
-      date: "5 Des 2024",
-      readTime: "5 min",
-      image: "/api/placeholder/300/200",
-    },
-    {
-      id: 7,
-      title: "Program Literasi Digital untuk Pemuda Desa",
-      excerpt:
-        "Inisiatif pelatihan komputer dan internet untuk pemuda desa dalam rangka meningkatkan daya saing di era digital...",
-      category: "Pendidikan",
-      author: "Andi Wijaya",
-      date: "3 Des 2024",
-      readTime: "6 min",
-      image: "/api/placeholder/300/200",
-    },
-  ];
-
   const filteredArticles = articles.filter((article) => {
     const matchesCategory =
       activeTab === "Semua" || article.category === activeTab;
@@ -108,7 +29,7 @@ const DesaArticlePage = () => {
     return matchesCategory && matchesSearch;
   });
 
-  const handleNewsletterSubmit = (e) => {
+  const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     alert("Terima kasih telah berlangganan newsletter!");
     setEmail("");
@@ -173,6 +94,8 @@ const DesaArticlePage = () => {
               const featured = filteredArticles.find(
                 (article) => article.featured
               );
+              if (!featured) return null;
+
               return (
                 <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
                   <div className="md:flex">
@@ -191,9 +114,11 @@ const DesaArticlePage = () => {
                           {featured.category}
                         </span>
                       </div>
-                      <h3 className="text-2xl font-bold mb-4 hover:text-blue-600 cursor-pointer">
-                        {featured.title}
-                      </h3>
+                      <Link href={`/Artikel/${featured.slug}`}>
+                        <h3 className="text-2xl font-bold mb-4 hover:text-blue-600 cursor-pointer">
+                          {featured.title}
+                        </h3>
+                      </Link>
                       <p className="text-gray-600 mb-6 leading-relaxed">
                         {featured.excerpt}
                       </p>
@@ -208,10 +133,12 @@ const DesaArticlePage = () => {
                             <span>{featured.date}</span>
                           </div>
                         </div>
-                        <button className="text-blue-600 hover:text-blue-800 font-medium flex items-center gap-1">
-                          Baca Selengkapnya
-                          <ChevronRight className="w-4 h-4" />
-                        </button>
+                        <Link href={`/Artikel/${featured.slug}`}>
+                          <button className="text-blue-600 hover:text-blue-800 font-medium flex items-center gap-1">
+                            Baca Selengkapnya
+                            <ChevronRight className="w-4 h-4" />
+                          </button>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -230,11 +157,15 @@ const DesaArticlePage = () => {
                 key={article.id}
                 className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
               >
-                <img
-                  src={article.image}
-                  alt={article.title}
-                  className="w-full h-48 object-cover"
-                />
+                <Link href={`/Artikel/${article.slug}`}>
+                  <Image
+                    width={400}
+                    height={250}
+                    src={article.image}
+                    alt={article.title}
+                    className="w-full h-48 object-cover cursor-pointer"
+                  />
+                </Link>
                 <div className="p-6">
                   <div className="flex items-center gap-2 mb-3">
                     <span
@@ -255,9 +186,11 @@ const DesaArticlePage = () => {
                       {article.category}
                     </span>
                   </div>
-                  <h3 className="text-xl font-bold mb-3 hover:text-blue-600 cursor-pointer line-clamp-2">
-                    {article.title}
-                  </h3>
+                  <Link href={`/Artikel/${article.slug}`}>
+                    <h3 className="text-xl font-bold mb-3 hover:text-blue-600 cursor-pointer line-clamp-2">
+                      {article.title}
+                    </h3>
+                  </Link>
                   <p className="text-gray-600 mb-4 line-clamp-3">
                     {article.excerpt}
                   </p>
@@ -294,7 +227,10 @@ const DesaArticlePage = () => {
             Anda
           </p>
 
-          <div className="max-w-md mx-auto flex gap-4">
+          <form
+            onSubmit={handleNewsletterSubmit}
+            className="max-w-md mx-auto flex gap-4"
+          >
             <div className="flex-1 relative">
               <Mail className="absolute left-3 top-3 text-gray-400 w-5 h-5" />
               <input
@@ -303,15 +239,16 @@ const DesaArticlePage = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                required
               />
             </div>
             <button
-              onClick={handleNewsletterSubmit}
+              type="submit"
               className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
             >
               Berlangganan
             </button>
-          </div>
+          </form>
         </div>
       </div>
     </div>
