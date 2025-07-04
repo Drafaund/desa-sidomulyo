@@ -4,16 +4,18 @@ import React from "react";
 interface CategoryTabsProps {
   categories: string[];
   activeTab: string;
+  bgColor: string;
   setActiveTab: (category: string) => void;
 }
 
 const CategoryTabs: React.FC<CategoryTabsProps> = ({
   categories,
   activeTab,
+  bgColor,
   setActiveTab,
 }) => {
   return (
-    <div className="bg-white shadow-sm sticky top-0 z-10">
+    <div className={`${bgColor} shadow-sm sticky top-0 z-10`}>
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex flex-wrap gap-2 py-4">
           {categories.map((category) => (

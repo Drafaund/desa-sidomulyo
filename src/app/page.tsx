@@ -1,16 +1,21 @@
 import { Play, ArrowRight } from "lucide-react";
 import React from "react";
 import Image from "next/image";
-import TourismAttractions from "@/components/Tourism";
 import InvestmentOpportunities from "@/components/Investment";
 import ArticleCard from "@/components/article/ArticleCard";
-import { MessageCircle, Send, MapPin } from "lucide-react";
+import { MessageCircle, Send, MapPin, Star } from "lucide-react";
 import { articles } from "../../data/article";
+import { attractionsData, categoryColors } from "../../data/attractionsData";
 import Link from "next/link";
 
 export default function Home() {
   // Get the latest 3 articles for the home page
   const latestArticles = articles.slice(0, 3);
+
+  // Get the latest 3 attractions based on highest ID
+  const latestAttractions = attractionsData
+    .sort((a, b) => b.id - a.id)
+    .slice(0, 3);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
@@ -56,22 +61,6 @@ export default function Home() {
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
-
-              {/* Stats */}
-              {/* <div className="grid grid-cols-3 gap-8">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-yellow-400">15+</div>
-                  <div className="text-green-100">Tourist Spots</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-yellow-400">500+</div>
-                  <div className="text-green-100">Hectares</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-yellow-400">2K+</div>
-                  <div className="text-green-100">Residents</div>
-                </div>
-              </div> */}
             </div>
 
             {/* Image */}
@@ -89,18 +78,105 @@ export default function Home() {
             </div>
           </div>
         </div>
-
-        {/* Scroll Indicator */}
-        {/* <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-          <div className="animate-bounce">
-            <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center">
-              <div className="w-1 h-3 bg-white rounded-full mt-2 animate-pulse"></div>
-            </div>
-          </div>
-        </div> */}
       </section>
 
-      <TourismAttractions />
+      {/* Latest Potensi Section */}
+      <section className="py-16 bg-white w-full">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+              Potensi Desa Terbaru
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Temukan berbagai potensi unggulan yang dimiliki oleh Desa
+              Sidomulyo
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {latestAttractions.map((attraction) => {
+              const categoryColor = categoryColors[attraction.category];
+
+              return (
+                <div
+                  key={attraction.id}
+                  className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+                >
+                  {/* Clickable Card Container */}
+                  <Link href={`/PotensiDesa/${attraction.slug}`}>
+                    <div className="cursor-pointer">
+                      {/* Image */}
+                      <div className="relative overflow-hidden">
+                        <Image
+                          src={attraction.image}
+                          alt={attraction.title}
+                          width={400}
+                          height={300}
+                          className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"
+                        />
+
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                        {/* Category Badge */}
+                        <div className="absolute top-4 left-4">
+                          <span
+                            className={`${categoryColor.bgLight} ${categoryColor.text} px-3 py-1 rounded-full text-sm font-medium border-2 ${categoryColor.borderLight} backdrop-blur-sm`}
+                          >
+                            {attraction.category}
+                          </span>
+                        </div>
+
+                        {/* Rating */}
+                        <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center space-x-1">
+                          <Star className="h-4 w-4 text-yellow-400 fill-current" />
+                          <span className="text-sm font-medium text-gray-700">
+                            {attraction.rating}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Content */}
+                      <div className="p-6">
+                        <h3
+                          className={`text-xl font-semibold text-gray-900 mb-3 group-hover:${categoryColor.text} transition-colors`}
+                        >
+                          {attraction.title}
+                        </h3>
+                        <p className="text-gray-600 mb-4 line-clamp-2">
+                          {attraction.description}
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+
+                  {/* Learn More Button - Outside of Link to avoid nested links */}
+                  <div className="px-6 pb-6">
+                    <Link href={`/PotensiDesa/${attraction.id}`}>
+                      <button
+                        className={`group/btn flex items-center ${categoryColor.text} hover:opacity-80 font-medium transition-colors`}
+                      >
+                        Pelajari Lebih Lanjut
+                        <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
+                      </button>
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* View All Button */}
+          <div className="text-center mt-12">
+            <Link href="/PotensiDesa">
+              <button className="group bg-gradient-to-r from-green-600 to-blue-600 text-white px-8 py-4 rounded-full font-semibold hover:from-green-700 hover:to-blue-700 transition-all duration-300 inline-flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105">
+                Lihat Semua Potensi
+                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <InvestmentOpportunities />
 
       {/* Latest Articles Section */}
