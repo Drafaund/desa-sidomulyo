@@ -37,28 +37,28 @@ export interface Attraction {
 export const categoryColors: Record<string, CategoryColor> = {
   Pertanian: {
     bg: "bg-green-500",
-    hover: "hover:bg-green-600",
+    hover: "hover:bg-green-100",
     text: "text-green-600",
     bgLight: "bg-green-50",
     borderLight: "border-green-200",
   },
   Peternakan: {
     bg: "bg-amber-500",
-    hover: "hover:bg-amber-600",
+    hover: "hover:bg-amber-100",
     text: "text-amber-600",
     bgLight: "bg-amber-50",
     borderLight: "border-amber-200",
   },
   Wisata: {
     bg: "bg-blue-500",
-    hover: "hover:bg-blue-600",
+    hover: "hover:bg-blue-100",
     text: "text-blue-600",
     bgLight: "bg-blue-50",
     borderLight: "border-blue-200",
   },
   Industri: {
     bg: "bg-purple-500",
-    hover: "hover:bg-purple-600",
+    hover: "hover:bg-purple-100",
     text: "text-purple-600",
     bgLight: "bg-purple-50",
     borderLight: "border-purple-200",
@@ -81,7 +81,8 @@ export const attractionsData: Attraction[] = [
       "Kebun sayur organik yang memproduksi berbagai jenis sayuran segar tanpa pestisida",
     fullDescription:
       "Kebun Sayur Organik Desa merupakan salah satu kebanggaan masyarakat setempat. Dengan luas area 2 hektar, kebun ini memproduksi berbagai jenis sayuran organik seperti kangkung, bayam, tomat, cabai, dan terong. Metode pertanian yang digunakan adalah sistem organik murni tanpa menggunakan pestisida kimia. Pengunjung dapat melihat langsung proses budidaya, belajar tentang teknik pertanian organik, dan membeli hasil panen segar langsung dari petani. Kebun ini juga menjadi pusat edukasi pertanian organik bagi masyarakat sekitar dan sekolah-sekolah yang berkunjung.",
-    image: "/images/kebun-organik.jpg",
+    image:
+      "https://res.cloudinary.com/dviwzluld/image/upload/v1751670980/pabrik-makanan-ringan_thqm8h.jpg",
     rating: 4.8,
     category: "Pertanian",
     link: "/PotensiDesa/kebun-sayur-organik-desa",
@@ -109,7 +110,8 @@ export const attractionsData: Attraction[] = [
       "Peternakan sapi perah modern dengan produksi susu segar berkualitas tinggi",
     fullDescription:
       "Peternakan Sapi Perah Desa telah beroperasi selama lebih dari 15 tahun dengan populasi 50 ekor sapi perah. Peternakan ini menggunakan teknologi modern dalam proses pemerahan dan pengolahan susu. Susu segar yang dihasilkan memiliki kualitas tinggi dan telah mendapat sertifikat dari Dinas Peternakan. Pengunjung dapat melihat proses pemerahan, memberi makan sapi, dan mencicipi susu segar langsung dari peternakan. Peternakan ini juga menjadi sumber penghasilan utama bagi beberapa keluarga di desa dan berkontribusi pada perekonomian lokal.",
-    image: "/images/peternakan-sapi.jpg",
+    image:
+      "https://res.cloudinary.com/dviwzluld/image/upload/v1751670982/peternakan-sapi-perah_ztjxms.jpg",
     rating: 4.7,
     category: "Peternakan",
     link: "/PotensiDesa/peternakan-sapi-perah",
@@ -137,7 +139,8 @@ export const attractionsData: Attraction[] = [
       "Destinasi wisata alam dengan hutan bambu yang sejuk dan udara yang segar",
     fullDescription:
       "Wisata Alam Hutan Bambu merupakan destinasi wisata unggulan desa yang menawarkan suasana alam yang sejuk dan menenangkan. Hutan bambu seluas 5 hektar ini memiliki jalur trekking sepanjang 2 km yang dapat dilalui pengunjung. Di sepanjang perjalanan, pengunjung dapat menikmati rimbunnya bambu yang memberikan keteduhan alami. Terdapat juga spot foto instagramable dan area piknik keluarga. Wisata ini cocok untuk melepas penat dan menikmati keindahan alam. Pengelolaan wisata ini melibatkan masyarakat lokal sebagai pemandu dan penjaga kebersihan area wisata.",
-    image: "/images/hutan-bambu.jpg",
+    image:
+      "https://res.cloudinary.com/dviwzluld/image/upload/v1751670981/wisata-hutan-bambu_mzsho8.jpg",
     rating: 4.9,
     category: "Wisata",
     link: "/PotensiDesa/wisata-alam-hutan-bambu",
@@ -165,7 +168,8 @@ export const attractionsData: Attraction[] = [
       "Kebun buah yang menanam berbagai jenis buah lokal seperti mangga, rambutan, dan durian",
     fullDescription:
       "Kebun Buah Lokal merupakan salah satu aset pertanian desa yang menanam berbagai jenis buah-buahan lokal. Dengan luas area 3 hektar, kebun ini menjadi rumah bagi berbagai jenis pohon buah seperti mangga, rambutan, durian, jambu, dan jeruk. Kebun ini dikelola secara tradisional dengan teknik budidaya yang ramah lingkungan. Pengunjung dapat memetik buah langsung dari pohon saat musim panen, belajar tentang cara budidaya buah lokal, dan membeli buah segar dengan harga langsung dari petani. Kebun ini juga menjadi tempat wisata edukasi yang menarik bagi keluarga.",
-    image: "/images/kebun-buah.jpg",
+    image:
+      "https://res.cloudinary.com/dviwzluld/image/upload/v1751670975/kebun-buah_s1uh2f.jpg",
     rating: 4.6,
     category: "Pertanian",
     link: "/PotensiDesa/kebun-buah-lokal",
@@ -193,7 +197,8 @@ export const attractionsData: Attraction[] = [
       "Peternakan ayam kampung dengan sistem pemeliharaan tradisional yang menghasilkan telur dan daging berkualitas",
     fullDescription:
       "Peternakan Ayam Kampung Desa telah beroperasi selama 10 tahun dengan populasi sekitar 200 ekor ayam kampung. Peternakan ini menggunakan sistem pemeliharaan semi-intensif yang memungkinkan ayam berkeliaran bebas di area yang luas. Ayam-ayam ini diberi pakan alami berupa dedak, jagung, dan sayuran hijau. Telur yang dihasilkan memiliki kualitas tinggi dengan kuning telur yang pekat dan rasa yang khas. Peternakan ini juga menjadi sumber penghasilan bagi keluarga peternak dan menyuplai kebutuhan telur dan daging ayam kampung untuk pasar lokal.",
-    image: "/images/peternakan-ayam.jpg",
+    image:
+      "https://res.cloudinary.com/dviwzluld/image/upload/v1751670980/peternakan-ayam_i7pe3d.jpg",
     rating: 4.5,
     category: "Peternakan",
     link: "/PotensiDesa/peternakan-ayam-kampung",
@@ -221,7 +226,8 @@ export const attractionsData: Attraction[] = [
       "Pantai dengan pasir putih dan air laut yang jernih, cocok untuk berenang dan bersantai",
     fullDescription:
       "Pantai Pasir Putih merupakan destinasi wisata pantai yang memukau dengan hamparan pasir putih yang lembut dan air laut yang jernih berwarna biru kehijauan. Pantai ini memiliki panjang sekitar 1 km dengan ombak yang tenang, sangat cocok untuk berenang dan aktivitas air lainnya. Terdapat fasilitas gazebo untuk bersantai, warung makan yang menyajikan makanan laut segar, dan area parkir yang luas. Pantai ini juga menjadi spot favorit untuk menikmati sunset yang indah. Pengelolaan pantai ini melibatkan masyarakat lokal sebagai penjaga kebersihan dan keamanan.",
-    image: "/images/pantai-pasir-putih.jpg",
+    image:
+      "https://res.cloudinary.com/dviwzluld/image/upload/v1751670675/pantai-pasir-putih_l4eoh6.jpg",
     rating: 4.8,
     category: "Wisata",
     link: "/PotensiDesa/pantai-pasir-putih",
@@ -249,7 +255,8 @@ export const attractionsData: Attraction[] = [
       "Pabrik keramik yang memproduksi berbagai jenis keramik berkualitas tinggi dengan teknik tradisional",
     fullDescription:
       "Pabrik Keramik Desa telah beroperasi sejak tahun 2005 dan menjadi salah satu pabrik keramik terkemuka di wilayah ini. Dengan menggunakan teknik tradisional yang dipadukan dengan teknologi modern, pabrik ini memproduksi berbagai jenis keramik seperti piring, mangkuk, dan vas bunga. Pengunjung dapat melihat langsung proses pembuatan keramik, mulai dari pengolahan tanah liat hingga pembakaran di oven. Pabrik ini juga menyediakan workshop bagi pengunjung yang ingin belajar membuat keramik sendiri.",
-    image: "/images/pabrik-keramik.jpg",
+    image:
+      "https://res.cloudinary.com/dviwzluld/image/upload/v1751670980/pabrik-keramik_e0kj7b.jpg",
     rating: 4.7,
     category: "Industri",
     link: "/PotensiDesa/pabrik-keramik-desa",
@@ -277,7 +284,8 @@ export const attractionsData: Attraction[] = [
       "Pabrik yang memproduksi berbagai jenis makanan ringan khas desa dengan bahan alami",
     fullDescription:
       "Pabrik Makanan Ringan Desa menyediakan berbagai jenis makanan ringan yang terbuat dari bahan-bahan alami dan berkualitas. Sejak didirikan pada tahun 2010, pabrik ini telah menjadi favorit masyarakat lokal dan wisatawan. Produk yang ditawarkan termasuk keripik singkong, kacang goreng, dan snack berbasis sayuran. Pengunjung dapat mengikuti tur pabrik untuk melihat proses produksi, mulai dari pemilihan bahan baku hingga pengemasan produk. Pabrik ini juga menawarkan sesi mencicipi produk untuk pengunjung.",
-    image: "/images/pabrik-makanan-ringan.jpg",
+    image:
+      "https://res.cloudinary.com/dviwzluld/image/upload/v1751670980/pabrik-makanan-ringan_thqm8h.jpg",
     rating: 4.6,
     category: "Industri",
     link: "/PotensiDesa/pabrik-makanan-ringan",
