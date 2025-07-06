@@ -72,9 +72,6 @@ export default function PotensiDetailPage() {
               </span>
               <div className="flex items-center bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
                 <Star className="h-4 w-4 text-yellow-400 fill-current mr-1" />
-                <span className="text-sm font-medium text-gray-700">
-                  {attraction.rating}
-                </span>
               </div>
             </div>
             <h1 className="text-4xl font-bold text-white mb-2">
