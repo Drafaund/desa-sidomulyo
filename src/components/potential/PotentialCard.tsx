@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { ArrowRight, Star, Plus } from "lucide-react";
+import { ArrowRight, Plus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -97,14 +97,6 @@ const PotensiCard: React.FC<PotensiCardProps> = ({
                           className={`${categoryColor.bgLight} ${categoryColor.text} px-3 py-1 rounded-full text-sm font-medium border-2 ${categoryColor.borderLight} backdrop-blur-sm`}
                         >
                           {attraction.category}
-                        </span>
-                      </div>
-
-                      {/* Rating */}
-                      <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center space-x-1">
-                        <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                        <span className="text-sm font-medium text-gray-700">
-                          {attraction.rating}
                         </span>
                       </div>
                     </div>
