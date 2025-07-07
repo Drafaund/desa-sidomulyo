@@ -1,0 +1,165 @@
+// utils/articleService.ts
+import { supabase } from "./supabase";
+
+export interface Article {
+  id: number;
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  category: string;
+  author: string;
+  date: string;
+  read_time: string;
+  image_url: string;
+  featured: boolean;
+  tags: string[];
+}
+
+// Get all articles
+export const getAllArticles = async (): Promise<Article[]> => {
+  const { data, error } = await supabase
+    .from("articles")
+    .select("*")
+    .order("date", { ascending: false });
+
+  if (error) {
+    throw new Error(`Error fetching articles: ${error.message}`);
+  }
+
+  return data || [];
+};
+
+// Get article by slug
+export const getArticleBySlug = async (
+  slug: string
+): Promise<Article | null> => {
+  const { data, error } = await supabase
+    .from("articles")
+    .select("*")
+    .eq("slug", slug)
+    .single();
+
+  if (error) {
+    if (error.code === "PGRST116") {
+      // No rows returned
+      return null;
+    }
+    throw new Error(`Error fetching article: ${error.message}`);
+  }
+
+  return data;
+};
+
+// Get featured articles
+export const getFeaturedArticles = async (): Promise<Article[]> => {
+  const { data, error } = await supabase
+    .from("articles")
+    .select("*")
+    .eq("featured", true)
+    .order("date", { ascending: false });
+
+  if (error) {
+    throw new Error(`Error fetching featured articles: ${error.message}`);
+  }
+
+  return data || [];
+};
+
+// Get articles by category
+export const getArticlesByCategory = async (
+  category: string
+): Promise<Article[]> => {
+  const { data, error } = await supabase
+    .from("articles")
+    .select("*")
+    .eq("category", category)
+    .order("date", { ascending: false });
+
+  if (error) {
+    throw new Error(`Error fetching articles by category: ${error.message}`);
+  }
+
+  return data || [];
+};
+
+// Get articles by tag
+export const getArticlesByTag = async (tag: string): Promise<Article[]> => {
+  const { data, error } = await supabase
+    .from("articles")
+    .select("*")
+    .contains("tags", [tag])
+    .order("date", { ascending: false });
+
+  if (error) {
+    throw new Error(`Error fetching articles by tag: ${error.message}`);
+  }
+
+  return data || [];
+};
+
+// Search articles
+export const searchArticles = async (query: string): Promise<Article[]> => {
+  const { data, error } = await supabase
+    .from("articles")
+    .select("*")
+    .or(
+      `title.ilike.%${query}%,excerpt.ilike.%${query}%,content.ilike.%${query}%`
+    )
+    .order("date", { ascending: false });
+
+  if (error) {
+    throw new Error(`Error searching articles: ${error.message}`);
+  }
+
+  return data || [];
+};
+
+// Get recent articles
+export const getRecentArticles = async (
+  limit: number = 5
+): Promise<Article[]> => {
+  const { data, error } = await supabase
+    .from("articles")
+    .select("*")
+    .order("date", { ascending: false })
+    .limit(limit);
+
+  if (error) {
+    throw new Error(`Error fetching recent articles: ${error.message}`);
+  }
+
+  return data || [];
+};
+
+// Get all unique categories
+export const getArticleCategories = async (): Promise<string[]> => {
+  const { data, error } = await supabase
+    .from("articles")
+    .select("category")
+    .order("category");
+
+  if (error) {
+    throw new Error(`Error fetching categories: ${error.message}`);
+  }
+
+  // Get unique categories
+  const uniqueCategories = [
+    ...new Set(data?.map((item) => item.category) || []),
+  ];
+  return uniqueCategories;
+};
+
+// Get all unique tags
+export const getArticleTags = async (): Promise<string[]> => {
+  const { data, error } = await supabase.from("articles").select("tags");
+
+  if (error) {
+    throw new Error(`Error fetching tags: ${error.message}`);
+  }
+
+  // Flatten and get unique tags
+  const allTags = data?.flatMap((item) => item.tags || []) || [];
+  const uniqueTags = [...new Set(allTags)];
+  return uniqueTags;
+};

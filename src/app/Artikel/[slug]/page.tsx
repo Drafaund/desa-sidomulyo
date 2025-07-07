@@ -1,19 +1,75 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { ArrowLeft, Calendar, User, Clock, Tag, Share2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { getArticleBySlug } from "../../../../data/article";
-// import "../../../../styles/article.css";
+import {
+  getArticleBySlug,
+  type Article,
+} from "../../../../utils/articleService";
 
 const ArticleDetailPage = () => {
   const params = useParams();
   const router = useRouter();
   const slug = params.slug as string;
 
-  const article = getArticleBySlug(slug);
+  const [article, setArticle] = useState<Article | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
+  // Fetch article from Supabase
+  useEffect(() => {
+    const fetchArticle = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const data = await getArticleBySlug(slug);
+        setArticle(data);
+      } catch (err) {
+        console.error("Error fetching article:", err);
+        setError("Gagal memuat artikel");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (slug) {
+      fetchArticle();
+    }
+  }, [slug]);
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Memuat artikel...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-gray-800 mb-4">Error</h1>
+          <p className="text-gray-600 mb-8">{error}</p>
+          <Link href="/Artikel">
+            <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
+              Kembali ke Artikel
+            </button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  // Article not found
   if (!article) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -46,6 +102,16 @@ const ArticleDetailPage = () => {
       navigator.clipboard.writeText(window.location.href);
       alert("Link artikel telah disalin ke clipboard!");
     }
+  };
+
+  // Format date
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("id-ID", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
   };
 
   return (
@@ -98,11 +164,11 @@ const ArticleDetailPage = () => {
             </div>
             <div className="flex items-center gap-2">
               <Calendar className="w-5 h-5" />
-              <span>{article.date}</span>
+              <span>{formatDate(article.date)}</span>
             </div>
             <div className="flex items-center gap-2">
               <Clock className="w-5 h-5" />
-              <span>{article.readTime}</span>
+              <span>{article.read_time}</span>
             </div>
             <button
               onClick={handleShare}
@@ -116,7 +182,7 @@ const ArticleDetailPage = () => {
           {/* Featured Image */}
           <div className="mb-8">
             <Image
-              src={article.image}
+              src={article.image_url}
               alt={article.title}
               width={800}
               height={400}
