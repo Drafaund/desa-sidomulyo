@@ -1,12 +1,9 @@
 // src/app/investasi/[slug]/page.tsx
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import {
-  getInvestmentBySlug,
-  getCategoryConfig,
-} from "../../../../data/investmentData";
+import { supabase } from "../../../../utils/supabase";
 import {
   ArrowLeft,
   Phone,
@@ -16,21 +13,128 @@ import {
   Clock,
   Target,
   AlertCircle,
+  Leaf,
+  Fence,
+  TicketsPlane,
+  Factory,
 } from "lucide-react";
+
+// Interface untuk data investment dari Supabase
+interface Investment {
+  id: number;
+  slug: string;
+  title: string;
+  category: "Pertanian" | "Peternakan" | "Wisata" | "Industri";
+  roi: string;
+  description: string;
+  investasi_minimal: string;
+  periode: string;
+  detail_description?: string;
+  benefits?: string[];
+  requirements?: string[];
+  timeline?: string[];
+  contact?: {
+    name: string;
+    phone: string;
+    email: string;
+  };
+}
+
+// Configuration untuk kategori
+const getCategoryConfig = (category: string) => {
+  const configs = {
+    Pertanian: {
+      icon: Leaf,
+      bgColor: "bg-green-100",
+      iconColor: "text-green-600",
+      buttonColor: "bg-green-600 hover:bg-green-700",
+    },
+    Peternakan: {
+      icon: Fence,
+      bgColor: "bg-amber-100",
+      iconColor: "text-amber-600",
+      buttonColor: "bg-amber-600 hover:bg-amber-700",
+    },
+    Wisata: {
+      icon: TicketsPlane,
+      bgColor: "bg-blue-100",
+      iconColor: "text-blue-600",
+      buttonColor: "bg-blue-600 hover:bg-blue-700",
+    },
+    Industri: {
+      icon: Factory,
+      bgColor: "bg-purple-100",
+      iconColor: "text-purple-600",
+      buttonColor: "bg-purple-600 hover:bg-purple-700",
+    },
+  };
+
+  return configs[category as keyof typeof configs] || configs.Pertanian;
+};
 
 export default function InvestmentDetailPage() {
   const params = useParams();
   const router = useRouter();
   const slug = params.slug as string;
 
-  const investment = getInvestmentBySlug(slug);
+  const [investment, setInvestment] = useState<Investment | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  if (!investment) {
+  useEffect(() => {
+    const fetchInvestment = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const { data, error } = await supabase
+          .from("investments")
+          .select("*")
+          .eq("slug", slug)
+          .single();
+
+        if (error) {
+          throw error;
+        }
+
+        if (!data) {
+          setError("Investasi tidak ditemukan");
+          return;
+        }
+
+        setInvestment(data);
+      } catch (err) {
+        console.error("Error fetching investment:", err);
+        setError("Gagal memuat data investasi");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (slug) {
+      fetchInvestment();
+    }
+  }, [slug]);
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Memuat data investasi...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error || !investment) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">
-            Investasi tidak ditemukan
+            {error || "Investasi tidak ditemukan"}
           </h1>
           <button
             onClick={() => router.back()}
@@ -101,7 +205,7 @@ export default function InvestmentDetailPage() {
                       Investasi Minimal
                     </div>
                     <div className="font-bold text-gray-900">
-                      {investment.investasiMinimal}
+                      {investment.investasi_minimal}
                     </div>
                   </div>
                 </div>
@@ -127,17 +231,19 @@ export default function InvestmentDetailPage() {
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
             {/* Detail Description */}
-            <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                Deskripsi Lengkap
-              </h2>
-              <p className="text-gray-600 leading-relaxed">
-                {investment.detailDescription}
-              </p>
-            </div>
+            {investment.detail_description && (
+              <div className="bg-white rounded-xl shadow-sm p-6">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                  Deskripsi Lengkap
+                </h2>
+                <p className="text-gray-600 leading-relaxed">
+                  {investment.detail_description}
+                </p>
+              </div>
+            )}
 
             {/* Benefits */}
-            {investment.benefits && (
+            {investment.benefits && investment.benefits.length > 0 && (
               <div className="bg-white rounded-xl shadow-sm p-6">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">
                   Keuntungan & Manfaat
@@ -154,7 +260,7 @@ export default function InvestmentDetailPage() {
             )}
 
             {/* Requirements */}
-            {investment.requirements && (
+            {investment.requirements && investment.requirements.length > 0 && (
               <div className="bg-white rounded-xl shadow-sm p-6">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">
                   Persyaratan
@@ -171,7 +277,7 @@ export default function InvestmentDetailPage() {
             )}
 
             {/* Timeline */}
-            {investment.timeline && (
+            {investment.timeline && investment.timeline.length > 0 && (
               <div className="bg-white rounded-xl shadow-sm p-6">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">
                   Timeline Pengembangan
@@ -240,20 +346,6 @@ export default function InvestmentDetailPage() {
               </div>
             )}
 
-            {/* CTA */}
-            {/* <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-6 text-white">
-              <h3 className="text-xl font-bold mb-2">
-                Tertarik untuk Investasi?
-              </h3>
-              <p className="text-blue-100 mb-4">
-                Hubungi kami untuk informasi lebih lanjut dan jadwalkan
-                kunjungan lapangan.
-              </p>
-              <button className="w-full bg-white text-blue-600 py-3 px-4 rounded-lg font-semibold hover:bg-gray-50 transition-colors">
-                Hubungi Sekarang
-              </button>
-            </div> */}
-
             {/* Investment Summary */}
             <div className="bg-white rounded-xl shadow-sm p-6">
               <h3 className="text-xl font-bold text-gray-900 mb-4">
@@ -273,7 +365,7 @@ export default function InvestmentDetailPage() {
                 <div className="flex justify-between">
                   <span className="text-gray-600">Modal Minimal</span>
                   <span className="font-semibold">
-                    {investment.investasiMinimal}
+                    {investment.investasi_minimal}
                   </span>
                 </div>
                 <div className="flex justify-between">

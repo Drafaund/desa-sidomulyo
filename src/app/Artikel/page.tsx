@@ -1,7 +1,7 @@
 // src/app/Artikel/page.tsx
 "use client";
-import React, { useState } from "react";
-import { articles } from "../../../data/article";
+import React, { useState, useEffect } from "react";
+import { supabase } from "../../../utils/supabase";
 
 // Import komponen
 import ArticleHero from "../../components/article/ArticleHero";
@@ -10,19 +10,30 @@ import ArticleList from "../../components/article/ArticleList";
 import LoadMoreButton from "../../components/article/LoadMoreButton";
 import Newsletter from "../../components/article/NewsLetter";
 
+// Interface untuk article dari Supabase
+interface Article {
+  id: number;
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  category: string;
+  author: string;
+  date: string;
+  read_time: string;
+  image_url: string;
+  featured: boolean;
+  tags: string[];
+}
+
 const DesaArticlePage = () => {
   const [activeTab, setActiveTab] = useState("Semua");
   const [searchTerm, setSearchTerm] = useState("");
   const [visibleArticles, setVisibleArticles] = useState(6);
-
-  const categories = [
-    "Semua",
-    "Kesehatan",
-    "Budaya & Sejarah",
-    "Agro & Lingkungan",
-    "Pembangunan",
-    "Pendidikan",
-  ];
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [categories, setCategories] = useState<string[]>(["Semua"]);
 
   const categoryColors = {
     Kesehatan: {
@@ -39,7 +50,7 @@ const DesaArticlePage = () => {
     },
     "Agro & Lingkungan": {
       bg: "bg-emerald-500",
-      text: "text-emarald-600",
+      text: "text-emerald-600",
       bgLight: "bg-emerald-50",
       hover: "hover:bg-emerald-100",
     },
@@ -56,6 +67,42 @@ const DesaArticlePage = () => {
       hover: "hover:bg-indigo-100",
     },
   };
+
+  // Fetch articles dari Supabase
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const { data, error } = await supabase
+          .from("articles")
+          .select("*")
+          .order("date", { ascending: false });
+
+        if (error) {
+          throw error;
+        }
+
+        if (data) {
+          setArticles(data);
+
+          // Extract unique categories from articles
+          const uniqueCategories = Array.from(
+            new Set(data.map((article) => article.category))
+          );
+          setCategories(["Semua", ...uniqueCategories]);
+        }
+      } catch (err) {
+        console.error("Error fetching articles:", err);
+        setError("Gagal memuat artikel");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchArticles();
+  }, []);
 
   const filteredArticles = articles.filter((article) => {
     const matchesCategory =
@@ -79,6 +126,35 @@ const DesaArticlePage = () => {
     const category = categories.find((cat) => cat === categoryName);
     return category ? categoryColors[category] : null;
   };
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Memuat artikel...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">{error}</h1>
+          <button
+            onClick={() => window.location.reload()}
+            className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Coba Lagi
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -142,6 +218,25 @@ const DesaArticlePage = () => {
           <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
         </div>
 
+        {/* No Articles Message */}
+        {articles.length === 0 && !loading && (
+          <div className="text-center py-12">
+            <p className="text-gray-600 text-lg">
+              Belum ada artikel yang tersedia
+            </p>
+          </div>
+        )}
+
+        {/* No Filtered Articles Message */}
+        {filteredArticles.length === 0 && articles.length > 0 && (
+          <div className="text-center py-12">
+            <p className="text-gray-600 text-lg">
+              Tidak ada artikel yang sesuai dengan pencarian "{searchTerm}"
+              {activeTab !== "Semua" && ` dalam kategori "${activeTab}"`}
+            </p>
+          </div>
+        )}
+
         {/* Featured Article */}
         {featuredArticle && (
           <div className="mb-12">
@@ -150,7 +245,9 @@ const DesaArticlePage = () => {
         )}
 
         {/* Articles Grid */}
-        <ArticleList articles={regularArticles} />
+        {regularArticles.length > 0 && (
+          <ArticleList articles={regularArticles} />
+        )}
 
         {/* Load More Button - only show if there are more articles to load */}
         {regularArticles.length <

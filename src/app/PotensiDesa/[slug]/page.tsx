@@ -1,32 +1,136 @@
 // src/app/PotensiDesa/[slug]/page.tsx
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { ArrowLeft, MapPin, Clock, Phone, Mail, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  attractionsData,
-  categoryColors,
-} from "../../../../data/attractionsData";
+import { supabase } from "../../../../utils/supabase";
+
+// Types
+interface Attraction {
+  id: number;
+  title: string;
+  slug: string;
+  description: string;
+  full_description: string;
+  image_url: string;
+  category: string;
+  link: string;
+  contact: {
+    phone?: string;
+    email?: string;
+    address: string;
+  };
+  operating_hours: {
+    days: string;
+    hours: string;
+  };
+  location: {
+    lat: number;
+    lng: number;
+    embedUrl: string;
+  };
+}
+
+// Category colors config
+const categoryColors: { [key: string]: any } = {
+  Pertanian: {
+    bg: "bg-green-600",
+    bgLight: "bg-green-50",
+    text: "text-green-600",
+    hover: "hover:bg-green-100",
+  },
+  Peternakan: {
+    bg: "bg-orange-600",
+    bgLight: "bg-orange-50",
+    text: "text-orange-600",
+    hover: "hover:bg-orange-100",
+  },
+  Wisata: {
+    bg: "bg-blue-600",
+    bgLight: "bg-blue-50",
+    text: "text-blue-600",
+    hover: "hover:bg-blue-100",
+  },
+  Industri: {
+    bg: "bg-purple-600",
+    bgLight: "bg-purple-50",
+    text: "text-purple-600",
+    hover: "hover:bg-purple-100",
+  },
+};
 
 export default function PotensiDetailPage() {
   const params = useParams();
   const slug = params.slug as string;
 
-  // Find attraction by slug instead of id
-  const attraction = attractionsData.find((item) => item.slug === slug);
+  const [attraction, setAttraction] = useState<Attraction | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  if (!attraction) {
+  useEffect(() => {
+    const fetchAttraction = async () => {
+      try {
+        setLoading(true);
+
+        const { data, error } = await supabase
+          .from("attractions")
+          .select("*")
+          .eq("slug", slug)
+          .single();
+
+        if (error) {
+          if (error.code === "PGRST116") {
+            // No rows returned
+            setAttraction(null);
+          } else {
+            throw new Error(`Error fetching attraction: ${error.message}`);
+          }
+        } else {
+          // Transform data to match expected interface
+          const transformedAttraction: Attraction = {
+            ...data,
+            image_url: data.image_url,
+            full_description: data.full_description,
+            operating_hours: data.operating_hours,
+          };
+
+          setAttraction(transformedAttraction);
+        }
+      } catch (err) {
+        console.error("Error fetching attraction:", err);
+        setError(err instanceof Error ? err.message : "Unknown error occurred");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (slug) {
+      fetchAttraction();
+    }
+  }, [slug]);
+
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">
-            Potensi tidak ditemukan
-          </h1>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Memuat data...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-red-600 mb-4">Error</h1>
+          <p className="text-gray-600 mb-4">{error}</p>
           <Link href="/PotensiDesa">
-            <button className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+            <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
               Kembali ke Potensi Desa
             </button>
           </Link>
@@ -35,7 +139,32 @@ export default function PotensiDetailPage() {
     );
   }
 
-  const categoryColor = categoryColors[attraction.category];
+  if (!attraction) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">
+            Potensi tidak ditemukan
+          </h1>
+          <p className="text-gray-600 mb-4">
+            Potensi dengan slug "{slug}" tidak ditemukan.
+          </p>
+          <Link href="/PotensiDesa">
+            <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+              Kembali ke Potensi Desa
+            </button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  const categoryColor = categoryColors[attraction.category] || {
+    bg: "bg-gray-600",
+    bgLight: "bg-gray-50",
+    text: "text-gray-600",
+    hover: "hover:bg-gray-100",
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -54,7 +183,7 @@ export default function PotensiDetailPage() {
       {/* Hero Section */}
       <div className="relative h-96 overflow-hidden">
         <Image
-          src={attraction.image}
+          src={attraction.image_url}
           alt={attraction.title}
           fill
           className="object-cover"
@@ -94,7 +223,7 @@ export default function PotensiDetailPage() {
                 Tentang {attraction.title}
               </h2>
               <p className="text-gray-600 leading-relaxed text-lg">
-                {attraction.fullDescription}
+                {attraction.full_description}
               </p>
             </div>
           </div>
@@ -158,10 +287,10 @@ export default function PotensiDetailPage() {
                 <Clock className="h-5 w-5 text-gray-400 mr-3" />
                 <div>
                   <p className="font-medium text-gray-900">
-                    {attraction.operatingHours.days}
+                    {attraction.operating_hours.days}
                   </p>
                   <p className="text-gray-600">
-                    {attraction.operatingHours.hours}
+                    {attraction.operating_hours.hours}
                   </p>
                 </div>
               </div>

@@ -4,18 +4,131 @@ import Image from "next/image";
 import InvestmentOpportunities from "@/components/Investment";
 import ArticleCard from "@/components/article/ArticleCard";
 import { MessageCircle, Send, MapPin } from "lucide-react";
-import { articles } from "../../data/article";
-import { attractionsData, categoryColors } from "../../data/attractionsData";
 import Link from "next/link";
+import { supabase } from "../../utils/supabase";
 
-export default function Home() {
-  // Get the latest 3 articles for the home page
-  const latestArticles = articles.slice(0, 3);
+// Define types for our data
+interface Article {
+  id: number;
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  category: string;
+  author: string;
+  date: string;
+  read_time: string;
+  image_url: string;
+  featured: boolean;
+  tags: string[];
+}
 
-  // Get the latest 3 attractions based on highest ID
-  const latestAttractions = attractionsData
-    .sort((a, b) => b.id - a.id)
-    .slice(0, 3);
+interface Attraction {
+  id: number;
+  slug: string;
+  title: string;
+  description: string;
+  full_description: string;
+  image_url: string;
+  category: string;
+  link: string;
+  contact: {
+    phone?: string;
+    email?: string;
+    address: string;
+  };
+  operating_hours: {
+    days: string;
+    hours: string;
+  };
+  location: {
+    lat: number;
+    lng: number;
+    embedUrl: string;
+  };
+}
+
+// Category colors for attractions
+const categoryColors: { [key: string]: any } = {
+  Pertanian: {
+    bgLight: "bg-green-50",
+    text: "text-green-600",
+    borderLight: "border-green-200",
+  },
+  Peternakan: {
+    bgLight: "bg-orange-50",
+    text: "text-orange-600",
+    borderLight: "border-orange-200",
+  },
+  Wisata: {
+    bgLight: "bg-blue-50",
+    text: "text-blue-600",
+    borderLight: "border-blue-200",
+  },
+  Industri: {
+    bgLight: "bg-purple-50",
+    text: "text-purple-600",
+    borderLight: "border-purple-200",
+  },
+  Kuliner: {
+    bgLight: "bg-red-50",
+    text: "text-red-600",
+    borderLight: "border-red-200",
+  },
+  Ekonomi: {
+    bgLight: "bg-yellow-50",
+    text: "text-yellow-600",
+    borderLight: "border-yellow-200",
+  },
+};
+
+// Async function to fetch data from Supabase
+async function fetchLatestArticles(): Promise<Article[]> {
+  try {
+    const { data, error } = await supabase
+      .from("articles")
+      .select("*")
+      .order("date", { ascending: false })
+      .limit(3);
+
+    if (error) {
+      console.error("Error fetching articles:", error);
+      return [];
+    }
+
+    return data || [];
+  } catch (error) {
+    console.error("Error fetching articles:", error);
+    return [];
+  }
+}
+
+async function fetchLatestAttractions(): Promise<Attraction[]> {
+  try {
+    const { data, error } = await supabase
+      .from("attractions")
+      .select("*")
+      .order("id", { ascending: false })
+      .limit(3);
+
+    if (error) {
+      console.error("Error fetching attractions:", error);
+      return [];
+    }
+
+    return data || [];
+  } catch (error) {
+    console.error("Error fetching attractions:", error);
+    return [];
+  }
+}
+
+export default async function Home() {
+  // Fetch data from Supabase
+  const [latestArticles, latestAttractions] = await Promise.all([
+    fetchLatestArticles(),
+    fetchLatestAttractions(),
+  ]);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
@@ -95,7 +208,11 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {latestAttractions.map((attraction) => {
-              const categoryColor = categoryColors[attraction.category];
+              const categoryColor = categoryColors[attraction.category] || {
+                bgLight: "bg-gray-50",
+                text: "text-gray-600",
+                borderLight: "border-gray-200",
+              };
 
               return (
                 <div
@@ -108,7 +225,7 @@ export default function Home() {
                       {/* Image */}
                       <div className="relative overflow-hidden">
                         <Image
-                          src={attraction.image}
+                          src={attraction.image_url}
                           alt={attraction.title}
                           width={400}
                           height={300}
@@ -143,7 +260,7 @@ export default function Home() {
 
                   {/* Learn More Button - Outside of Link to avoid nested links */}
                   <div className="px-6 pb-6">
-                    <Link href={`/PotensiDesa/${attraction.id}`}>
+                    <Link href={`/PotensiDesa/${attraction.slug}`}>
                       <button
                         className={`group/btn flex items-center ${categoryColor.text} hover:opacity-80 font-medium transition-colors`}
                       >

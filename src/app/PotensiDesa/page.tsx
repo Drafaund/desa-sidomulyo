@@ -1,20 +1,126 @@
 // src/app/PotensiDesa/page.tsx
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import PotensiCard from "@/components/potential/PotentialCard";
-import { attractionsData, categoryColors } from "../../../data/attractionsData";
 import { TreePine, Truck, Triangle, Users } from "lucide-react";
 import StatCard from "@/components/StatCard";
 import InvestmentCard from "@/components/investation/InvestmentCard";
-import {
-  investmentData,
-  getCategoryConfig,
-} from "../../../data/investmentData";
+import { supabase } from "../../../utils/supabase";
+
+// Types
+interface Attraction {
+  id: number;
+  title: string;
+  slug: string;
+  description: string;
+  full_description: string;
+  image_url: string;
+  category: string;
+  link: string;
+  contact: {
+    phone?: string;
+    email?: string;
+    address: string;
+  };
+  operating_hours: {
+    days: string;
+    hours: string;
+  };
+  location: {
+    lat: number;
+    lng: number;
+    embedUrl: string;
+  };
+}
+
+interface Investment {
+  id: number;
+  slug: string;
+  title: string;
+  category: "Pertanian" | "Peternakan" | "Wisata" | "Industri";
+  roi: string;
+  description: string;
+  investasi_minimal: string;
+  periode: string;
+  detail_description?: string;
+  benefits?: string[];
+  requirements?: string[];
+  timeline?: string[];
+  contact?: {
+    name: string;
+    phone: string;
+    email: string;
+  };
+}
+
+// Category colors config
+const categoryColors: { [key: string]: any } = {
+  Pertanian: {
+    bg: "bg-green-600",
+    bgLight: "bg-green-50",
+    text: "text-green-600",
+    hover: "hover:bg-green-100",
+  },
+  Peternakan: {
+    bg: "bg-orange-600",
+    bgLight: "bg-orange-50",
+    text: "text-orange-600",
+    hover: "hover:bg-orange-100",
+  },
+  Wisata: {
+    bg: "bg-blue-600",
+    bgLight: "bg-blue-50",
+    text: "text-blue-600",
+    hover: "hover:bg-blue-100",
+  },
+  Industri: {
+    bg: "bg-purple-600",
+    bgLight: "bg-purple-50",
+    text: "text-purple-600",
+    hover: "hover:bg-purple-100",
+  },
+};
+
+// Category config for investments
+const getCategoryConfig = (category: string) => {
+  const configs = {
+    Pertanian: {
+      icon: TreePine,
+      iconColor: "text-green-600",
+      buttonColor: "bg-green-600 hover:bg-green-700",
+      bgColor: "bg-green-50",
+    },
+    Peternakan: {
+      icon: Truck,
+      iconColor: "text-orange-600",
+      buttonColor: "bg-orange-600 hover:bg-orange-700",
+      bgColor: "bg-orange-50",
+    },
+    Wisata: {
+      icon: Triangle,
+      iconColor: "text-blue-600",
+      buttonColor: "bg-blue-600 hover:bg-blue-700",
+      bgColor: "bg-blue-50",
+    },
+    Industri: {
+      icon: Users,
+      iconColor: "text-purple-600",
+      buttonColor: "bg-purple-600 hover:bg-purple-700",
+      bgColor: "bg-purple-50",
+    },
+  };
+
+  return configs[category as keyof typeof configs] || configs.Pertanian;
+};
 
 export default function PotensiDesaPage() {
   const router = useRouter();
+  const [attractions, setAttractions] = useState<Attraction[]>([]);
+  const [investments, setInvestments] = useState<Investment[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const statistikData = [
     {
@@ -47,11 +153,72 @@ export default function PotensiDesaPage() {
   const [activeInvestmentCategory, setActiveInvestmentCategory] =
     useState("Semua");
 
+  // Fetch data from Supabase
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+
+        // Fetch attractions
+        const { data: attractionsData, error: attractionsError } =
+          await supabase
+            .from("attractions")
+            .select("*")
+            .order("id", { ascending: true });
+
+        if (attractionsError) {
+          throw new Error(
+            `Error fetching attractions: ${attractionsError.message}`
+          );
+        }
+
+        // Fetch investments
+        const { data: investmentsData, error: investmentsError } =
+          await supabase
+            .from("investments")
+            .select("*")
+            .order("id", { ascending: true });
+
+        if (investmentsError) {
+          throw new Error(
+            `Error fetching investments: ${investmentsError.message}`
+          );
+        }
+
+        // Transform data to match expected interface
+        const transformedAttractions: Attraction[] =
+          attractionsData?.map((item) => ({
+            ...item,
+            image_url: item.image_url,
+            full_description: item.full_description,
+            operating_hours: item.operating_hours,
+          })) || [];
+
+        const transformedInvestments: Investment[] =
+          investmentsData?.map((item) => ({
+            ...item,
+            investasi_minimal: item.investasi_minimal,
+            detail_description: item.detail_description,
+          })) || [];
+
+        setAttractions(transformedAttractions);
+        setInvestments(transformedInvestments);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+        setError(err instanceof Error ? err.message : "Unknown error occurred");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   // Get unique categories from data
   const categories = [
     "Semua",
     ...Array.from(
-      new Set(attractionsData.map((attraction) => attraction.category))
+      new Set(attractions.map((attraction) => attraction.category))
     ),
   ];
 
@@ -59,29 +226,55 @@ export default function PotensiDesaPage() {
   const investmentCategories = [
     "Semua",
     ...Array.from(
-      new Set(investmentData.map((investment) => investment.category))
+      new Set(investments.map((investment) => investment.category))
     ),
   ];
 
   // Filter attractions based on active tab
   const filteredAttractions =
     activeTab === "Semua"
-      ? attractionsData
-      : attractionsData.filter(
-          (attraction) => attraction.category === activeTab
-        );
+      ? attractions
+      : attractions.filter((attraction) => attraction.category === activeTab);
 
   // Filter investments based on active category
   const filteredInvestments =
     activeInvestmentCategory === "Semua"
-      ? investmentData
-      : investmentData.filter(
+      ? investments
+      : investments.filter(
           (investment) => investment.category === activeInvestmentCategory
         );
 
   const handleInvestmentClick = (slug: string) => {
     router.push(`/investasi/${slug}`);
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Memuat data...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-red-600 mb-4">Error</h1>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Coba Lagi
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -189,12 +382,6 @@ export default function PotensiDesaPage() {
             {investmentCategories.map((category) => {
               const isActive = activeInvestmentCategory === category;
 
-              // Get category config for styling
-              let categoryConfig = null;
-              if (category !== "Semua") {
-                categoryConfig = getCategoryConfig(category as any);
-              }
-
               // Define colors for each category
               const getActiveColors = () => {
                 if (category === "Semua") {
@@ -263,7 +450,7 @@ export default function PotensiDesaPage() {
                     title={investment.title}
                     description={investment.description}
                     roi={investment.roi}
-                    minInvestment={investment.investasiMinimal}
+                    minInvestment={investment.investasi_minimal}
                     period={investment.periode}
                     buttonColor={config.buttonColor}
                     bgcolor={config.bgColor}
