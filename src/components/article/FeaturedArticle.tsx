@@ -3,7 +3,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Calendar, User, ChevronRight } from "lucide-react";
-import { Article } from "../../../types/article";
+import { Article } from "../../types/article";
 
 interface FeaturedArticleProps {
   article: Article;

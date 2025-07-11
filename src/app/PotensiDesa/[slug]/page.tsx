@@ -6,7 +6,7 @@ import { useParams } from "next/navigation";
 import { ArrowLeft, MapPin, Clock, Phone, Mail, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { supabase } from "../../../../utils/supabase";
+import { supabase } from "../../../utils/supabase";
 
 // Types
 interface Attraction {

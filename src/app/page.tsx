@@ -5,7 +5,7 @@ import InvestmentOpportunities from "@/components/Investment";
 import ArticleCard from "@/components/article/ArticleCard";
 import { MessageCircle, Send, MapPin } from "lucide-react";
 import Link from "next/link";
-import { supabase } from "../../utils/supabase";
+import { supabase } from "../utils/supabase";
 
 // Define types for our data
 interface Article {
@@ -17,13 +17,12 @@ interface Article {
   category: string;
   author: string;
   date: string;
-  read_time: string;
   image_url: string;
   featured: boolean;
   tags: string[];
 }
 
-interface Attraction {
+interface Potential {
   id: number;
   slug: string;
   title: string;
@@ -48,7 +47,7 @@ interface Attraction {
   };
 }
 
-// Category colors for attractions
+// Category colors for Potentials
 const categoryColors: { [key: string]: any } = {
   Pertanian: {
     bgLight: "bg-green-50",
@@ -60,25 +59,20 @@ const categoryColors: { [key: string]: any } = {
     text: "text-orange-600",
     borderLight: "border-orange-200",
   },
-  Wisata: {
+  Perikanan: {
     bgLight: "bg-blue-50",
     text: "text-blue-600",
     borderLight: "border-blue-200",
+  },
+  Parwisata: {
+    bgLight: "bg-red-50",
+    text: "text-red-600",
+    borderLight: "border-red-200",
   },
   Industri: {
     bgLight: "bg-purple-50",
     text: "text-purple-600",
     borderLight: "border-purple-200",
-  },
-  Kuliner: {
-    bgLight: "bg-red-50",
-    text: "text-red-600",
-    borderLight: "border-red-200",
-  },
-  Ekonomi: {
-    bgLight: "bg-yellow-50",
-    text: "text-yellow-600",
-    borderLight: "border-yellow-200",
   },
 };
 
@@ -96,38 +90,48 @@ async function fetchLatestArticles(): Promise<Article[]> {
       return [];
     }
 
-    return data || [];
+    // Transform the data to match our Article interface
+    const transformedData =
+      data?.map((item: any) => ({
+        ...item,
+        date: item.date
+          ? new Date(item.date).toISOString().split("T")[0]
+          : new Date().toISOString().split("T")[0],
+        tags: item.tags || [],
+      })) || [];
+
+    return transformedData;
   } catch (error) {
     console.error("Error fetching articles:", error);
     return [];
   }
 }
 
-async function fetchLatestAttractions(): Promise<Attraction[]> {
+async function fetchLatestPotentials(): Promise<Potential[]> {
   try {
     const { data, error } = await supabase
-      .from("attractions")
+      .from("potential") // Changed from "Potentials" to "potential"
       .select("*")
       .order("id", { ascending: false })
       .limit(3);
 
     if (error) {
-      console.error("Error fetching attractions:", error);
+      console.error("Error fetching Potentials:", error);
       return [];
     }
 
     return data || [];
   } catch (error) {
-    console.error("Error fetching attractions:", error);
+    console.error("Error fetching Potentials:", error);
     return [];
   }
 }
 
 export default async function Home() {
   // Fetch data from Supabase
-  const [latestArticles, latestAttractions] = await Promise.all([
+  const [latestArticles, latestPotentials] = await Promise.all([
     fetchLatestArticles(),
-    fetchLatestAttractions(),
+    fetchLatestPotentials(),
   ]);
 
   return (
@@ -207,8 +211,8 @@ export default async function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {latestAttractions.map((attraction) => {
-              const categoryColor = categoryColors[attraction.category] || {
+            {latestPotentials.map((potential) => {
+              const categoryColor = categoryColors[potential.category] || {
                 bgLight: "bg-gray-50",
                 text: "text-gray-600",
                 borderLight: "border-gray-200",
@@ -216,17 +220,17 @@ export default async function Home() {
 
               return (
                 <div
-                  key={attraction.id}
+                  key={potential.id}
                   className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
                 >
                   {/* Clickable Card Container */}
-                  <Link href={`/PotensiDesa/${attraction.slug}`}>
+                  <Link href={`/PotensiDesa/${potential.slug}`}>
                     <div className="cursor-pointer">
                       {/* Image */}
                       <div className="relative overflow-hidden">
                         <Image
-                          src={attraction.image_url}
-                          alt={attraction.title}
+                          src={potential.image_url}
+                          alt={potential.title}
                           width={400}
                           height={300}
                           className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"
@@ -239,7 +243,7 @@ export default async function Home() {
                           <span
                             className={`${categoryColor.bgLight} ${categoryColor.text} px-3 py-1 rounded-full text-sm font-medium border-2 ${categoryColor.borderLight} backdrop-blur-sm`}
                           >
-                            {attraction.category}
+                            {potential.category}
                           </span>
                         </div>
                       </div>
@@ -249,10 +253,10 @@ export default async function Home() {
                         <h3
                           className={`text-xl font-semibold text-gray-900 mb-3 group-hover:${categoryColor.text} transition-colors`}
                         >
-                          {attraction.title}
+                          {potential.title}
                         </h3>
                         <p className="text-gray-600 mb-4 line-clamp-2">
-                          {attraction.description}
+                          {potential.description}
                         </p>
                       </div>
                     </div>
@@ -260,7 +264,7 @@ export default async function Home() {
 
                   {/* Learn More Button - Outside of Link to avoid nested links */}
                   <div className="px-6 pb-6">
-                    <Link href={`/PotensiDesa/${attraction.slug}`}>
+                    <Link href={`/PotensiDesa/${potential.slug}`}>
                       <button
                         className={`group/btn flex items-center ${categoryColor.text} hover:opacity-80 font-medium transition-colors`}
                       >

@@ -7,10 +7,10 @@ import PotensiCard from "@/components/potential/PotentialCard";
 import { TreePine, Truck, Triangle, Users } from "lucide-react";
 import StatCard from "@/components/StatCard";
 import InvestmentCard from "@/components/investation/InvestmentCard";
-import { supabase } from "../../../utils/supabase";
+import { supabase } from "../../utils/supabase";
 
 // Types
-interface Attraction {
+interface Potential {
   id: number;
   title: string;
   slug: string;
@@ -62,24 +62,35 @@ const categoryColors: { [key: string]: any } = {
     bgLight: "bg-green-50",
     text: "text-green-600",
     hover: "hover:bg-green-100",
+    borderLight: "border-green-200",
   },
   Peternakan: {
     bg: "bg-orange-600",
     bgLight: "bg-orange-50",
     text: "text-orange-600",
     hover: "hover:bg-orange-100",
+    borderLight: "border-orange-200",
   },
-  Wisata: {
+  Perikanan: {
     bg: "bg-blue-600",
     bgLight: "bg-blue-50",
     text: "text-blue-600",
     hover: "hover:bg-blue-100",
+    borderLight: "border-blue-200",
+  },
+  Pariwisata: {
+    bg: "bg-red-600",
+    bgLight: "bg-red-50",
+    text: "text-red-600",
+    hover: "hover:bg-red-100",
+    borderLight: "border-red-200",
   },
   Industri: {
     bg: "bg-purple-600",
     bgLight: "bg-purple-50",
     text: "text-purple-600",
     hover: "hover:bg-purple-100",
+    borderLight: "border-purple-200",
   },
 };
 
@@ -98,11 +109,17 @@ const getCategoryConfig = (category: string) => {
       buttonColor: "bg-orange-600 hover:bg-orange-700",
       bgColor: "bg-orange-50",
     },
-    Wisata: {
+    Perikanan: {
       icon: Triangle,
       iconColor: "text-blue-600",
       buttonColor: "bg-blue-600 hover:bg-blue-700",
       bgColor: "bg-blue-50",
+    },
+    Pariwisata: {
+      icon: Triangle,
+      iconColor: "text-red-600",
+      buttonColor: "bg-red-600 hover:bg-red-700",
+      bgColor: "bg-red-50",
     },
     Industri: {
       icon: Users,
@@ -117,7 +134,7 @@ const getCategoryConfig = (category: string) => {
 
 export default function PotensiDesaPage() {
   const router = useRouter();
-  const [attractions, setAttractions] = useState<Attraction[]>([]);
+  const [potentials, setPotentials] = useState<Potential[]>([]);
   const [investments, setInvestments] = useState<Investment[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -158,17 +175,17 @@ export default function PotensiDesaPage() {
     const fetchData = async () => {
       try {
         setLoading(true);
+        setError(null);
 
-        // Fetch attractions
-        const { data: attractionsData, error: attractionsError } =
-          await supabase
-            .from("attractions")
-            .select("*")
-            .order("id", { ascending: true });
+        // Fetch potentials - fixed table name from 'potentials' to 'potential'
+        const { data: potentialsData, error: potentialsError } = await supabase
+          .from("potential")
+          .select("*")
+          .order("id", { ascending: true });
 
-        if (attractionsError) {
+        if (potentialsError) {
           throw new Error(
-            `Error fetching attractions: ${attractionsError.message}`
+            `Error fetching potentials: ${potentialsError.message}`
           );
         }
 
@@ -185,24 +202,45 @@ export default function PotensiDesaPage() {
           );
         }
 
-        // Transform data to match expected interface
-        const transformedAttractions: Attraction[] =
-          attractionsData?.map((item) => ({
-            ...item,
-            image_url: item.image_url,
+        // Transform potentials data to match expected interface
+        const transformedPotentials: Potential[] =
+          potentialsData?.map((item) => ({
+            id: item.id,
+            title: item.title,
+            slug: item.slug,
+            description: item.description,
             full_description: item.full_description,
-            operating_hours: item.operating_hours,
+            image_url: item.image_url,
+            category: item.category,
+            link: item.link,
+            contact: item.contact || { address: "" },
+            operating_hours: item.operating_hours || { days: "", hours: "" },
+            location: item.location || { lat: 0, lng: 0, embedUrl: "" },
           })) || [];
 
+        // Transform investments data to match expected interface
         const transformedInvestments: Investment[] =
           investmentsData?.map((item) => ({
-            ...item,
+            id: item.id,
+            slug: item.slug,
+            title: item.title,
+            category: item.category,
+            roi: item.roi,
+            description: item.description,
             investasi_minimal: item.investasi_minimal,
+            periode: item.periode,
             detail_description: item.detail_description,
+            benefits: item.benefits,
+            requirements: item.requirements,
+            timeline: item.timeline,
+            contact: item.contact,
           })) || [];
 
-        setAttractions(transformedAttractions);
+        setPotentials(transformedPotentials);
         setInvestments(transformedInvestments);
+
+        console.log("Potentials loaded:", transformedPotentials.length);
+        console.log("Investments loaded:", transformedInvestments.length);
       } catch (err) {
         console.error("Error fetching data:", err);
         setError(err instanceof Error ? err.message : "Unknown error occurred");
@@ -217,9 +255,7 @@ export default function PotensiDesaPage() {
   // Get unique categories from data
   const categories = [
     "Semua",
-    ...Array.from(
-      new Set(attractions.map((attraction) => attraction.category))
-    ),
+    ...Array.from(new Set(potentials.map((potential) => potential.category))),
   ];
 
   // Get unique investment categories
@@ -230,11 +266,11 @@ export default function PotensiDesaPage() {
     ),
   ];
 
-  // Filter attractions based on active tab
-  const filteredAttractions =
+  // Filter potentials based on active tab
+  const filteredPotentials =
     activeTab === "Semua"
-      ? attractions
-      : attractions.filter((attraction) => attraction.category === activeTab);
+      ? potentials
+      : potentials.filter((potential) => potential.category === activeTab);
 
   // Filter investments based on active category
   const filteredInvestments =
@@ -322,7 +358,7 @@ export default function PotensiDesaPage() {
                   if (category === "Semua") {
                     return {
                       active: "bg-gray-600 text-white",
-                      inactive: "bg-gray-100 text-gray-600 hover:bg-gray-100",
+                      inactive: "bg-gray-100 text-gray-600 hover:bg-gray-200",
                     };
                   }
 
@@ -360,7 +396,7 @@ export default function PotensiDesaPage() {
 
         {/* Content */}
         <PotensiCard
-          attractions={filteredAttractions}
+          potentials={filteredPotentials}
           categoryColors={categoryColors}
         />
       </div>
@@ -391,7 +427,8 @@ export default function PotensiDesaPage() {
                 const colorMap = {
                   Pertanian: "bg-green-600 text-white",
                   Peternakan: "bg-orange-600 text-white",
-                  Wisata: "bg-blue-600 text-white",
+                  Perikanan: "bg-blue-600 text-white",
+                  Pariwisata: "bg-red-600 text-white",
                   Industri: "bg-purple-600 text-white",
                 };
 
@@ -403,14 +440,15 @@ export default function PotensiDesaPage() {
 
               const getInactiveColors = () => {
                 if (category === "Semua") {
-                  return "bg-gray-100 text-gray-600 hover:bg-gray-100";
+                  return "bg-gray-100 text-gray-600 hover:bg-gray-200";
                 }
 
                 const colorMap = {
                   Pertanian: "bg-green-50 text-green-600 hover:bg-green-100",
                   Peternakan:
                     "bg-orange-50 text-orange-600 hover:bg-orange-100",
-                  Wisata: "bg-blue-50 text-blue-600 hover:bg-blue-100",
+                  Perikanan: "bg-blue-50 text-blue-600 hover:bg-blue-100",
+                  Pariwisata: "bg-red-50 text-red-600 hover:bg-red-100",
                   Industri: "bg-purple-50 text-purple-600 hover:bg-purple-100",
                 };
 

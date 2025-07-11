@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { supabase } from "../../../../utils/supabase";
+import { supabase } from "../../../utils/supabase";
 import {
   ArrowLeft,
   Phone,
