@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { ArrowRight, Plus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { CldImage } from "next-cloudinary";
 
 interface CategoryColor {
   bg: string;
@@ -13,35 +14,49 @@ interface CategoryColor {
   borderLight: string;
 }
 
-interface Attraction {
+interface Potential {
   id: number;
   title: string;
-  slug: string; // Added slug field
+  slug: string;
   description: string;
-  image: string;
-  rating: number;
+  full_description: string;
+  image_url: string; // Changed from 'image' to 'image_url'
   category: string;
   link: string;
+  contact: {
+    phone?: string;
+    email?: string;
+    address: string;
+  };
+  operating_hours: {
+    days: string;
+    hours: string;
+  };
+  location: {
+    lat: number;
+    lng: number;
+    embedUrl: string;
+  };
 }
 
 interface PotensiCardProps {
-  attractions: Attraction[];
+  potentials: Potential[];
   categoryColors: Record<string, CategoryColor>;
 }
 
 const PotensiCard: React.FC<PotensiCardProps> = ({
-  attractions,
+  potentials,
   categoryColors,
 }) => {
   const [visibleCount, setVisibleCount] = useState(6);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Reset visible count when attractions change (e.g., when tab changes)
+  // Reset visible count when potentials change (e.g., when tab changes)
   useEffect(() => {
     setVisibleCount(6);
-  }, [attractions]);
+  }, [potentials]);
 
-  if (!attractions || attractions.length === 0) {
+  if (!potentials || potentials.length === 0) {
     return (
       <div className="text-center py-16">
         <p className="text-gray-500 text-lg">
@@ -60,34 +75,48 @@ const PotensiCard: React.FC<PotensiCardProps> = ({
     }, 500);
   };
 
-  const visibleAttractions = attractions.slice(0, visibleCount);
-  const hasMore = visibleCount < attractions.length;
+  const visiblePotentials = potentials.slice(0, visibleCount);
+  const hasMore = visibleCount < potentials.length;
 
   return (
     <div className="py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Attractions Grid */}
+        {/* Potentials Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {visibleAttractions.map((attraction) => {
-            const categoryColor = categoryColors[attraction.category];
+          {visiblePotentials.map((potential) => {
+            const categoryColor = categoryColors[potential.category] || {
+              bg: "bg-gray-600",
+              bgLight: "bg-gray-50",
+              text: "text-gray-600",
+              hover: "hover:bg-gray-100",
+              borderLight: "border-gray-200",
+            };
 
             return (
               <div
-                key={attraction.id}
+                key={potential.id}
                 className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
               >
-                {/* Clickable Card Container - Using slug instead of id */}
-                <Link href={`/PotensiDesa/${attraction.slug}`}>
+                {/* Clickable Card Container */}
+                <Link href={`/PotensiDesa/${potential.slug}`}>
                   <div className="cursor-pointer">
                     {/* Image */}
                     <div className="relative overflow-hidden">
-                      <Image
-                        src={attraction.image}
-                        alt={attraction.title}
-                        width={400}
-                        height={300}
-                        className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"
-                      />
+                      {/* Check if image_url exists and is not empty */}
+                      {potential.image_url ? (
+                        <CldImage
+                          src={potential.image_url}
+                          alt={potential.title}
+                          width={400}
+                          height={300}
+                          className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"
+                        />
+                      ) : (
+                        /* Fallback image */
+                        <div className="w-full h-64 bg-gray-200 flex items-center justify-center">
+                          <span className="text-gray-500">No Image</span>
+                        </div>
+                      )}
 
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
@@ -96,7 +125,7 @@ const PotensiCard: React.FC<PotensiCardProps> = ({
                         <span
                           className={`${categoryColor.bgLight} ${categoryColor.text} px-3 py-1 rounded-full text-sm font-medium border-2 ${categoryColor.borderLight} backdrop-blur-sm`}
                         >
-                          {attraction.category}
+                          {potential.category}
                         </span>
                       </div>
                     </div>
@@ -106,18 +135,18 @@ const PotensiCard: React.FC<PotensiCardProps> = ({
                       <h3
                         className={`text-xl font-semibold text-gray-900 mb-3 group-hover:${categoryColor.text} transition-colors`}
                       >
-                        {attraction.title}
+                        {potential.title}
                       </h3>
                       <p className="text-gray-600 mb-4 line-clamp-2">
-                        {attraction.description}
+                        {potential.description}
                       </p>
                     </div>
                   </div>
                 </Link>
 
-                {/* Learn More Button - Outside of Link to avoid nested links, using slug */}
+                {/* Learn More Button */}
                 <div className="px-6 pb-6">
-                  <Link href={`/PotensiDesa/${attraction.slug}`}>
+                  <Link href={`/PotensiDesa/${potential.slug}`}>
                     <button
                       className={`group/btn flex items-center ${categoryColor.text} hover:opacity-80 font-medium transition-colors`}
                     >
@@ -157,7 +186,7 @@ const PotensiCard: React.FC<PotensiCardProps> = ({
         {/* Info Text */}
         <div className="text-center mt-8 text-gray-500">
           <p>
-            Menampilkan {visibleAttractions.length} dari {attractions.length}{" "}
+            Menampilkan {visiblePotentials.length} dari {potentials.length}{" "}
             potensi
             {hasMore && (
               <span className="block text-sm mt-1">

@@ -7,7 +7,7 @@ import Link from "next/link";
 import {
   getArticleBySlug,
   type Article,
-} from "../../../../utils/articleService";
+} from "../../../services/articleService";
 
 const ArticleDetailPage = () => {
   const params = useParams();

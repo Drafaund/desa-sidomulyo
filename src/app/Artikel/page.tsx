@@ -1,7 +1,7 @@
 // src/app/Artikel/page.tsx
 "use client";
 import React, { useState, useEffect } from "react";
-import { supabase } from "../../../utils/supabase";
+import { supabase } from "../../utils/supabase";
 
 // Import komponen
 import ArticleHero from "../../components/article/ArticleHero";

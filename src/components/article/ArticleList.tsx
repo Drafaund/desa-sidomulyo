@@ -1,6 +1,6 @@
 // src/components/article/ArticleList.tsx
 import React, { useState } from "react";
-import { Article } from "../../../types/article";
+import { Article } from "../../types/article";
 import ArticleCard from "./ArticleCard";
 
 interface ArticleListProps {
