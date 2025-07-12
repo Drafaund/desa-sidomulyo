@@ -3,13 +3,30 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { ArrowLeft, MapPin, Clock, Phone, Mail, Star } from "lucide-react";
-import Image from "next/image";
+import { ArrowLeft, MapPin, Clock, Phone, Mail } from "lucide-react";
 import Link from "next/link";
-import { supabase } from "../../../utils/supabase";
+import { supabase, handleSupabaseError } from "../../../utils/supabase";
+import { CldImage } from "next-cloudinary";
 
 // Types
-interface Attraction {
+interface Contact {
+  phone?: string;
+  email?: string;
+  address: string;
+}
+
+interface OperatingHours {
+  days: string;
+  hours: string;
+}
+
+interface Location {
+  lat: number;
+  lng: number;
+  embedUrl: string;
+}
+
+interface Potential {
   id: number;
   title: string;
   slug: string;
@@ -18,47 +35,55 @@ interface Attraction {
   image_url: string;
   category: string;
   link: string;
-  contact: {
-    phone?: string;
-    email?: string;
-    address: string;
-  };
-  operating_hours: {
-    days: string;
-    hours: string;
-  };
-  location: {
-    lat: number;
-    lng: number;
-    embedUrl: string;
-  };
+  contact: Contact;
+  operating_hours: OperatingHours;
+  location: Location;
 }
 
-// Category colors config
-const categoryColors: { [key: string]: any } = {
+// Category colors configuration with proper typing
+interface CategoryColorConfig {
+  bg: string;
+  bgLight: string;
+  text: string;
+  hover: string;
+  borderLight: string;
+}
+
+const categoryColors: { [key: string]: CategoryColorConfig } = {
   Pertanian: {
     bg: "bg-green-600",
     bgLight: "bg-green-50",
     text: "text-green-600",
     hover: "hover:bg-green-100",
+    borderLight: "border-green-200",
   },
   Peternakan: {
     bg: "bg-orange-600",
     bgLight: "bg-orange-50",
     text: "text-orange-600",
     hover: "hover:bg-orange-100",
+    borderLight: "border-orange-200",
   },
-  Wisata: {
+  Perikanan: {
     bg: "bg-blue-600",
     bgLight: "bg-blue-50",
     text: "text-blue-600",
     hover: "hover:bg-blue-100",
+    borderLight: "border-blue-200",
+  },
+  Pariwisata: {
+    bg: "bg-red-600",
+    bgLight: "bg-red-50",
+    text: "text-red-600",
+    hover: "hover:bg-red-100",
+    borderLight: "border-red-200",
   },
   Industri: {
     bg: "bg-purple-600",
     bgLight: "bg-purple-50",
     text: "text-purple-600",
     hover: "hover:bg-purple-100",
+    borderLight: "border-purple-200",
   },
 };
 
@@ -66,104 +91,147 @@ export default function PotensiDetailPage() {
   const params = useParams();
   const slug = params.slug as string;
 
-  const [attraction, setAttraction] = useState<Attraction | null>(null);
+  const [potential, setPotential] = useState<Potential | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchAttraction = async () => {
+    const fetchPotential = async () => {
       try {
         setLoading(true);
+        setError(null);
 
-        const { data, error } = await supabase
-          .from("attractions")
+        // Fetch data from Supabase
+        const { data, error: supabaseError } = await supabase
+          .from("potential")
           .select("*")
           .eq("slug", slug)
           .single();
 
-        if (error) {
-          if (error.code === "PGRST116") {
+        if (supabaseError) {
+          if (supabaseError.code === "PGRST116") {
             // No rows returned
-            setAttraction(null);
+            setPotential(null);
           } else {
-            throw new Error(`Error fetching attraction: ${error.message}`);
+            const errorMessage = handleSupabaseError(supabaseError);
+            setError(errorMessage);
           }
-        } else {
-          // Transform data to match expected interface
-          const transformedAttraction: Attraction = {
-            ...data,
-            image_url: data.image_url,
-            full_description: data.full_description,
-            operating_hours: data.operating_hours,
-          };
-
-          setAttraction(transformedAttraction);
+          return;
         }
+
+        // Validate and transform data
+        if (!data) {
+          setPotential(null);
+          return;
+        }
+
+        // Transform data to match expected interface
+        const transformedPotential: Potential = {
+          id: data.id,
+          title: data.title || "",
+          slug: data.slug || "",
+          description: data.description || "",
+          full_description: data.full_description || "",
+          image_url: data.image_url || "/placeholder-image.jpg",
+          category: data.category || "Umum",
+          link: data.link || "",
+          contact: {
+            phone: data.contact?.phone || "",
+            email: data.contact?.email || "",
+            address: data.contact?.address || "Alamat tidak tersedia",
+          },
+          operating_hours: {
+            days: data.operating_hours?.days || "Senin - Jumat",
+            hours: data.operating_hours?.hours || "08:00 - 17:00",
+          },
+          location: {
+            lat: data.location?.lat || 0,
+            lng: data.location?.lng || 0,
+            embedUrl: data.location?.embedUrl || "",
+          },
+        };
+
+        setPotential(transformedPotential);
       } catch (err) {
-        console.error("Error fetching attraction:", err);
-        setError(err instanceof Error ? err.message : "Unknown error occurred");
+        console.error("Error fetching potential:", err);
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Terjadi kesalahan yang tidak diketahui"
+        );
       } finally {
         setLoading(false);
       }
     };
 
     if (slug) {
-      fetchAttraction();
+      fetchPotential();
     }
   }, [slug]);
 
+  // Loading state
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Memuat data...</p>
+          <p className="text-gray-600">Memuat data potensi desa...</p>
         </div>
       </div>
     );
   }
 
+  // Error state
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-red-600 mb-4">Error</h1>
-          <p className="text-gray-600 mb-4">{error}</p>
-          <Link href="/PotensiDesa">
-            <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-              Kembali ke Potensi Desa
-            </button>
-          </Link>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center max-w-md mx-auto px-4">
+          <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+            <h1 className="text-2xl font-bold text-red-700 mb-4">
+              Terjadi Kesalahan
+            </h1>
+            <p className="text-red-600 mb-6">{error}</p>
+            <Link href="/PotensiDesa">
+              <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                Kembali ke Potensi Desa
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
     );
   }
 
-  if (!attraction) {
+  // Not found state
+  if (!potential) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">
-            Potensi tidak ditemukan
-          </h1>
-          <p className="text-gray-600 mb-4">
-            Potensi dengan slug "{slug}" tidak ditemukan.
-          </p>
-          <Link href="/PotensiDesa">
-            <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-              Kembali ke Potensi Desa
-            </button>
-          </Link>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center max-w-md mx-auto px-4">
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
+            <h1 className="text-2xl font-bold text-gray-900 mb-4">
+              Potensi Tidak Ditemukan
+            </h1>
+            <p className="text-gray-600 mb-6">
+              Potensi dengan slug `<span className="font-medium">{slug}</span>`
+              tidak ditemukan di database.
+            </p>
+            <Link href="/PotensiDesa">
+              <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                Kembali ke Potensi Desa
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
     );
   }
 
-  const categoryColor = categoryColors[attraction.category] || {
+  const categoryColor = categoryColors[potential.category] || {
     bg: "bg-gray-600",
     bgLight: "bg-gray-50",
     text: "text-gray-600",
     hover: "hover:bg-gray-100",
+    borderLight: "border-gray-200",
   };
 
   return (
@@ -182,12 +250,19 @@ export default function PotensiDetailPage() {
 
       {/* Hero Section */}
       <div className="relative h-96 overflow-hidden">
-        <Image
-          src={attraction.image_url}
-          alt={attraction.title}
-          fill
-          className="object-cover"
-        />
+        <div className="relative w-full h-full">
+          <CldImage
+            src={potential.image_url}
+            alt={potential.title}
+            fill
+            className="object-cover"
+            priority
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.src = "/placeholder-image.jpg";
+            }}
+          />
+        </div>
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
 
         {/* Hero Content */}
@@ -197,17 +272,14 @@ export default function PotensiDetailPage() {
               <span
                 className={`${categoryColor.bg} text-white px-4 py-2 rounded-full text-sm font-medium mr-4`}
               >
-                {attraction.category}
+                {potential.category}
               </span>
-              <div className="flex items-center bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
-                <Star className="h-4 w-4 text-yellow-400 fill-current mr-1" />
-              </div>
             </div>
             <h1 className="text-4xl font-bold text-white mb-2">
-              {attraction.title}
+              {potential.title}
             </h1>
             <p className="text-xl text-white/90 max-w-2xl">
-              {attraction.description}
+              {potential.description}
             </p>
           </div>
         </div>
@@ -220,11 +292,28 @@ export default function PotensiDetailPage() {
           <div className="lg:col-span-2">
             <div className="bg-white rounded-2xl shadow-lg p-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                Tentang {attraction.title}
+                Tentang {potential.title}
               </h2>
-              <p className="text-gray-600 leading-relaxed text-lg">
-                {attraction.full_description}
-              </p>
+              <div className="prose prose-lg max-w-none">
+                <p className="text-gray-600 leading-relaxed text-lg whitespace-pre-wrap">
+                  {potential.full_description}
+                </p>
+              </div>
+
+              {/* Link jika ada */}
+              {potential.link && (
+                <div className="mt-6 pt-6 border-t border-gray-200">
+                  <a
+                    href={potential.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-blue-600 hover:text-blue-700 transition-colors"
+                  >
+                    Kunjungi Website
+                    <ArrowLeft className="h-4 w-4 ml-2 rotate-180" />
+                  </a>
+                </div>
+              )}
             </div>
           </div>
 
@@ -240,37 +329,35 @@ export default function PotensiDetailPage() {
                   <MapPin className="h-5 w-5 text-gray-400 mt-1 mr-3 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-gray-900">Alamat</p>
-                    <p className="text-gray-600">
-                      {attraction.contact.address}
-                    </p>
+                    <p className="text-gray-600">{potential.contact.address}</p>
                   </div>
                 </div>
 
-                {attraction.contact.phone && (
+                {potential.contact.phone && (
                   <div className="flex items-center">
                     <Phone className="h-5 w-5 text-gray-400 mr-3" />
                     <div>
                       <p className="font-medium text-gray-900">Telepon</p>
                       <a
-                        href={`tel:${attraction.contact.phone}`}
+                        href={`tel:${potential.contact.phone}`}
                         className="text-blue-600 hover:text-blue-700 transition-colors"
                       >
-                        {attraction.contact.phone}
+                        {potential.contact.phone}
                       </a>
                     </div>
                   </div>
                 )}
 
-                {attraction.contact.email && (
+                {potential.contact.email && (
                   <div className="flex items-center">
                     <Mail className="h-5 w-5 text-gray-400 mr-3" />
                     <div>
                       <p className="font-medium text-gray-900">Email</p>
                       <a
-                        href={`mailto:${attraction.contact.email}`}
+                        href={`mailto:${potential.contact.email}`}
                         className="text-blue-600 hover:text-blue-700 transition-colors"
                       >
-                        {attraction.contact.email}
+                        {potential.contact.email}
                       </a>
                     </div>
                   </div>
@@ -287,10 +374,10 @@ export default function PotensiDetailPage() {
                 <Clock className="h-5 w-5 text-gray-400 mr-3" />
                 <div>
                   <p className="font-medium text-gray-900">
-                    {attraction.operating_hours.days}
+                    {potential.operating_hours.days}
                   </p>
                   <p className="text-gray-600">
-                    {attraction.operating_hours.hours}
+                    {potential.operating_hours.hours}
                   </p>
                 </div>
               </div>
@@ -299,21 +386,23 @@ export default function PotensiDetailPage() {
         </div>
 
         {/* Map Section */}
-        <div className="mt-8 bg-white rounded-2xl shadow-lg p-8">
-          <h3 className="text-2xl font-bold text-gray-900 mb-6">Lokasi</h3>
-          <div className="aspect-video rounded-lg overflow-hidden">
-            <iframe
-              src={attraction.location.embedUrl}
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="rounded-lg"
-            />
+        {potential.location.embedUrl && (
+          <div className="mt-8 bg-white rounded-2xl shadow-lg p-8">
+            <h3 className="text-2xl font-bold text-gray-900 mb-6">Lokasi</h3>
+            <div className="aspect-video rounded-lg overflow-hidden">
+              <iframe
+                src={potential.location.embedUrl}
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="rounded-lg"
+              />
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

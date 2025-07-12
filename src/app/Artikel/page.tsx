@@ -26,6 +26,21 @@ interface Article {
   tags: string[];
 }
 
+// Type untuk category colors
+type CategoryKey =
+  | "Agrikultur & Lingkungan"
+  | "Sejarah & Budaya"
+  | "Hewan & Peternakan"
+  | "Kesehatan & Medis"
+  | "Sains & Teknologi";
+
+interface CategoryColorConfig {
+  bg: string;
+  text: string;
+  bgLight: string;
+  hover: string;
+}
+
 const DesaArticlePage = () => {
   const [activeTab, setActiveTab] = useState("Semua");
   const [searchTerm, setSearchTerm] = useState("");
@@ -35,36 +50,37 @@ const DesaArticlePage = () => {
   const [error, setError] = useState<string | null>(null);
   const [categories, setCategories] = useState<string[]>(["Semua"]);
 
-  const categoryColors = {
-    Kesehatan: {
+  // Type-safe category colors dengan Record type
+  const categoryColors: Record<CategoryKey, CategoryColorConfig> = {
+    "Agrikultur & Lingkungan": {
       bg: "bg-green-500",
       text: "text-green-600",
       bgLight: "bg-green-100",
       hover: "hover:bg-green-200",
     },
-    "Budaya & Sejarah": {
+    "Sejarah & Budaya": {
       bg: "bg-purple-500",
       text: "text-purple-600",
       bgLight: "bg-purple-50",
       hover: "hover:bg-purple-100",
     },
-    "Agro & Lingkungan": {
-      bg: "bg-emerald-500",
-      text: "text-emerald-600",
-      bgLight: "bg-emerald-50",
-      hover: "hover:bg-emerald-100",
-    },
-    Pembangunan: {
+    "Hewan & Peternakan": {
       bg: "bg-orange-500",
       text: "text-orange-600",
       bgLight: "bg-orange-50",
       hover: "hover:bg-orange-100",
     },
-    Pendidikan: {
-      bg: "bg-indigo-500",
-      text: "text-indigo-600",
-      bgLight: "bg-indigo-50",
-      hover: "hover:bg-indigo-100",
+    "Kesehatan & Medis": {
+      bg: "bg-blue-500",
+      text: "text-blue-600",
+      bgLight: "bg-blue-50",
+      hover: "hover:bg-blue-100",
+    },
+    "Sains & Teknologi": {
+      bg: "bg-red-500",
+      text: "text-red-600",
+      bgLight: "bg-red-50",
+      hover: "hover:bg-red-100",
     },
   };
 
@@ -122,9 +138,33 @@ const DesaArticlePage = () => {
     setVisibleArticles((prev) => prev + 3);
   };
 
-  const getCategoryColor = (categoryName: string) => {
-    const category = categories.find((cat) => cat === categoryName);
-    return category ? categoryColors[category] : null;
+  // Helper function untuk mendapatkan category color dengan type safety
+  const getCategoryColors = (category: string) => {
+    if (category === "Semua") {
+      return {
+        active: "bg-gray-600 text-white",
+        inactive: "bg-gray-100 text-gray-600 hover:bg-gray-200",
+      };
+    }
+
+    // Type guard untuk memastikan category adalah CategoryKey
+    const isValidCategory = (cat: string): cat is CategoryKey => {
+      return cat in categoryColors;
+    };
+
+    if (isValidCategory(category)) {
+      const colorConfig = categoryColors[category];
+      return {
+        active: `${colorConfig.bg} text-white`,
+        inactive: `${colorConfig.bgLight} ${colorConfig.text} ${colorConfig.hover}`,
+      };
+    }
+
+    // Fallback untuk kategori yang tidak ada dalam categoryColors
+    return {
+      active: "bg-gray-600 text-white",
+      inactive: "bg-white text-gray-600 hover:bg-gray-100",
+    };
   };
 
   // Loading state
@@ -167,31 +207,7 @@ const DesaArticlePage = () => {
           <div className="flex flex-wrap justify-center gap-4">
             {categories.map((category) => {
               const isActive = activeTab === category;
-
-              // Get category color
-              const getCategoryColors = () => {
-                if (category === "Semua") {
-                  return {
-                    active: "bg-gray-600 text-white",
-                    inactive: "bg-gray-100 text-gray-600 hover:bg-gray-200",
-                  };
-                }
-
-                const colorConfig = categoryColors[category];
-                if (!colorConfig) {
-                  return {
-                    active: "bg-gray-600 text-white",
-                    inactive: "bg-white text-gray-600 hover:bg-gray-100",
-                  };
-                }
-
-                return {
-                  active: `${colorConfig.bg} text-white`,
-                  inactive: `${colorConfig.bgLight} ${colorConfig.text} ${colorConfig.hover}`,
-                };
-              };
-
-              const colors = getCategoryColors();
+              const colors = getCategoryColors(category);
 
               return (
                 <button
@@ -231,7 +247,7 @@ const DesaArticlePage = () => {
         {filteredArticles.length === 0 && articles.length > 0 && (
           <div className="text-center py-12">
             <p className="text-gray-600 text-lg">
-              Tidak ada artikel yang sesuai dengan pencarian "{searchTerm}"
+              Tidak ada artikel yang sesuai dengan pencarian `{searchTerm}`
               {activeTab !== "Semua" && ` dalam kategori "${activeTab}"`}
             </p>
           </div>
