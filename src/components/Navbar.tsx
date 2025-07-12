@@ -13,7 +13,7 @@ const Navbar = () => {
   };
 
   // Fungsi untuk memeriksa apakah link aktif
-  const isActive = (path) => {
+  const isActive = (path: string): boolean => {
     return pathname === path;
   };
 

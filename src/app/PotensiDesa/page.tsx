@@ -55,8 +55,16 @@ interface Investment {
   };
 }
 
-// Category colors config
-const categoryColors: { [key: string]: any } = {
+// Category colors configuration with proper typing
+interface CategoryColorConfig {
+  bg: string;
+  bgLight: string;
+  text: string;
+  hover: string;
+  borderLight: string;
+}
+
+const categoryColors: { [key: string]: CategoryColorConfig } = {
   Pertanian: {
     bg: "bg-green-600",
     bgLight: "bg-green-50",

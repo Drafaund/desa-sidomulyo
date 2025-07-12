@@ -47,8 +47,29 @@ interface Potential {
   };
 }
 
+// Database article interface for raw data from Supabase
+interface DatabaseArticle {
+  id: number;
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  category: string;
+  author: string;
+  date: string | null;
+  image_url: string;
+  featured: boolean;
+  tags: string[] | null;
+}
+
 // Category colors for Potentials
-const categoryColors: { [key: string]: any } = {
+interface CategoryColor {
+  bgLight: string;
+  text: string;
+  borderLight: string;
+}
+
+const categoryColors: { [key: string]: CategoryColor } = {
   Pertanian: {
     bgLight: "bg-green-50",
     text: "text-green-600",
@@ -92,7 +113,7 @@ async function fetchLatestArticles(): Promise<Article[]> {
 
     // Transform the data to match our Article interface
     const transformedData =
-      data?.map((item: any) => ({
+      data?.map((item: DatabaseArticle) => ({
         ...item,
         date: item.date
           ? new Date(item.date).toISOString().split("T")[0]

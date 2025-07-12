@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { supabase } from "../../../utils/supabase";
+import { supabase, handleSupabaseError } from "../../../utils/supabase";
 import {
   ArrowLeft,
   Phone,
@@ -19,6 +19,13 @@ import {
   Factory,
 } from "lucide-react";
 
+// Interface untuk contact dari JSONB
+interface Contact {
+  name: string;
+  phone: string;
+  email: string;
+}
+
 // Interface untuk data investment dari Supabase
 interface Investment {
   id: number;
@@ -33,11 +40,7 @@ interface Investment {
   benefits?: string[];
   requirements?: string[];
   timeline?: string[];
-  contact?: {
-    name: string;
-    phone: string;
-    email: string;
-  };
+  contact?: Contact;
 }
 
 // Configuration untuk kategori
@@ -87,25 +90,63 @@ export default function InvestmentDetailPage() {
         setLoading(true);
         setError(null);
 
-        const { data, error } = await supabase
+        // Fetch data dari Supabase
+        const { data, error: supabaseError } = await supabase
           .from("investments")
           .select("*")
           .eq("slug", slug)
           .single();
 
-        if (error) {
-          throw error;
-        }
-
-        if (!data) {
-          setError("Investasi tidak ditemukan");
+        if (supabaseError) {
+          if (supabaseError.code === "PGRST116") {
+            // No rows returned
+            setInvestment(null);
+          } else {
+            const errorMessage = handleSupabaseError(supabaseError);
+            setError(errorMessage);
+          }
           return;
         }
 
-        setInvestment(data);
+        // Validasi dan transform data
+        if (!data) {
+          setInvestment(null);
+          return;
+        }
+
+        // Transform data untuk memastikan type safety
+        const transformedInvestment: Investment = {
+          id: data.id,
+          slug: data.slug || "",
+          title: data.title || "Investasi Tidak Bernama",
+          category: data.category || "Pertanian",
+          roi: data.roi || "Tidak diketahui",
+          description: data.description || "Deskripsi tidak tersedia",
+          investasi_minimal: data.investasi_minimal || "Tidak diketahui",
+          periode: data.periode || "Tidak diketahui",
+          detail_description: data.detail_description || "",
+          benefits: Array.isArray(data.benefits) ? data.benefits : [],
+          requirements: Array.isArray(data.requirements)
+            ? data.requirements
+            : [],
+          timeline: Array.isArray(data.timeline) ? data.timeline : [],
+          contact: data.contact
+            ? {
+                name: data.contact.name || "Tidak ada kontak",
+                phone: data.contact.phone || "",
+                email: data.contact.email || "",
+              }
+            : undefined,
+        };
+
+        setInvestment(transformedInvestment);
       } catch (err) {
         console.error("Error fetching investment:", err);
-        setError("Gagal memuat data investasi");
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Terjadi kesalahan yang tidak diketahui"
+        );
       } finally {
         setLoading(false);
       }
@@ -129,20 +170,49 @@ export default function InvestmentDetailPage() {
   }
 
   // Error state
-  if (error || !investment) {
+  if (error) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">
-            {error || "Investasi tidak ditemukan"}
-          </h1>
-          <button
-            onClick={() => router.back()}
-            className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Kembali
-          </button>
+        <div className="text-center max-w-md mx-auto px-4">
+          <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+            <h1 className="text-2xl font-bold text-red-700 mb-4">
+              Terjadi Kesalahan
+            </h1>
+            <p className="text-red-600 mb-6">{error}</p>
+            <button
+              onClick={() => router.back()}
+              className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Kembali
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Not found state
+  if (!investment) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center max-w-md mx-auto px-4">
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
+            <h1 className="text-2xl font-bold text-gray-900 mb-4">
+              Investasi Tidak Ditemukan
+            </h1>
+            <p className="text-gray-600 mb-6">
+              Investasi dengan slug `<span className="font-medium">{slug}</span>
+              ` tidak ditemukan di database.
+            </p>
+            <button
+              onClick={() => router.back()}
+              className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Kembali ke Peluang Investasi
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -236,9 +306,11 @@ export default function InvestmentDetailPage() {
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">
                   Deskripsi Lengkap
                 </h2>
-                <p className="text-gray-600 leading-relaxed">
-                  {investment.detail_description}
-                </p>
+                <div className="prose max-w-none">
+                  <p className="text-gray-600 leading-relaxed whitespace-pre-wrap">
+                    {investment.detail_description}
+                  </p>
+                </div>
               </div>
             )}
 
@@ -300,6 +372,28 @@ export default function InvestmentDetailPage() {
                 </div>
               </div>
             )}
+
+            {/* Fallback jika tidak ada konten tambahan */}
+            {!investment.detail_description &&
+              (!investment.benefits || investment.benefits.length === 0) &&
+              (!investment.requirements ||
+                investment.requirements.length === 0) &&
+              (!investment.timeline || investment.timeline.length === 0) && (
+                <div className="bg-white rounded-xl shadow-sm p-6">
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                    Informasi Investasi
+                  </h2>
+                  <p className="text-gray-600 leading-relaxed">
+                    {investment.description}
+                  </p>
+                  <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+                    <p className="text-blue-700 text-sm">
+                      Untuk informasi lebih detail tentang peluang investasi
+                      ini, silakan hubungi kontak person yang tersedia.
+                    </p>
+                  </div>
+                </div>
+              )}
           </div>
 
           {/* Sidebar */}
@@ -323,25 +417,29 @@ export default function InvestmentDetailPage() {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-3">
-                    <Phone className="w-5 h-5 text-gray-400" />
-                    <a
-                      href={`tel:${investment.contact.phone}`}
-                      className="text-blue-600 hover:underline"
-                    >
-                      {investment.contact.phone}
-                    </a>
-                  </div>
+                  {investment.contact.phone && (
+                    <div className="flex items-center gap-3">
+                      <Phone className="w-5 h-5 text-gray-400" />
+                      <a
+                        href={`tel:${investment.contact.phone}`}
+                        className="text-blue-600 hover:underline"
+                      >
+                        {investment.contact.phone}
+                      </a>
+                    </div>
+                  )}
 
-                  <div className="flex items-center gap-3">
-                    <Mail className="w-5 h-5 text-gray-400" />
-                    <a
-                      href={`mailto:${investment.contact.email}`}
-                      className="text-blue-600 hover:underline"
-                    >
-                      {investment.contact.email}
-                    </a>
-                  </div>
+                  {investment.contact.email && (
+                    <div className="flex items-center gap-3">
+                      <Mail className="w-5 h-5 text-gray-400" />
+                      <a
+                        href={`mailto:${investment.contact.email}`}
+                        className="text-blue-600 hover:underline"
+                      >
+                        {investment.contact.email}
+                      </a>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
@@ -373,6 +471,26 @@ export default function InvestmentDetailPage() {
                   <span className="font-semibold">{investment.periode}</span>
                 </div>
               </div>
+            </div>
+
+            {/* Call to Action */}
+            <div className="bg-white rounded-xl shadow-sm p-6">
+              <h3 className="text-xl font-bold text-gray-900 mb-4">
+                Tertarik Berinvestasi?
+              </h3>
+              <p className="text-gray-600 text-sm mb-4">
+                Hubungi tim kami untuk konsultasi dan informasi lebih lanjut
+                tentang peluang investasi ini.
+              </p>
+              {investment.contact && investment.contact.phone && (
+                <a
+                  href={`tel:${investment.contact.phone}`}
+                  className={`w-full inline-flex items-center justify-center px-4 py-2 text-white rounded-lg transition-colors ${config.buttonColor}`}
+                >
+                  <Phone className="w-4 h-4 mr-2" />
+                  Hubungi Sekarang
+                </a>
+              )}
             </div>
           </div>
         </div>

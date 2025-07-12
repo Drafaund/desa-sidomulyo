@@ -47,9 +47,8 @@ export const articles: Article[] = [
     category: "Agro & Lingkungan",
     author: "Ahmad Rizki",
     date: "15 Desember 2024",
-    readTime: "5 min",
-    image:
-      "https://res.cloudinary.com/dviwzluld/image/upload/v1751670978/kebun-sayur_osip8c.jpg",
+    image_url:
+      "https://res.cloudinary.com/dviwzluld/image_url/upload/v1751670978/kebun-sayur_osip8c.jpg",
     featured: true,
     tags: ["pertanian", "organik", "lingkungan", "inovasi"],
     slug: "inovasi-pertanian-organik-desa-sidomulyo",
@@ -97,9 +96,9 @@ export const articles: Article[] = [
     category: "Kesehatan",
     author: "Dr. Sari Indah",
     date: "12 Des 2024",
-    readTime: "6 min",
-    image:
-      "https://res.cloudinary.com/dviwzluld/image/upload/v1751671655/posyandu-balita_eodonp.jpg",
+    featured: false,
+    image_url:
+      "https://res.cloudinary.com/dviwzluld/image_url/upload/v1751671655/posyandu-balita_eodonp.jpg",
     tags: ["kesehatan", "posyandu", "stunting", "balita"],
     slug: "program-posyandu-balita-menurunkan-stunting",
   },
@@ -135,9 +134,9 @@ export const articles: Article[] = [
     category: "Budaya & Sejarah",
     author: "Siti Nurhaliza",
     date: "10 November 2024",
-    readTime: "5 min",
-    image:
-      "https://res.cloudinary.com/dviwzluld/image/upload/v1751671651/budaya-desa_ysct8u.jpg",
+    featured: false,
+    image_url:
+      "https://res.cloudinary.com/dviwzluld/image_url/upload/v1751671651/budaya-desa_ysct8u.jpg",
     tags: ["budaya", "tradisi", "kearifan lokal", "desa"],
     slug: "warisan-budaya-desa-sidomulyo",
   },
@@ -174,9 +173,9 @@ export const articles: Article[] = [
     category: "Pendidikan",
     author: "Budi Santoso",
     date: "5 Januari 2025",
-    readTime: "7 min",
-    image:
-      "https://res.cloudinary.com/dviwzluld/image/upload/v1751671654/inovasi-pembelajaran_hdn76k.jpg",
+    featured: false,
+    image_url:
+      "https://res.cloudinary.com/dviwzluld/image_url/upload/v1751671654/inovasi-pembelajaran_hdn76k.jpg",
     tags: ["pendidikan", "teknologi", "inovasi", "desa"],
     slug: "inovasi-pembelajaran-era-digital",
   },
@@ -226,9 +225,9 @@ export const articles: Article[] = [
     category: "Agro & Lingkungan",
     author: "Ahmad Rizki",
     date: "15 Desember 2024",
-    readTime: "5 min",
-    image:
-      "https://res.cloudinary.com/dviwzluld/image/upload/v1751520432/flora-fauna_nyiwvk.png",
+    featured: false,
+    image_url:
+      "https://res.cloudinary.com/dviwzluld/image_url/upload/v1751520432/flora-fauna_nyiwvk.png",
     tags: ["pertanian", "organik", "lingkungan", "inovasi"],
     slug: "inovasi-pertanian-organik-desa-sidomulyo",
   },
@@ -265,9 +264,9 @@ export const articles: Article[] = [
     category: "Pembangunan",
     author: "Rudi Hartono",
     date: "20 Januari 2025",
-    readTime: "5 min",
-    image:
-      "https://res.cloudinary.com/dviwzluld/image/upload/v1751671652/infrastruktur-desa_y8g8u4.jpg",
+    featured: false,
+    image_url:
+      "https://res.cloudinary.com/dviwzluld/image_url/upload/v1751671652/infrastruktur-desa_y8g8u4.jpg",
     tags: ["pembangunan", "infrastruktur", "desa", "aksesibilitas"],
     slug: "pembangunan-infrastruktur-desa",
   },
@@ -315,9 +314,9 @@ export const articles: Article[] = [
     category: "Kesehatan",
     author: "dr. Ratna Wijaya",
     date: "5 Februari 2025",
-    readTime: "6 min",
-    image:
-      "https://res.cloudinary.com/dviwzluld/image/upload/v1751671651/gerakan-hidup-sehat_awbtaj.jpg",
+    featured: false,
+    image_url:
+      "https://res.cloudinary.com/dviwzluld/image_url/upload/v1751671651/gerakan-hidup-sehat_awbtaj.jpg",
     tags: ["kesehatan", "lansia", "olahraga", "preventif"],
     slug: "gerakan-hidup-sehat-program-olahraga-lansia",
   },
@@ -364,9 +363,9 @@ export const articles: Article[] = [
     category: "Budaya dan Sejarah",
     author: "Joko Widodo",
     date: "15 Maret 2025",
-    readTime: "7 min",
-    image:
-      "https://res.cloudinary.com/dviwzluld/image/upload/v1751675870/festival-budaya_br1e8n.jpg",
+    featured: false,
+    image_url:
+      "https://res.cloudinary.com/dviwzluld/image_url/upload/v1751675870/festival-budaya_br1e8n.jpg",
     tags: ["budaya", "festival", "seni tradisional", "pelestarian"],
     slug: "festival-seni-tradisional-melestarikan-warisan-budaya",
   },
@@ -414,9 +413,9 @@ export const articles: Article[] = [
     category: "Pendidikan",
     author: "Rina Agustina",
     date: "10 April 2025",
-    readTime: "6 min",
-    image:
-      "https://res.cloudinary.com/dviwzluld/image/upload/v1751671657/transdig-perpustakaan_hqhk2d.jpg",
+    featured: false,
+    image_url:
+      "https://res.cloudinary.com/dviwzluld/image_url/upload/v1751671657/transdig-perpustakaan_hqhk2d.jpg",
     tags: ["pendidikan", "perpustakaan", "digital", "literasi"],
     slug: "transformasi-digital-perpustakaan-desa",
   },
@@ -463,9 +462,9 @@ export const articles: Article[] = [
     category: "Agro & Lingkungan",
     author: "Hendra Susilo",
     date: "20 Mei 2025",
-    readTime: "5 min",
-    image:
-      "https://res.cloudinary.com/dviwzluld/image/upload/v1751671650/bank-sampah_jrg5yd.jpg",
+    featured: false,
+    image_url:
+      "https://res.cloudinary.com/dviwzluld/image_url/upload/v1751671650/bank-sampah_jrg5yd.jpg",
     tags: ["lingkungan", "bank sampah", "daur ulang", "ekonomi hijau"],
     slug: "bank-sampah-desa-solusi-pengelolaan-limbah",
   },
@@ -512,9 +511,9 @@ export const articles: Article[] = [
     category: "Pembangunan",
     author: "Diana Lestari",
     date: "30 Juni 2025",
-    readTime: "6 min",
-    image:
-      "https://res.cloudinary.com/dviwzluld/image/upload/v1751671659/workshop-ekonomi_fmig5b.jpg",
+    featured: false,
+    image_url:
+      "https://res.cloudinary.com/dviwzluld/image_url/upload/v1751671659/workshop-ekonomi_fmig5b.jpg",
     tags: ["pembangunan", "desa wisata", "ekonomi lokal", "pariwisata"],
     slug: "desa-wisata-strategi-pembangunan-ekonomi",
   },

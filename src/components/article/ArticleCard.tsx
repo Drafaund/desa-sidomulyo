@@ -1,7 +1,6 @@
 // src/components/article/ArticleCard.tsx
 "use client";
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { User, Calendar, Clock } from "lucide-react";
 import { CldImage } from "next-cloudinary";
@@ -38,12 +37,6 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
         return "bg-orange-100 text-orange-800";
       case "sains dan teknologi":
         return "bg-red-100 text-red-800";
-      case "berita":
-        return "bg-blue-100 text-blue-800";
-      case "tutorial":
-        return "bg-indigo-100 text-indigo-800";
-      case "lifestyle":
-        return "bg-pink-100 text-pink-800";
       default:
         return "bg-gray-100 text-gray-800";
     }

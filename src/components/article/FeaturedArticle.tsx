@@ -1,9 +1,9 @@
 // src/components/article/FeaturedArticle.tsx
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { Calendar, User, ChevronRight } from "lucide-react";
 import { Article } from "../../types/article";
+import { CldImage } from "next-cloudinary";
 
 interface FeaturedArticleProps {
   article: Article;
@@ -11,49 +11,49 @@ interface FeaturedArticleProps {
 
 const FeaturedArticle: React.FC<FeaturedArticleProps> = ({ article }) => {
   return (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-      <div className="md:flex">
-        <div className="md:w-1/2">
-          <Image
-            width={600}
-            height={400}
-            src={article.image}
+    <div className="relative overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:shadow-xl">
+      <div className="grid grid-cols-1 lg:grid-cols-2">
+        <div className="relative h-64 lg:h-full">
+          <CldImage
+            src={article.image_url} // Changed from article.image to article.image_url
             alt={article.title}
-            className="w-full h-64 md:h-full object-cover"
+            fill
+            className="object-cover"
+            priority
           />
         </div>
-        <div className="md:w-1/2 p-8">
-          <div className="flex items-center gap-2 mb-4">
-            <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
+
+        <div className="p-8">
+          <div className="mb-4">
+            <span className="inline-block rounded-full bg-red-100 px-3 py-1 text-sm font-semibold text-red-800">
               {article.category}
             </span>
           </div>
-          <Link href={`/Artikel/${article.slug}`}>
-            <h3 className="text-2xl font-bold mb-4 hover:text-blue-600 cursor-pointer">
-              {article.title}
-            </h3>
-          </Link>
-          <p className="text-gray-600 mb-6 leading-relaxed">
-            {article.excerpt}
-          </p>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4 text-sm text-gray-500">
-              <div className="flex items-center gap-1">
-                <User className="w-4 h-4" />
-                <span>{article.author}</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <Calendar className="w-4 h-4" />
-                <span>{article.date}</span>
-              </div>
+
+          <h2 className="mb-4 text-2xl font-bold text-gray-900 lg:text-3xl">
+            {article.title}
+          </h2>
+
+          <p className="mb-6 text-gray-600 line-clamp-3">{article.excerpt}</p>
+
+          <div className="mb-6 flex items-center gap-4 text-sm text-gray-500">
+            <div className="flex items-center gap-1">
+              <User className="h-4 w-4" />
+              <span>{article.author}</span>
             </div>
-            <Link href={`/Artikel/${article.slug}`}>
-              <button className="text-blue-600 hover:text-blue-800 font-medium flex items-center gap-1">
-                Baca Selengkapnya
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </Link>
+            <div className="flex items-center gap-1">
+              <Calendar className="h-4 w-4" />
+              <span>{article.date}</span>
+            </div>
           </div>
+
+          <Link
+            href={`/Artikel/${article.slug}`}
+            className="inline-flex items-center gap-2 rounded-lg bg-red-600 px-6 py-3 text-white transition-colors hover:bg-red-700"
+          >
+            Baca Selengkapnya
+            <ChevronRight className="h-4 w-4" />
+          </Link>
         </div>
       </div>
     </div>

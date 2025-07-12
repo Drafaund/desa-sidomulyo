@@ -2,27 +2,48 @@
 import React, { useState } from "react";
 import { MessageCircle, Mail, MapPin, Send } from "lucide-react";
 
+// Interface untuk form data
+interface FormData {
+  name: string;
+  email: string;
+  message: string;
+}
+
+// Interface untuk contact method
+interface ContactMethod {
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  title: string;
+  description: string;
+  action: string;
+  color: string;
+  href: string;
+}
+
 const ContactSection = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     message: "",
   });
 
-  const handleSubmit = (e) => {
+  // Type untuk form submit event
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Handle form submission here
     console.log("Form submitted:", formData);
   };
 
-  const handleChange = (e) => {
+  // Type untuk input change event
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
 
-  const contactMethods = [
+  const contactMethods: ContactMethod[] = [
     {
       icon: MessageCircle,
       title: "WhatsApp",
