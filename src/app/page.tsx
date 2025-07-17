@@ -1,4 +1,4 @@
-import { Play, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import React from "react";
 import Image from "next/image";
 import InvestmentOpportunities from "@/components/Investment";
@@ -6,6 +6,7 @@ import ArticleCard from "@/components/article/ArticleCard";
 import { MessageCircle, Send, MapPin } from "lucide-react";
 import Link from "next/link";
 import { supabase } from "../utils/supabase";
+import Carousel from "@/components/Carousel";
 
 // Define types for our data
 interface Article {
@@ -148,6 +149,43 @@ async function fetchLatestPotentials(): Promise<Potential[]> {
   }
 }
 
+const carouselSlides = [
+  {
+    id: 1,
+    image: "/desa-sidomulyo.jpg",
+    title: "Selamat Datang di Website Desa Sidomulyo",
+    description:
+      "Temukan solusi terbaik untuk kebutuhan bisnis Anda dengan layanan profesional kami.",
+    buttonText: "Pelajari Lebih Lanjut",
+    buttonLink: "/",
+  },
+  {
+    id: 2,
+    image: "/sumber-mata-air-gangging.jpg",
+    title: "Inovasi Terdepan",
+    description:
+      "Kami menghadirkan teknologi terbaru untuk membantu mengembangkan bisnis Anda.",
+    buttonText: "Lihat Potensi Desa",
+    buttonLink: "/PotensiDesa",
+  },
+  {
+    id: 3,
+    image: "/peternakan-sapi-perah.jpg",
+    title: "Tim Profesional",
+    description: "Tertarik untuk berinvestasi?",
+    buttonText: "Hubungi Kami",
+    buttonLink: "/Investasi",
+  },
+  {
+    id: 4,
+    image: "/perangkat-desa.jpg",
+    title: "Tim Profesional",
+    description: "Update informasi dan berita Desa Sidomulyo",
+    buttonText: "Lihat Artikel",
+    buttonLink: "Artikel",
+  },
+];
+
 export default async function Home() {
   // Fetch data from Supabase
   const [latestArticles, latestPotentials] = await Promise.all([
@@ -157,32 +195,36 @@ export default async function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
-      <section className="relative min-w-full flex items-center overflow-hidden">
-        {/* Background Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-r from-green-500 via-green-400 to-blue-500"></div>
+      <section>
+        <Carousel slides={carouselSlides} autoSlideInterval={3000} />
+      </section>
 
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
+      {/* <section className="relative min-w-full flex items-center overflow-hidden"> */}
+      {/* Background Gradient */}
+      {/* <div className="absolute inset-0 bg-gradient-to-r from-green-500 via-green-400 to-blue-500"></div> */}
+
+      {/* Background Pattern */}
+      {/* <div className="absolute inset-0 opacity-10">
           <div
             className="absolute inset-0"
             style={{
               backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
             }}
           ></div>
-        </div>
+        </div> */}
 
-        <div className="relative mx-auto px-4 sm:px-6 lg:px-8 w-full p-20">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Content */}
-            <div className="text-white">
+      {/* <div className="relative mx-auto px-4 sm:px-6 lg:px-8 w-full p-20">
+          <div className="grid lg:grid-cols-2 gap-12 items-center"> */}
+      {/* Content */}
+      {/* <div className="text-white">
               <h1 className="text-5xl lg:text-6xl font-bold leading-tight mb-6">
                 Discover{" "}
                 <span className="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
                   Sidomulyo
                 </span>{" "}
                 Village
-              </h1>
-
+              </h1> */}
+      {/* 
               <p className="text-xl lg:text-2xl mb-8 text-green-50 leading-relaxed">
                 Explore the hidden gems of Sidorejo, Magetan, East Java. From
                 stunning natural landscapes to rich agricultural heritage.
@@ -199,10 +241,10 @@ export default async function Home() {
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
-            </div>
+            </div> */}
 
-            {/* Image */}
-            <div className="relative">
+      {/* Image */}
+      {/* <div className="relative">
               <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl">
                 <Image
                   src="/sawah.jpeg"
@@ -216,7 +258,7 @@ export default async function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Latest Potensi Section */}
       <section className="py-16 bg-white w-full">

@@ -4,7 +4,7 @@ import { Menu, X, MapPin, Phone, Mail } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const Navbar = () => {
+const NavbarRoot = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
@@ -18,24 +18,33 @@ const Navbar = () => {
     return pathname === path;
   };
 
-  // Effect untuk menangani scroll
+  // Effect untuk mendeteksi scroll
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
-      setIsScrolled(scrollTop > 50); // Top bar akan menghilang setelah scroll 50px
+      setIsScrolled(scrollTop > 0); // Berubah segera setelah scroll dari posisi 0
     };
+
+    // Set initial scroll state
+    handleScroll();
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <nav className="bg-white shadow-lg sticky top-0 z-50">
-      {/* Top Bar */}
-      <div
-        className={`bg-green-600 text-white hidden md:block transition-all duration-300 ease-in-out overflow-hidden ${
+    <nav
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-white shadow-xl"
+          : "bg-white/5 backdrop-blur-md shadow-lg"
+      }`}
+    >
+      {/* Top Bar - akan menghilang saat scroll */}
+      {/* <div
+        className={`bg-green-600 text-white transition-all duration-300 overflow-hidden ${
           isScrolled ? "h-0 py-0" : "h-auto py-2"
-        }`}
+        } hidden md:block`}
       >
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center text-sm">
@@ -55,9 +64,9 @@ const Navbar = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
-      {/* Main Navigation */}
+      {/* Main Navigation - dengan background yang berubah */}
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
@@ -66,10 +75,20 @@ const Navbar = () => {
               <span className="text-white font-bold text-lg">S</span>
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-800">
+              <h1
+                className={`text-xl font-bold transition-colors duration-300 ${
+                  isScrolled ? "text-gray-900" : "text-white"
+                }`}
+              >
                 Sidomulyo Village
               </h1>
-              <p className="text-sm text-gray-600">Discover Hidden Gems</p>
+              <p
+                className={`text-sm transition-colors duration-300 ${
+                  isScrolled ? "text-gray-700" : "text-white/90"
+                }`}
+              >
+                Discover Hidden Gems
+              </p>
             </div>
           </div>
 
@@ -80,7 +99,7 @@ const Navbar = () => {
               className={`font-medium transition-colors relative ${
                 isActive("/")
                   ? "text-green-500"
-                  : "text-gray-700 hover:text-green-600"
+                  : `${isScrolled ? "text-gray-800" : "text-white"} hover:text-green-600`
               }`}
             >
               Home
@@ -94,7 +113,7 @@ const Navbar = () => {
               className={`font-medium transition-colors relative ${
                 isActive("/PotensiDesa")
                   ? "text-green-500"
-                  : "text-gray-700 hover:text-green-600"
+                  : `${isScrolled ? "text-gray-800" : "text-white"} hover:text-green-600`
               }`}
             >
               Potensi Desa
@@ -108,7 +127,7 @@ const Navbar = () => {
               className={`font-medium transition-colors relative ${
                 isActive("/Artikel")
                   ? "text-green-500"
-                  : "text-gray-700 hover:text-green-600"
+                  : `${isScrolled ? "text-gray-800" : "text-white"} hover:text-green-600`
               }`}
             >
               Artikel
@@ -122,7 +141,7 @@ const Navbar = () => {
               className={`font-medium transition-colors relative ${
                 isActive("/Contact")
                   ? "text-green-500"
-                  : "text-gray-700 hover:text-green-600"
+                  : `${isScrolled ? "text-gray-800" : "text-white"} hover:text-green-600`
               }`}
             >
               Kontak
@@ -140,7 +159,9 @@ const Navbar = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={toggleMenu}
-            className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            className={`md:hidden p-2 rounded-lg hover:bg-gray-100/20 transition-colors ${
+              isScrolled ? "text-gray-800" : "text-white"
+            }`}
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -148,14 +169,14 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-100">
+          <div className="md:hidden py-4 border-t border-gray-100/20">
             <div className="flex flex-col space-y-4">
               <Link
                 href="/"
                 className={`font-medium py-2 relative ${
                   isActive("/")
                     ? "text-green-500"
-                    : "text-gray-700 hover:text-green-600"
+                    : `${isScrolled ? "text-gray-800" : "text-white"} hover:text-green-600`
                 }`}
               >
                 Home
@@ -169,7 +190,7 @@ const Navbar = () => {
                 className={`font-medium py-2 relative ${
                   isActive("/PotensiDesa")
                     ? "text-green-500"
-                    : "text-gray-700 hover:text-green-600"
+                    : `${isScrolled ? "text-gray-800" : "text-white"} hover:text-green-600`
                 }`}
               >
                 Potensi Desa
@@ -183,7 +204,7 @@ const Navbar = () => {
                 className={`font-medium py-2 relative ${
                   isActive("/Artikel")
                     ? "text-green-500"
-                    : "text-gray-700 hover:text-green-600"
+                    : `${isScrolled ? "text-gray-800" : "text-white"} hover:text-green-600`
                 }`}
               >
                 Artikel
@@ -197,7 +218,7 @@ const Navbar = () => {
                 className={`font-medium py-2 relative ${
                   isActive("/Contact")
                     ? "text-green-500"
-                    : "text-gray-700 hover:text-green-600"
+                    : `${isScrolled ? "text-gray-800" : "text-white"} hover:text-green-600`
                 }`}
               >
                 Kontak
@@ -217,4 +238,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default NavbarRoot;
