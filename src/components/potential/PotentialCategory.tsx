@@ -1,4 +1,5 @@
 // src/components/potensi/PotentialCategoryTabs.tsx
+"use client";
 import React from "react";
 
 interface CategoryColor {

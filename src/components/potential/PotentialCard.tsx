@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import { ArrowRight, Plus } from "lucide-react";
 import Link from "next/link";
@@ -19,7 +18,7 @@ interface Potential {
   slug: string;
   description: string;
   full_description: string;
-  image_url: string; // Changed from 'image' to 'image_url'
+  image_url: string;
   category: string;
   link: string;
   contact: {
@@ -40,8 +39,47 @@ interface Potential {
 
 interface PotensiCardProps {
   potentials: Potential[];
-  categoryColors: Record<string, CategoryColor>;
+  categoryColors?: Record<string, CategoryColor>;
 }
+
+// Default category colors
+const defaultCategoryColors: { [key: string]: CategoryColor } = {
+  Pertanian: {
+    bg: "bg-green-600",
+    hover: "hover:bg-green-700",
+    bgLight: "bg-green-50",
+    text: "text-green-600",
+    borderLight: "border-green-200",
+  },
+  Peternakan: {
+    bg: "bg-orange-600",
+    hover: "hover:bg-orange-700",
+    bgLight: "bg-orange-50",
+    text: "text-orange-600",
+    borderLight: "border-orange-200",
+  },
+  Perikanan: {
+    bg: "bg-blue-600",
+    hover: "hover:bg-blue-700",
+    bgLight: "bg-blue-50",
+    text: "text-blue-600",
+    borderLight: "border-blue-200",
+  },
+  Pariwisata: {
+    bg: "bg-red-600",
+    hover: "hover:bg-red-700",
+    bgLight: "bg-red-50",
+    text: "text-red-600",
+    borderLight: "border-red-200",
+  },
+  Industri: {
+    bg: "bg-purple-600",
+    hover: "hover:bg-purple-700",
+    bgLight: "bg-purple-50",
+    text: "text-purple-600",
+    borderLight: "border-purple-200",
+  },
+};
 
 const PotensiCard: React.FC<PotensiCardProps> = ({
   potentials,
@@ -49,6 +87,9 @@ const PotensiCard: React.FC<PotensiCardProps> = ({
 }) => {
   const [visibleCount, setVisibleCount] = useState(6);
   const [isLoading, setIsLoading] = useState(false);
+
+  // Use provided categoryColors or default ones
+  const colors = categoryColors || defaultCategoryColors;
 
   // Reset visible count when potentials change (e.g., when tab changes)
   useEffect(() => {
@@ -83,7 +124,7 @@ const PotensiCard: React.FC<PotensiCardProps> = ({
         {/* Potentials Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {visiblePotentials.map((potential) => {
-            const categoryColor = categoryColors[potential.category] || {
+            const categoryColor = colors[potential.category] || {
               bg: "bg-gray-600",
               bgLight: "bg-gray-50",
               text: "text-gray-600",
@@ -117,7 +158,10 @@ const PotensiCard: React.FC<PotensiCardProps> = ({
                         </div>
                       )}
 
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      {/* Category-themed overlay */}
+                      <div
+                        className={`absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+                      ></div>
 
                       {/* Category Badge */}
                       <div className="absolute top-4 left-4">
@@ -147,7 +191,7 @@ const PotensiCard: React.FC<PotensiCardProps> = ({
                 <div className="px-6 pb-6">
                   <Link href={`/PotensiDesa/${potential.slug}`}>
                     <button
-                      className={`group/btn flex items-center ${categoryColor.text} hover:opacity-80 font-medium transition-colors`}
+                      className={`group/btn flex items-center ${categoryColor.text} font-medium transition-all duration-300 px-4 py-2 hover:bg-opacity-10`}
                     >
                       Pelajari Lebih Lanjut
                       <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />

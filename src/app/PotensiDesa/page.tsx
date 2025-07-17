@@ -55,91 +55,6 @@ interface Investment {
   };
 }
 
-// Category colors configuration with proper typing
-interface CategoryColorConfig {
-  bg: string;
-  bgLight: string;
-  text: string;
-  hover: string;
-  borderLight: string;
-}
-
-const categoryColors: { [key: string]: CategoryColorConfig } = {
-  Pertanian: {
-    bg: "bg-green-600",
-    bgLight: "bg-green-50",
-    text: "text-green-600",
-    hover: "hover:bg-green-100",
-    borderLight: "border-green-200",
-  },
-  Peternakan: {
-    bg: "bg-orange-600",
-    bgLight: "bg-orange-50",
-    text: "text-orange-600",
-    hover: "hover:bg-orange-100",
-    borderLight: "border-orange-200",
-  },
-  Perikanan: {
-    bg: "bg-blue-600",
-    bgLight: "bg-blue-50",
-    text: "text-blue-600",
-    hover: "hover:bg-blue-100",
-    borderLight: "border-blue-200",
-  },
-  Pariwisata: {
-    bg: "bg-red-600",
-    bgLight: "bg-red-50",
-    text: "text-red-600",
-    hover: "hover:bg-red-100",
-    borderLight: "border-red-200",
-  },
-  Industri: {
-    bg: "bg-purple-600",
-    bgLight: "bg-purple-50",
-    text: "text-purple-600",
-    hover: "hover:bg-purple-100",
-    borderLight: "border-purple-200",
-  },
-};
-
-// Category config for investments
-const getCategoryConfig = (category: string) => {
-  const configs = {
-    Pertanian: {
-      icon: TreePine,
-      iconColor: "text-green-600",
-      buttonColor: "bg-green-600 hover:bg-green-700",
-      bgColor: "bg-green-50",
-    },
-    Peternakan: {
-      icon: Truck,
-      iconColor: "text-orange-600",
-      buttonColor: "bg-orange-600 hover:bg-orange-700",
-      bgColor: "bg-orange-50",
-    },
-    Perikanan: {
-      icon: Triangle,
-      iconColor: "text-blue-600",
-      buttonColor: "bg-blue-600 hover:bg-blue-700",
-      bgColor: "bg-blue-50",
-    },
-    Pariwisata: {
-      icon: Triangle,
-      iconColor: "text-red-600",
-      buttonColor: "bg-red-600 hover:bg-red-700",
-      bgColor: "bg-red-50",
-    },
-    Industri: {
-      icon: Users,
-      iconColor: "text-purple-600",
-      buttonColor: "bg-purple-600 hover:bg-purple-700",
-      bgColor: "bg-purple-50",
-    },
-  };
-
-  return configs[category as keyof typeof configs] || configs.Pertanian;
-};
-
 export default function PotensiDesaPage() {
   const router = useRouter();
   const [potentials, setPotentials] = useState<Potential[]>([]);
@@ -292,6 +207,40 @@ export default function PotensiDesaPage() {
     router.push(`/investasi/${slug}`);
   };
 
+  // Helper function to get category colors for tabs
+  const getCategoryTabColors = (category: string, isActive: boolean) => {
+    const colorMap = {
+      Pertanian: {
+        active: "bg-green-600 text-white",
+        inactive: "bg-green-50 text-green-600 hover:bg-green-100",
+      },
+      Peternakan: {
+        active: "bg-orange-600 text-white",
+        inactive: "bg-orange-50 text-orange-600 hover:bg-orange-100",
+      },
+      Perikanan: {
+        active: "bg-blue-600 text-white",
+        inactive: "bg-blue-50 text-blue-600 hover:bg-blue-100",
+      },
+      Pariwisata: {
+        active: "bg-red-600 text-white",
+        inactive: "bg-red-50 text-red-600 hover:bg-red-100",
+      },
+      Industri: {
+        active: "bg-purple-600 text-white",
+        inactive: "bg-purple-50 text-purple-600 hover:bg-purple-100",
+      },
+      Semua: {
+        active: "bg-gray-600 text-white",
+        inactive: "bg-gray-100 text-gray-600 hover:bg-gray-200",
+      },
+    };
+
+    const colors =
+      colorMap[category as keyof typeof colorMap] || colorMap.Semua;
+    return isActive ? colors.active : colors.inactive;
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -360,39 +309,13 @@ export default function PotensiDesaPage() {
             <div className="flex flex-wrap justify-center gap-4">
               {categories.map((category) => {
                 const isActive = activeTab === category;
-
-                // Get category color
-                const getCategoryColors = () => {
-                  if (category === "Semua") {
-                    return {
-                      active: "bg-gray-600 text-white",
-                      inactive: "bg-gray-100 text-gray-600 hover:bg-gray-200",
-                    };
-                  }
-
-                  const colorConfig = categoryColors[category];
-                  if (!colorConfig) {
-                    return {
-                      active: "bg-gray-600 text-white",
-                      inactive: "bg-white text-gray-600 hover:bg-gray-100",
-                    };
-                  }
-
-                  return {
-                    active: `${colorConfig.bg} text-white`,
-                    inactive: `${colorConfig.bgLight} ${colorConfig.text} ${colorConfig.hover}`,
-                  };
-                };
-
-                const colors = getCategoryColors();
+                const colorClasses = getCategoryTabColors(category, isActive);
 
                 return (
                   <button
                     key={category}
                     onClick={() => setActiveTab(category)}
-                    className={`px-6 py-2 rounded-full font-medium transition-colors ${
-                      isActive ? colors.active : colors.inactive
-                    }`}
+                    className={`px-6 py-2 rounded-full font-medium transition-colors ${colorClasses}`}
                   >
                     {category}
                   </button>
@@ -402,11 +325,8 @@ export default function PotensiDesaPage() {
           </div>
         </div>
 
-        {/* Content */}
-        <PotensiCard
-          potentials={filteredPotentials}
-          categoryColors={categoryColors}
-        />
+        {/* Content - PotensiCard component handles its own colors */}
+        <PotensiCard potentials={filteredPotentials} />
       </div>
 
       <section className="py-20 bg-white">
@@ -425,54 +345,13 @@ export default function PotensiDesaPage() {
           <div className="flex flex-wrap justify-center gap-4 mb-8">
             {investmentCategories.map((category) => {
               const isActive = activeInvestmentCategory === category;
-
-              // Define colors for each category
-              const getActiveColors = () => {
-                if (category === "Semua") {
-                  return "bg-gray-600 text-white";
-                }
-
-                const colorMap = {
-                  Pertanian: "bg-green-600 text-white",
-                  Peternakan: "bg-orange-600 text-white",
-                  Perikanan: "bg-blue-600 text-white",
-                  Pariwisata: "bg-red-600 text-white",
-                  Industri: "bg-purple-600 text-white",
-                };
-
-                return (
-                  colorMap[category as keyof typeof colorMap] ||
-                  "bg-gray-600 text-white"
-                );
-              };
-
-              const getInactiveColors = () => {
-                if (category === "Semua") {
-                  return "bg-gray-100 text-gray-600 hover:bg-gray-200";
-                }
-
-                const colorMap = {
-                  Pertanian: "bg-green-50 text-green-600 hover:bg-green-100",
-                  Peternakan:
-                    "bg-orange-50 text-orange-600 hover:bg-orange-100",
-                  Perikanan: "bg-blue-50 text-blue-600 hover:bg-blue-100",
-                  Pariwisata: "bg-red-50 text-red-600 hover:bg-red-100",
-                  Industri: "bg-purple-50 text-purple-600 hover:bg-purple-100",
-                };
-
-                return (
-                  colorMap[category as keyof typeof colorMap] ||
-                  "bg-white text-gray-600 hover:bg-gray-100"
-                );
-              };
+              const colorClasses = getCategoryTabColors(category, isActive);
 
               return (
                 <button
                   key={category}
                   onClick={() => setActiveInvestmentCategory(category)}
-                  className={`px-6 py-2 rounded-full font-medium transition-colors ${
-                    isActive ? getActiveColors() : getInactiveColors()
-                  }`}
+                  className={`px-6 py-2 rounded-full font-medium transition-colors ${colorClasses}`}
                 >
                   {category}
                 </button>
@@ -481,30 +360,19 @@ export default function PotensiDesaPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredInvestments.map((investment) => {
-              const config = getCategoryConfig(investment.category);
-              const IconComponent = config.icon;
-
-              return (
-                <div key={investment.id} className="p-4 rounded-xl">
-                  <InvestmentCard
-                    icon={
-                      <IconComponent
-                        className={`w-6 h-6 ${config.iconColor}`}
-                      />
-                    }
-                    title={investment.title}
-                    description={investment.description}
-                    roi={investment.roi}
-                    minInvestment={investment.investasi_minimal}
-                    period={investment.periode}
-                    buttonColor={config.buttonColor}
-                    bgcolor={config.bgColor}
-                    onButtonClick={() => handleInvestmentClick(investment.slug)}
-                  />
-                </div>
-              );
-            })}
+            {filteredInvestments.map((investment) => (
+              <div key={investment.id} className="p-4 rounded-xl">
+                <InvestmentCard
+                  title={investment.title}
+                  description={investment.description}
+                  roi={investment.roi}
+                  minInvestment={investment.investasi_minimal}
+                  period={investment.periode}
+                  category={investment.category}
+                  onButtonClick={() => handleInvestmentClick(investment.slug)}
+                />
+              </div>
+            ))}
           </div>
 
           {filteredInvestments.length === 0 && (

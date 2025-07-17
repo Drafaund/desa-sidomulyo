@@ -80,14 +80,14 @@ const NavbarRoot = () => {
                   isScrolled ? "text-gray-900" : "text-white"
                 }`}
               >
-                Sidomulyo Village
+                Desa Sidomulyo
               </h1>
               <p
                 className={`text-sm transition-colors duration-300 ${
                   isScrolled ? "text-gray-700" : "text-white/90"
                 }`}
               >
-                Discover Hidden Gems
+                Sidorejo, Magetan
               </p>
             </div>
           </div>
@@ -149,11 +149,6 @@ const NavbarRoot = () => {
                 <span className="absolute bottom-[-8px] left-0 w-full h-1 bg-green-500 rounded-full"></span>
               )}
             </Link>
-
-            {/* CTA Button */}
-            <button className="bg-gradient-to-r from-green-500 to-blue-600 text-white px-6 py-2 rounded-full font-medium hover:shadow-lg transform hover:scale-105 transition-all duration-200">
-              Explore Now
-            </button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -226,10 +221,6 @@ const NavbarRoot = () => {
                   <span className="absolute left-0 bottom-0 w-16 h-0.5 bg-green-500"></span>
                 )}
               </Link>
-
-              <button className="bg-gradient-to-r from-green-500 to-blue-600 text-white px-6 py-3 rounded-full font-medium w-full mt-4">
-                Explore Now
-              </button>
             </div>
           </div>
         )}
