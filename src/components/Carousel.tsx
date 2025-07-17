@@ -19,7 +19,7 @@ interface CarouselProps {
 
 const Carousel: React.FC<CarouselProps> = ({
   slides,
-  autoSlideInterval = 3000,
+  autoSlideInterval = 5000,
 }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -48,7 +48,7 @@ const Carousel: React.FC<CarouselProps> = ({
     <div className=" relative w-full h-screen overflow-hidden">
       {/* Slides Container */}
       <div
-        className="flex transition-transform duration-500 ease-in-out h-full"
+        className=" flex transition-transform duration-500 ease-in-out h-full"
         style={{ transform: `translateX(-${currentSlide * 100}%)` }}
       >
         {slides.map((slide, index) => (
@@ -83,7 +83,7 @@ const Carousel: React.FC<CarouselProps> = ({
                 </p>
                 <button
                   onClick={() => (window.location.href = slide.buttonLink)}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors duration-300 animate-fade-in-delay-2 shadow-lg"
+                  className="bg-gradient-to-r from-green-500 to-blue-600 text-white font-semibold py-3 px-8 rounded-lg colors duration-300 animate-fade-in-delay-2 shadow-lg transform hover:scale-105"
                 >
                   {slide.buttonText}
                 </button>
@@ -96,7 +96,7 @@ const Carousel: React.FC<CarouselProps> = ({
       {/* Navigation Arrows */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-3 rounded-full transition-all duration-300 z-20"
+        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-transparent text-white p-3 rounded-full transition-all duration-300 z-20"
       >
         <svg
           className="w-6 h-6"
@@ -115,7 +115,7 @@ const Carousel: React.FC<CarouselProps> = ({
 
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-3 rounded-full transition-all duration-300 z-20"
+        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-transparent  text-white p-3 rounded-full transition-all duration-300 z-20"
       >
         <svg
           className="w-6 h-6"

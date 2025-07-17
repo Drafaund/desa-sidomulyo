@@ -11,8 +11,6 @@ import {
 import Link from "next/link";
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
-
   return (
     <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
       {/* Main Footer Content */}
@@ -25,14 +23,13 @@ const Footer = () => {
                 <span className="text-white font-bold text-xl">S</span>
               </div>
               <div>
-                <h3 className="text-xl font-bold">Sidomulyo Village</h3>
-                <p className="text-gray-400 text-sm">Discover Hidden Gems</p>
+                <h3 className="text-xl font-bold">Desa Sidomulyo</h3>
+                <p className="text-gray-400 text-sm">Sidorejo, Magetan</p>
               </div>
             </div>
             <p className="text-gray-300 text-sm leading-relaxed">
-              Discover the beauty and potential of Sidomulyo Village, Sidorejo,
-              Magetan, East Java. From stunning natural landscapes to rich
-              agricultural heritage.
+              Terwujudnya Masyarakat Desa Sidomulyo yang Transparan Adil dan
+              Merata
             </p>
 
             {/* Social Media */}
@@ -183,31 +180,19 @@ const Footer = () => {
       {/* Bottom Bar */}
       <div className="bg-gray-900 border-t border-gray-700 py-4">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
+          <div className="flex flex-col md:flex-row justify-center items-center text-sm text-gray-400">
             <p>
-              © {currentYear} Sidomulyo Village. Developed by KKN Team
-              Universitas.
+              © 2025 Desa Sidomulyo. Developed by{" "}
+              <span>
+                <Link
+                  href="https://www.linkedin.com/in/faundrapratamasukma/"
+                  className="text-green-400 hover:underline"
+                >
+                  Faundra Pratama Sukma
+                </Link>
+              </span>{" "}
+              Team KKN Magetan Gemawan UGM.
             </p>
-            <div className="flex space-x-6 mt-2 md:mt-0">
-              <a
-                href="#privacy"
-                className="hover:text-green-400 transition-colors"
-              >
-                Privacy Policy
-              </a>
-              <a
-                href="#terms"
-                className="hover:text-green-400 transition-colors"
-              >
-                Terms of Service
-              </a>
-              <a
-                href="#sitemap"
-                className="hover:text-green-400 transition-colors"
-              >
-                Sitemap
-              </a>
-            </div>
           </div>
         </div>
       </div>
