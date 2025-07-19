@@ -1,13 +1,6 @@
 import React from "react";
-import {
-  MapPin,
-  Phone,
-  Mail,
-  Facebook,
-  Instagram,
-  Youtube,
-  Twitter,
-} from "lucide-react";
+import { MapPin, Phone, Mail, Instagram } from "lucide-react";
+import { FaTiktok } from "react-icons/fa";
 import Link from "next/link";
 
 const Footer = () => {
@@ -35,40 +28,27 @@ const Footer = () => {
             {/* Social Media */}
             <div className="flex space-x-4 pt-4">
               <a
-                href="#"
-                className="w-10 h-10 bg-gray-700 hover:bg-blue-600 rounded-full flex items-center justify-center transition-colors"
-                aria-label="Facebook"
-              >
-                <Facebook size={18} />
-              </a>
-              <a
-                href="#"
+                href="https://www.instagram.com/kita.sidomulyo/"
                 className="w-10 h-10 bg-gray-700 hover:bg-pink-600 rounded-full flex items-center justify-center transition-colors"
                 aria-label="Instagram"
               >
                 <Instagram size={18} />
               </a>
+
               <a
-                href="#"
-                className="w-10 h-10 bg-gray-700 hover:bg-red-600 rounded-full flex items-center justify-center transition-colors"
-                aria-label="Youtube"
-              >
-                <Youtube size={18} />
-              </a>
-              <a
-                href="#"
+                href="https://www.tiktok.com/@sidomulyokita?is_from_webapp=1&sender_device=pc"
                 className="w-10 h-10 bg-gray-700 hover:bg-blue-400 rounded-full flex items-center justify-center transition-colors"
-                aria-label="Twitter"
+                aria-label="Tiktok"
               >
-                <Twitter size={18} />
+                <FaTiktok size={18} />
               </a>
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Jelajahi */}
           <div className="space-y-4">
             <h4 className="text-lg font-semibold mb-6 text-green-400">
-              Quick Links
+              Jelajahi
             </h4>
             <ul className="space-y-3">
               <li>
@@ -98,10 +78,10 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Services */}
+          {/* Layanan */}
           <div className="space-y-4">
             <h4 className="text-lg font-semibold mb-6 text-green-400">
-              Services
+              Layanan
             </h4>
             <ul className="space-y-3">
               <li>
@@ -139,10 +119,10 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact Info - Uncommented and fixed */}
+          {/* Kontak Info - Uncommented and fixed */}
           <div className="space-y-4">
             <h4 className="text-lg font-semibold mb-6 text-green-400">
-              Contact
+              Kontak
             </h4>
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
@@ -163,13 +143,13 @@ const Footer = () => {
 
               <div className="flex items-center space-x-3">
                 <Phone size={18} className="text-green-400 flex-shrink-0" />
-                <p className="text-gray-300 text-sm">+62 351 123456</p>
+                <p className="text-gray-300 text-sm">+62 851 3596 4679</p>
               </div>
 
               <div className="flex items-center space-x-3">
                 <Mail size={18} className="text-green-400 flex-shrink-0" />
                 <p className="text-gray-300 text-sm">
-                  info@sidomulyo-village.id
+                  desasidomulyo07@gmail.com
                 </p>
               </div>
             </div>
