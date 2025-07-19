@@ -1,5 +1,7 @@
+"use client";
+
 import { ArrowRight } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
 import InvestmentOpportunities from "@/components/Investment";
 import ArticleCard from "@/components/article/ArticleCard";
 import { MessageCircle, Send, MapPin } from "lucide-react";
@@ -7,6 +9,8 @@ import Link from "next/link";
 import { supabase } from "../utils/supabase";
 import Carousel from "@/components/Carousel";
 import PotensiCard from "@/components/potential/PotentialCard";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 // Define types for our data
 interface Article {
@@ -151,23 +155,49 @@ const carouselSlides = [
   },
 ];
 
-export default async function Home() {
-  // Fetch data from Supabase
-  const [latestArticles, latestPotentials] = await Promise.all([
-    fetchLatestArticles(),
-    fetchLatestPotentials(),
-  ]);
+export default function Home() {
+  const [latestArticles, setLatestArticles] = React.useState<Article[]>([]);
+  const [latestPotentials, setLatestPotentials] = React.useState<Potential[]>(
+    []
+  );
+
+  useEffect(() => {
+    // Initialize AOS
+    AOS.init({
+      duration: 1000,
+      easing: "ease-in-out",
+      once: true,
+      mirror: false,
+    });
+
+    // Fetch data
+    const fetchData = async () => {
+      const [articles, potentials] = await Promise.all([
+        fetchLatestArticles(),
+        fetchLatestPotentials(),
+      ]);
+      setLatestArticles(articles);
+      setLatestPotentials(potentials);
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
-      <section>
+      {/* Carousel Section */}
+      <section data-aos="fade-in">
         <Carousel slides={carouselSlides} autoSlideInterval={5000} />
       </section>
 
       {/* Latest Potensi Section */}
       <section className="py-16 bg-gradient-to-b from-green-200 bg-opacity-60 w-full">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <div
+            className="text-center mb-12"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
               Potensi Desa Terbaru
             </h2>
@@ -178,10 +208,16 @@ export default async function Home() {
           </div>
 
           {/* Use PotensiCard component with default colors */}
-          <PotensiCard potentials={latestPotentials} />
+          <div data-aos="fade-up" data-aos-delay="400" data-aos-duration="1200">
+            <PotensiCard potentials={latestPotentials} />
+          </div>
 
           {/* View All Button */}
-          <div className="text-center mt-12">
+          <div
+            className="text-center mt-12"
+            data-aos="zoom-in"
+            data-aos-delay="600"
+          >
             <Link href="/PotensiDesa">
               <button className="group bg-gradient-to-r from-green-600 to-blue-600 text-white px-8 py-4 rounded-full font-semibold hover:from-green-700 hover:to-blue-700 transition-all duration-300 inline-flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105">
                 Lihat Semua Potensi
@@ -192,12 +228,19 @@ export default async function Home() {
         </div>
       </section>
 
-      <InvestmentOpportunities />
+      {/* Investment Opportunities Section */}
+      <div data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
+        <InvestmentOpportunities />
+      </div>
 
       {/* Latest Articles Section */}
       <section className="py-16 bg-gray-50 w-full">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <div
+            className="text-center mb-12"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
               Berita & Artikel Terbaru
             </h2>
@@ -207,12 +250,23 @@ export default async function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {latestArticles.map((article) => (
-              <ArticleCard key={article.id} article={article} />
+            {latestArticles.map((article, index) => (
+              <div
+                key={article.id}
+                data-aos="fade-up"
+                data-aos-delay={400 + index * 200}
+                data-aos-duration="800"
+              >
+                <ArticleCard article={article} />
+              </div>
             ))}
           </div>
 
-          <div className="text-center mt-12">
+          <div
+            className="text-center mt-12"
+            data-aos="zoom-in"
+            data-aos-delay="800"
+          >
             <Link href="/Artikel">
               <button className="bg-green-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-green-700 transition-all duration-300 inline-flex items-center gap-2">
                 Lihat Semua Artikel
@@ -226,20 +280,32 @@ export default async function Home() {
       {/* Contact Actions */}
       <div className="bg-gradient-to-r from-green-600 to-blue-600 py-6 w-full">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-6">
-            <h3 className="text-xl font-semibold mb-2">Get in Touch</h3>
+          <div
+            className="text-center mb-6"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
+            <h3 className="text-xl font-semibold mb-2 text-white">
+              Get in Touch
+            </h3>
             <p className="text-green-100">
               Ready to explore investment opportunities or plan your visit?
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
+          <div
+            className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6"
+            data-aos="fade-up"
+            data-aos-delay="400"
+          >
             {/* WhatsApp Button */}
             <a
               href="https://wa.me/62351123456"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center space-x-2 bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full font-medium transition-all duration-200 hover:shadow-lg transform hover:scale-105"
+              data-aos="slide-right"
+              data-aos-delay="600"
             >
               <MessageCircle size={20} />
               <span>Chat Now</span>
@@ -249,13 +315,19 @@ export default async function Home() {
             <a
               href="mailto:info@sidomulyo-village.id"
               className="flex items-center space-x-2 bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-full font-medium transition-all duration-200 hover:shadow-lg transform hover:scale-105"
+              data-aos="slide-up"
+              data-aos-delay="700"
             >
               <Send size={20} />
               <span>Send Email</span>
             </a>
 
             {/* Visit Button */}
-            <button className="flex items-center space-x-2 bg-white hover:bg-gray-100 text-gray-800 px-6 py-3 rounded-full font-medium transition-all duration-200 hover:shadow-lg transform hover:scale-105">
+            <button
+              className="flex items-center space-x-2 bg-white hover:bg-gray-100 text-gray-800 px-6 py-3 rounded-full font-medium transition-all duration-200 hover:shadow-lg transform hover:scale-105"
+              data-aos="slide-left"
+              data-aos-delay="800"
+            >
               <MapPin size={20} />
               <span>Get Directions</span>
             </button>

@@ -40,18 +40,22 @@ const Navbar = () => {
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center text-sm">
             <div className="flex items-center space-x-6">
-              <div className="flex items-center space-x-2">
-                <MapPin size={14} />
-                <span>Desa Sidomulyo, Kec. Sidorejo, Magetan, Jawa Timur</span>
-              </div>
+              <Link href="https://maps.app.goo.gl/dxBpZ1AzjcPuh5Xy5">
+                <div className="flex items-center space-x-2">
+                  <MapPin size={14} />
+                  <span>
+                    Desa Sidomulyo, Kec. Sidorejo, Magetan, Jawa Timur
+                  </span>
+                </div>
+              </Link>
               <div className="flex items-center space-x-2">
                 <Phone size={14} />
-                <span>+62 351 123456</span>
+                <span>+62 851 3596 4679</span>
               </div>
             </div>
             <div className="flex items-center space-x-2">
               <Mail size={14} />
-              <span>info@sidomulyo-village.id</span>
+              <span>desasidomulyo07@gmail.com</span>
             </div>
           </div>
         </div>
@@ -67,9 +71,9 @@ const Navbar = () => {
             </div>
             <div>
               <h1 className="text-xl font-bold text-gray-800">
-                Sidomulyo Village
+                Desa Sidomulyo
               </h1>
-              <p className="text-sm text-gray-600">Discover Hidden Gems</p>
+              <p className="text-sm text-gray-600"> Sidorejo, Magetan</p>
             </div>
           </div>
 
