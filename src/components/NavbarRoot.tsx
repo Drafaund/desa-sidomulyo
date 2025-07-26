@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 const NavbarRoot = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -40,40 +41,22 @@ const NavbarRoot = () => {
           : "bg-white/5 backdrop-blur-md shadow-lg"
       }`}
     >
-      {/* Top Bar - akan menghilang saat scroll */}
-      {/* <div
-        className={`bg-green-600 text-white transition-all duration-300 overflow-hidden ${
-          isScrolled ? "h-0 py-0" : "h-auto py-2"
-        } hidden md:block`}
-      >
-        <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center text-sm">
-            <div className="flex items-center space-x-6">
-              <div className="flex items-center space-x-2">
-                <MapPin size={14} />
-                <span>Desa Sidomulyo, Kec. Sidorejo, Magetan, Jawa Timur</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Phone size={14} />
-                <span>+62 351 123456</span>
-              </div>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Mail size={14} />
-              <span>info@sidomulyo-village.id</span>
-            </div>
-          </div>
-        </div>
-      </div> */}
-
       {/* Main Navigation - dengan background yang berubah */}
+
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
-          {/* Logo */}
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-blue-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">S</span>
-            </div>
+          {/* Logo - Made clickable */}
+          <Link
+            href="/"
+            className="flex items-center space-x-3 hover:opacity-80 transition-opacity duration-200"
+          >
+            <Image
+              src="/logo_desa_sidomulyo_fix.png"
+              alt="Logo"
+              width={60}
+              height={60}
+              className="rounded-full"
+            />
             <div>
               <h1
                 className={`text-xl font-bold transition-colors duration-300 ${
@@ -90,7 +73,7 @@ const NavbarRoot = () => {
                 Sidorejo, Magetan
               </p>
             </div>
-          </div>
+          </Link>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">

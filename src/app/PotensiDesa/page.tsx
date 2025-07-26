@@ -271,6 +271,73 @@ export default function PotensiDesaPage() {
 
   return (
     <>
+      <section className="py-20 bg-gray-100">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left Content */}
+            <div className="space-y-8">
+              <div>
+                <h2 className="text-4xl font-bold text-teal-700 mb-6">
+                  Kenapa Menggunakan DIGIDES?
+                </h2>
+              </div>
+
+              <div className="space-y-6">
+                {[
+                  "Mudah digunakan",
+                  "Terintegrasi antara Android dan Website",
+                  "Dapat berjalan secara online dan offline",
+                  "Mudah dalam memasukkan data",
+                  "Terintegrasi PRODESKEL, IDM, dan SDGs.",
+                ].map((feature, index) => (
+                  <div key={index} className="flex items-start space-x-4">
+                    <div className="flex-shrink-0 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center mt-1">
+                      <svg
+                        className="w-5 h-5 text-white"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </div>
+                    <p className="text-lg text-gray-700 font-medium">
+                      {feature}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right Content - Video */}
+            <div className="relative">
+              {/* Laptop Frame */}
+              <div className="relative">
+                {/* Screen */}
+                <div className="p-4 mb-4 ">
+                  <video autoPlay muted loop playsInline width={300}>
+                    <source src="/laptop-animation.mp4" type="video/mp4" />
+                    {/* Fallback jika video tidak bisa dimuat */}
+                    <div className="text-center text-white">
+                      <svg
+                        className="w-16 h-16 mx-auto mb-4"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
+                      </svg>
+                      <p className="text-lg font-semibold">DIGIDES Demo</p>
+                    </div>
+                  </video>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

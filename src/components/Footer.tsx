@@ -2,6 +2,7 @@ import React from "react";
 import { MapPin, Phone, Mail, Instagram } from "lucide-react";
 import { FaTiktok } from "react-icons/fa";
 import Link from "next/link";
+import Image from "next/image";
 
 const Footer = () => {
   return (
@@ -12,9 +13,13 @@ const Footer = () => {
           {/* About Section */}
           <div className="space-y-4">
             <div className="flex items-center space-x-3 mb-6">
-              <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">S</span>
-              </div>
+              <Image
+                src="/logo_desa_sidomulyo_fix.png"
+                alt="Logo"
+                width={60}
+                height={60}
+                className="rounded-full"
+              />
               <div>
                 <h3 className="text-xl font-bold">Desa Sidomulyo</h3>
                 <p className="text-gray-400 text-sm">Sidorejo, Magetan</p>
@@ -78,48 +83,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Layanan */}
-          <div className="space-y-4">
-            <h4 className="text-lg font-semibold mb-6 text-green-400">
-              Layanan
-            </h4>
-            <ul className="space-y-3">
-              <li>
-                <a
-                  href="#tourism-guidance"
-                  className="text-gray-300 hover:text-green-400 transition-colors"
-                >
-                  Tourism Guidance
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#investment-consultation"
-                  className="text-gray-300 hover:text-green-400 transition-colors"
-                >
-                  Investment Consultation
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#cultural-tours"
-                  className="text-gray-300 hover:text-green-400 transition-colors"
-                >
-                  Cultural Tours
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#agricultural-programs"
-                  className="text-gray-300 hover:text-green-400 transition-colors"
-                >
-                  Agricultural Programs
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Kontak Info - Uncommented and fixed */}
+          {/* Kontak Info */}
           <div className="space-y-4">
             <h4 className="text-lg font-semibold mb-6 text-green-400">
               Kontak
@@ -154,6 +118,25 @@ const Footer = () => {
               </div>
             </div>
           </div>
+
+          {/* Lokasi */}
+          <div className="space-y-4">
+            <h4 className="text-lg font-semibold mb-6 text-green-400">
+              Lokasi
+            </h4>
+            <div className="w-full">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15281.472009420646!2d111.27257895!3d-7.657826099999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e798de91598e60d%3A0x19888cf45fec4f94!2sBalai%20Desa%20Sidomulyo!5e1!3m2!1sid!2sid!4v1753488096445!5m2!1sid!2sid"
+                width="100%"
+                height="200"
+                style={{ border: 0 }}
+                allowFullScreen={true}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="rounded-lg"
+              />
+            </div>
+          </div>
         </div>
       </div>
 
@@ -161,6 +144,20 @@ const Footer = () => {
       <div className="bg-gray-900 border-t border-gray-700 py-4">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-center items-center text-sm text-gray-400">
+            <Image
+              src="/logo-ugm.png"
+              alt="Universitas Gadjah Mada"
+              width={30}
+              height={30}
+              className="rounded-full mr-2"
+            />
+            <Image
+              src="/logo-magetan-gemawan.png"
+              alt="Logo KKN Magetan Gemawan UGM"
+              width={30}
+              height={30}
+              className="rounded-full mr-2"
+            />
             <p>
               © 2025 Desa Sidomulyo. Developed by{" "}
               <span>
