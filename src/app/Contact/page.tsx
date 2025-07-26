@@ -7,7 +7,12 @@ import {
   Send,
   CheckCircle,
   AlertCircle,
+  Phone,
+  Clock,
+  Users,
+  Star,
 } from "lucide-react";
+import Image from "next/image";
 
 // Interface untuk form data
 interface FormData {
@@ -125,16 +130,158 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Page Header */}
-      <div className="bg-gradient-to-r from-green-600 to-blue-600 text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4">Hubungi Kami</h1>
-          <p className="text-xl opacity-90 max-w-2xl mx-auto">
-            Siap untuk menjelajahi peluang investasi atau merencanakan kunjungan
-            Anda ke Desa Sidomulyo?
-          </p>
+      {/* Enhanced Hero Section */}
+      <section className="relative py-20 bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-10 left-10 w-72 h-72 bg-green-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
+          <div className="absolute top-20 right-10 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-700"></div>
+          <div className="absolute bottom-10 left-1/2 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-1000"></div>
         </div>
-      </div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            {/* Left Content */}
+            <div className="space-y-8 text-center lg:text-left">
+              {/* Main Title */}
+              <div className="space-y-4">
+                <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-green-100 to-blue-100 rounded-full text-sm font-medium text-green-700 mb-4">
+                  <Users className="w-4 h-4 mr-2" />
+                  Terhubung dengan Desa Sidomulyo
+                </div>
+
+                <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
+                  <span className="bg-gradient-to-r from-green-600 via-blue-600 to-purple-600 bg-clip-text text-transparent">
+                    Mari Berkenalan
+                  </span>
+                  <br />
+                  <span className="text-gray-800">dengan Kami</span>
+                </h1>
+
+                <p className="text-xl text-gray-600 leading-relaxed max-w-lg">
+                  Kami siap membantu Anda mengenal lebih dekat keindahan dan
+                  potensi
+                  <span className="font-semibold text-green-600">
+                    {" "}
+                    Desa Sidomulyo
+                  </span>
+                  . Hubungi kami kapan saja!
+                </p>
+              </div>
+
+              {/* Stats */}
+              <div className="grid grid-cols-3 gap-6 py-8">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-green-600 mb-2">
+                    24/7
+                  </div>
+                  <div className="text-sm text-gray-600">Siap Melayani</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-blue-600 mb-2">
+                    100+
+                  </div>
+                  <div className="text-sm text-gray-600">Pengunjung Puas</div>
+                </div>
+                <div className="text-center">
+                  <div className="flex items-center justify-center mb-2">
+                    <Star className="w-6 h-6 text-yellow-500 fill-current" />
+                    <span className="text-3xl font-bold text-purple-600 ml-1">
+                      4.9
+                    </span>
+                  </div>
+                  <div className="text-sm text-gray-600">Rating Layanan</div>
+                </div>
+              </div>
+
+              {/* Quick Contact Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4">
+                <a
+                  href="https://wa.me/1234567890"
+                  className="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold rounded-2xl hover:from-green-600 hover:to-green-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+                >
+                  <MessageCircle className="w-5 h-5 mr-2" />
+                  Chat WhatsApp
+                </a>
+                <a
+                  href="tel:+1234567890"
+                  className="inline-flex items-center justify-center px-8 py-4 bg-white text-green-600 font-semibold rounded-2xl border-2 border-green-200 hover:border-green-300 hover:bg-green-50 transform hover:scale-105 transition-all duration-300 shadow-lg"
+                >
+                  <Phone className="w-5 h-5 mr-2" />
+                  Telepon Kami
+                </a>
+              </div>
+            </div>
+
+            {/* Right Content - Enhanced Visual */}
+            <div className="relative">
+              {/* Main Image Container */}
+              <div className="relative bg-gradient-to-br from-white to-gray-50 p-8 rounded-3xl shadow-2xl">
+                {/* Floating Elements */}
+                <div className="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-r from-green-400 to-blue-500 rounded-2xl flex items-center justify-center shadow-lg animate-bounce">
+                  <Mail className="w-8 h-8 text-white" />
+                </div>
+
+                <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-r from-purple-400 to-pink-500 rounded-xl flex items-center justify-center shadow-lg animate-pulse">
+                  <MapPin className="w-6 h-6 text-white" />
+                </div>
+
+                {/* Main Image */}
+                <div className="relative overflow-hidden rounded-2xl">
+                  <Image
+                    src="/billboard-kontak.png"
+                    alt="Hubungi Desa Sidomulyo"
+                    width={600}
+                    height={400}
+                    className="w-full h-auto object-cover"
+                  />
+
+                  {/* Overlay with Contact Info */}
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                    <div className="text-white">
+                      <div className="flex items-center text-sm mb-2">
+                        <Clock className="w-4 h-4 mr-1" />
+                        Online 24/7
+                      </div>
+                      <div className="font-semibold">Desa Sidomulyo</div>
+                      <div className="text-sm opacity-90">
+                        Sidorejo, Magetan, Jawa Timur
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Decorative Elements */}
+                <div className="absolute top-1/2 -right-8 w-32 h-1 bg-gradient-to-r from-green-400 to-transparent rounded-full"></div>
+                <div className="absolute top-1/3 -left-8 w-24 h-1 bg-gradient-to-l from-blue-400 to-transparent rounded-full"></div>
+              </div>
+
+              {/* Background Decorative Circles */}
+              <div className="absolute -z-10 top-10 right-10 w-40 h-40 bg-gradient-to-r from-green-200 to-blue-200 rounded-full opacity-20 animate-pulse"></div>
+              <div className="absolute -z-10 bottom-10 left-10 w-32 h-32 bg-gradient-to-r from-purple-200 to-pink-200 rounded-full opacity-20 animate-pulse delay-1000"></div>
+            </div>
+          </div>
+        </div>
+
+        {/* Wave Separator */}
+        <div className="absolute bottom-0 left-0 right-0">
+          <svg
+            viewBox="0 0 1200 120"
+            preserveAspectRatio="none"
+            className="w-full h-12 fill-white"
+          >
+            <path
+              d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
+              opacity=".25"
+            ></path>
+            <path
+              d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z"
+              opacity=".5"
+            ></path>
+            <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"></path>
+          </svg>
+        </div>
+      </section>
 
       {/* Contact Section */}
       <section className="py-20">
@@ -280,6 +427,128 @@ export default function ContactPage() {
                   )}
                 </button>
               </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Map Section */}
+      <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-green-100 to-blue-100 rounded-full text-sm font-medium text-green-700 mb-4">
+              <MapPin className="w-4 h-4 mr-2" />
+              Lokasi Kami
+            </div>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Temukan{" "}
+              <span className="bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
+                Balai Desa Sidomulyo
+              </span>
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Kunjungi langsung kantor Balai Desa Sidomulyo di Sidorejo,
+              Magetan, Jawa Timur. Kami siap menyambut kedatangan Anda dengan
+              ramah.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-12 items-start">
+            {/* Map Container */}
+            <div className="lg:col-span-2">
+              <div className="relative bg-white p-2 rounded-3xl shadow-2xl overflow-hidden">
+                {/* Decorative Elements */}
+                <div className="absolute -top-2 -right-2 w-16 h-16 bg-gradient-to-r from-green-400 to-blue-500 rounded-2xl opacity-20 animate-pulse"></div>
+                <div className="absolute -bottom-2 -left-2 w-12 h-12 bg-gradient-to-r from-purple-400 to-pink-500 rounded-xl opacity-20 animate-pulse delay-1000"></div>
+
+                {/* Map iframe */}
+                <div className="relative rounded-2xl overflow-hidden">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3820.397247141442!2d111.26245287484284!3d-7.6545633923617205!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e798de91598e60d%3A0x19888cf45fec4f94!2sBalai%20Desa%20Sidomulyo!5e1!3m2!1sid!2sid!4v1753417562360!5m2!1sid!2sid"
+                    width="100%"
+                    height="450"
+                    style={{ border: 0 }}
+                    allowFullScreen={true}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="rounded-2xl"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Location Info */}
+            <div className="space-y-6">
+              <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-blue-500 rounded-xl flex items-center justify-center">
+                    <MapPin className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      Alamat Lengkap
+                    </h3>
+                    <p className="text-sm text-gray-600">
+                      Lokasi resmi kantor desa
+                    </p>
+                  </div>
+                </div>
+                <p className="text-gray-700 leading-relaxed">
+                  <strong>Balai Desa Sidomulyo</strong>
+                  <br />
+                  Sidorejo, Magetan
+                  <br />
+                  Jawa Timur, Indonesia
+                </p>
+              </div>
+
+              <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+                    <Clock className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      Jam Operasional
+                    </h3>
+                    <p className="text-sm text-gray-600">
+                      Waktu pelayanan kantor
+                    </p>
+                  </div>
+                </div>
+                <div className="space-y-2 text-gray-700">
+                  <div className="flex justify-between">
+                    <span>Senin - Jumat</span>
+                    <span className="font-medium">08:00 - 16:00</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Sabtu</span>
+                    <span className="font-medium">08:00 - 12:00</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Minggu</span>
+                    <span className="text-red-500 font-medium">Tutup</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-r from-green-500 to-blue-500 p-6 rounded-2xl text-white">
+                <h3 className="text-lg font-semibold mb-3">Petunjuk Arah</h3>
+                <p className="text-sm opacity-90 mb-4">
+                  Gunakan Google Maps untuk navigasi yang akurat menuju lokasi
+                  kami.
+                </p>
+                <a
+                  href="https://www.google.com/maps/dir//Balai+Desa+Sidomulyo,+Sidorejo,+Magetan,+Jawa+Timur/@-7.6545634,111.2624529,17z"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center bg-white text-green-600 px-4 py-2 rounded-xl font-medium hover:bg-gray-50 transition-colors"
+                >
+                  <MapPin className="w-4 h-4 mr-2" />
+                  Buka di Google Maps
+                </a>
+              </div>
             </div>
           </div>
         </div>

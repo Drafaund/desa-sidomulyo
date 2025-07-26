@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Menu, X, MapPin, Phone, Mail } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -64,18 +65,25 @@ const Navbar = () => {
       {/* Main Navigation */}
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
-          {/* Logo */}
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-blue-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">S</span>
-            </div>
+          {/* Logo Clickable*/}
+          <Link
+            href="/"
+            className="flex items-center space-x-3 hover:opacity-80 transition-opacity duration-200"
+          >
+            <Image
+              src="/logo_desa_sidomulyo_fix.png"
+              alt="Logo"
+              width={60}
+              height={60}
+              className="rounded-full"
+            />
             <div>
               <h1 className="text-xl font-bold text-gray-800">
                 Desa Sidomulyo
               </h1>
               <p className="text-sm text-gray-600"> Sidorejo, Magetan</p>
             </div>
-          </div>
+          </Link>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">

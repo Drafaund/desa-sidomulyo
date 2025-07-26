@@ -28,14 +28,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const pathname = usePathname();
-  const isRootPage = pathname === "/";
+  const isCertainPage = pathname === "/" || pathname === "/Artikel";
 
   return (
     <html lang="en" className="scroll-smooth">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
-        {isRootPage ? <NavbarRoot /> : <Navbar />}
+        {isCertainPage ? <NavbarRoot /> : <Navbar />}
         <main className="flex-1">{children}</main>
         <Footer />
       </body>
