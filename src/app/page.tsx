@@ -2,7 +2,6 @@
 
 import { ArrowRight } from "lucide-react";
 import React, { useEffect } from "react";
-import InvestmentOpportunities from "@/components/Investment";
 import ArticleCard from "@/components/article/ArticleCard";
 import { MessageCircle, Send, MapPin } from "lucide-react";
 import Link from "next/link";
@@ -11,6 +10,7 @@ import Carousel from "@/components/Carousel";
 import PotensiCard from "@/components/potential/PotentialCard";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import Image from "next/image";
 
 // Define types for our data
 interface Article {
@@ -190,6 +190,80 @@ export default function Home() {
         <Carousel slides={carouselSlides} autoSlideInterval={5000} />
       </section>
 
+      {/* Village Profile Section */}
+      <section className="py-16 bg-white w-full">
+        <div className="container mx-auto px-4 sm:px-10 lg:px-30">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Text Content - Left Side */}
+            <div
+              className="space-y-6"
+              data-aos="fade-right"
+              data-aos-delay="200"
+            >
+              <div>
+                <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+                  Profil Desa Sidomulyo
+                </h2>
+                <div className="w-20 h-1 bg-gradient-to-r from-green-600 to-blue-600 mb-6"></div>
+              </div>
+
+              <p className="text-lg text-gray-700 leading-relaxed text-justify">
+                Desa Sidomulyo merupakan desa yang terletak di kaki Gunung Lawu,
+                Kabupaten Magetan, Jawa Timur. Desa ini terbentuk dari
+                penggabungan dua wilayah, yaitu Kelurahan Gangging dan Kelurahan
+                Ngijo, yang masing-masing memiliki sejarah, budaya, dan potensi
+                alam yang unik.
+              </p>
+
+              <p className="text-lg text-gray-700 leading-relaxed text-justify">
+                Dikenal dengan keindahan alamnya serta udara yang sejuk,
+                Sidomulyo memiliki potensi unggulan di bidang pertanian,
+                perkebunan seperti mawar, kopi, dan lemon, serta peternakan sapi
+                perah dalam skala kecil. Kehidupan masyarakat yang rukun, budaya
+                lokal yang masih lestari, dan nilai sejarah yang kuat menjadikan
+                Desa Sidomulyo sebagai salah satu desa yang kaya akan potensi
+                sekaligus nilai-nilai kearifan lokal.
+              </p>
+
+              <div className="flex flex-wrap gap-4 pt-4">
+                <div className="flex items-center text-green-700">
+                  <MapPin className="h-5 w-5 mr-2" />
+                  <span className="font-medium">Kaki Gunung Lawu, Magetan</span>
+                </div>
+              </div>
+
+              {/* Button */}
+              <div className="pt-6">
+                <Link href="/TentangDesa">
+                  <button className="group bg-gradient-to-r from-green-600 to-blue-600 text-white px-8 py-4 rounded-full font-semibold hover:from-green-700 hover:to-blue-700 transition-all duration-300 inline-flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105">
+                    Lihat Profil Desa
+                    <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                  </button>
+                </Link>
+              </div>
+            </div>
+
+            {/* Image - Right Side */}
+            <div className="relative" data-aos="fade-left" data-aos-delay="400">
+              <div className="relative overflow-hidden rounded-2xl shadow-2xl">
+                <Image
+                  src="/desa-sidomulyo.jpg"
+                  alt="Profil Desa Sidomulyo"
+                  className="w-full h-96 lg:h-[500px] object-cover hover:scale-105 transition-transform duration-700"
+                  width={500}
+                  height={400}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+              </div>
+
+              {/* Decorative elements */}
+              <div className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-green-400 to-blue-500 rounded-full opacity-20 animate-pulse"></div>
+              <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-br from-blue-400 to-green-500 rounded-full opacity-30 animate-pulse delay-1000"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Latest Potensi Section */}
       <section className="py-16 bg-gradient-to-b from-green-200 bg-opacity-60 w-full">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -228,14 +302,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Investment Opportunities Section */}
-      <div data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
-        <InvestmentOpportunities />
-      </div>
-
       {/* Latest Articles Section */}
       <section className="py-16 bg-gray-50 w-full">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto px-4 sm:px-10 lg:px-30">
           <div
             className="text-center mb-12"
             data-aos="fade-up"
