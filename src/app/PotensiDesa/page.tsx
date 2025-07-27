@@ -72,25 +72,25 @@ export default function PotensiDesaPage() {
 
   const statistikData = [
     {
-      icon: <TreePine className="w-8 h-8 text-green-600" />,
+      icon: <TreePine className="w-6 h-6 text-green-600" />,
       jumlah: "850",
       label: "Hektar Lahan Pertanian",
       color: "text-green-600",
     },
     {
-      icon: <Truck className="w-8 h-8 text-blue-600" />,
+      icon: <Truck className="w-6 h-6 text-blue-600" />,
       jumlah: "320",
       label: "Kepala Ternak",
       color: "text-blue-600",
     },
     {
-      icon: <Triangle className="w-8 h-8 text-orange-600" />,
+      icon: <Triangle className="w-6 h-6 text-orange-600" />,
       jumlah: "12",
       label: "Destinasi Wisata",
       color: "text-orange-600",
     },
     {
-      icon: <Users className="w-8 h-8 text-purple-600" />,
+      icon: <Users className="w-6 h-6 text-purple-600" />,
       jumlah: "2,450",
       label: "Penduduk Aktif",
       color: "text-purple-600",
@@ -253,8 +253,8 @@ export default function PotensiDesaPage() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Memuat data...</p>
+          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600 mx-auto mb-3"></div>
+          <p className="text-gray-600 text-sm">Memuat data...</p>
         </div>
       </div>
     );
@@ -264,11 +264,11 @@ export default function PotensiDesaPage() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-red-600 mb-4">Error</h1>
-          <p className="text-gray-600 mb-4">{error}</p>
+          <h1 className="text-xl font-bold text-red-600 mb-3">Error</h1>
+          <p className="text-gray-600 mb-4 text-sm">{error}</p>
           <button
             onClick={() => window.location.reload()}
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm"
           >
             Coba Lagi
           </button>
@@ -279,65 +279,65 @@ export default function PotensiDesaPage() {
 
   return (
     <>
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-green-50 via-blue-50 to-green-100 py-20 overflow-hidden">
+      {/* Hero Section - More Compact */}
+      <section className="relative bg-gradient-to-br from-green-50 via-blue-50 to-green-100 py-12 lg:py-16 overflow-hidden px-20">
         {/* Background decorative elements */}
         <div className="absolute inset-0 bg-white/40"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-green-200/30 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-200/30 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2"></div>
+        <div className="absolute top-0 right-0 w-64 h-64 lg:w-80 lg:h-80 bg-green-200/30 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 lg:w-80 lg:h-80 bg-blue-200/30 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2"></div>
 
         <div className="container mx-auto px-4 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Left Column - Image */}
             <div className="order-2 lg:order-1">
               <div className="relative">
                 {/* Main Image */}
-                <div className="relative overflow-hidden rounded-2xl shadow-2xl transform hover:scale-105 transition-transform duration-300">
+                <div className="relative overflow-hidden rounded-xl shadow-xl transform hover:scale-105 transition-transform duration-300">
                   <Image
                     src="/macbook-mockup-resized.png"
                     alt="Potensi Desa Sidomulyo"
-                    width={800}
-                    height={600}
+                    width={700}
+                    height={500}
                     className="w-full h-auto object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                 </div>
 
                 {/* Floating Stats Card */}
-                <div className="absolute -bottom-6 -right-6 bg-white rounded-xl shadow-lg p-4 border border-gray-100">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                      <TreePine className="w-6 h-6 text-green-600" />
+                <div className="absolute -bottom-4 -right-4 bg-white rounded-lg shadow-lg p-3 border border-gray-100">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                      <TreePine className="w-5 h-5 text-green-600" />
                     </div>
                     <div>
-                      <p className="text-2xl font-bold text-gray-800">850+</p>
-                      <p className="text-sm text-gray-600">Hektar Lahan</p>
+                      <p className="text-lg font-bold text-gray-800">850+</p>
+                      <p className="text-xs text-gray-600">Hektar Lahan</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Small decorative dots */}
-                <div className="absolute top-4 left-4 w-3 h-3 bg-green-400 rounded-full"></div>
-                <div className="absolute top-12 left-8 w-2 h-2 bg-blue-400 rounded-full"></div>
-                <div className="absolute top-8 left-16 w-1 h-1 bg-yellow-400 rounded-full"></div>
+                <div className="absolute top-3 left-3 w-2 h-2 bg-green-400 rounded-full"></div>
+                <div className="absolute top-8 left-6 w-1.5 h-1.5 bg-blue-400 rounded-full"></div>
+                <div className="absolute top-6 left-12 w-1 h-1 bg-yellow-400 rounded-full"></div>
               </div>
             </div>
 
             {/* Right Column - Content */}
-            <div className="order-1 lg:order-2 space-y-8">
+            <div className="order-1 lg:order-2 space-y-6">
               {/* Badge */}
-              <div className="inline-flex items-center space-x-2 bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-medium">
+              <div className="inline-flex items-center space-x-2 bg-green-100 text-green-800 px-3 py-1.5 rounded-full text-sm font-medium">
                 <MapPin className="w-4 h-4" />
                 <span>Desa Sidomulyo, Magetan</span>
               </div>
 
               {/* Main Heading */}
-              <div className="space-y-4">
-                <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+              <div className="space-y-3">
+                <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">
                   Potensi Desa
                   <span className="block text-green-600">Sidomulyo</span>
                 </h1>
-                <p className="text-xl text-gray-600 leading-relaxed">
+                <p className="text-base lg:text-lg text-gray-600 leading-relaxed">
                   Jelajahi kekayaan alam dan berbagai potensi unggulan yang
                   dimiliki desa kami. Dari pertanian yang subur, peternakan yang
                   berkembang, hingga destinasi wisata yang memukau.
@@ -345,68 +345,76 @@ export default function PotensiDesaPage() {
               </div>
 
               {/* Key Features */}
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-white/70 backdrop-blur-sm rounded-lg p-4 border border-white/50">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                      <TreePine className="w-5 h-5 text-green-600" />
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-white/70 backdrop-blur-sm rounded-lg p-3 border border-white/50">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                      <TreePine className="w-4 h-4 text-green-600" />
                     </div>
                     <div>
-                      <p className="font-semibold text-gray-800">Pertanian</p>
-                      <p className="text-sm text-gray-600">Lahan subur</p>
+                      <p className="font-semibold text-gray-800 text-sm">
+                        Pertanian
+                      </p>
+                      <p className="text-xs text-gray-600">Lahan subur</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white/70 backdrop-blur-sm rounded-lg p-4 border border-white/50">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                      <Truck className="w-5 h-5 text-blue-600" />
+                <div className="bg-white/70 backdrop-blur-sm rounded-lg p-3 border border-white/50">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                      <Truck className="w-4 h-4 text-blue-600" />
                     </div>
                     <div>
-                      <p className="font-semibold text-gray-800">Peternakan</p>
-                      <p className="text-sm text-gray-600">320+ ternak</p>
+                      <p className="font-semibold text-gray-800 text-sm">
+                        Peternakan
+                      </p>
+                      <p className="text-xs text-gray-600">320+ ternak</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white/70 backdrop-blur-sm rounded-lg p-4 border border-white/50">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-                      <Triangle className="w-5 h-5 text-orange-600" />
+                <div className="bg-white/70 backdrop-blur-sm rounded-lg p-3 border border-white/50">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
+                      <Triangle className="w-4 h-4 text-orange-600" />
                     </div>
                     <div>
-                      <p className="font-semibold text-gray-800">Wisata</p>
-                      <p className="text-sm text-gray-600">12 destinasi</p>
+                      <p className="font-semibold text-gray-800 text-sm">
+                        Wisata
+                      </p>
+                      <p className="text-xs text-gray-600">12 destinasi</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white/70 backdrop-blur-sm rounded-lg p-4 border border-white/50">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                      <Users className="w-5 h-5 text-purple-600" />
+                <div className="bg-white/70 backdrop-blur-sm rounded-lg p-3 border border-white/50">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                      <Users className="w-4 h-4 text-purple-600" />
                     </div>
                     <div>
-                      <p className="font-semibold text-gray-800">Komunitas</p>
-                      <p className="text-sm text-gray-600">2,450 penduduk</p>
+                      <p className="font-semibold text-gray-800 text-sm">
+                        Komunitas
+                      </p>
+                      <p className="text-xs text-gray-600">2,450 penduduk</p>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* CTA Button */}
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <button
                   onClick={() =>
                     document
                       .getElementById("potensi-section")
                       ?.scrollIntoView({ behavior: "smooth" })
                   }
-                  className="bg-green-600 text-white px-8 py-4 rounded-xl font-semibold hover:bg-green-700 transition-colors shadow-lg hover:shadow-xl flex items-center justify-center space-x-2 group"
+                  className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-lg hover:shadow-xl flex items-center justify-center space-x-2 group text-sm"
                 >
                   <span>Jelajahi Potensi</span>
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </button>
 
                 <button
@@ -415,7 +423,7 @@ export default function PotensiDesaPage() {
                       .getElementById("investment-section")
                       ?.scrollIntoView({ behavior: "smooth" })
                   }
-                  className="bg-white text-green-600 px-8 py-4 rounded-xl font-semibold hover:bg-green-50 transition-colors shadow-lg border-2 border-green-200 hover:border-green-300"
+                  className="bg-white text-green-600 px-6 py-3 rounded-lg font-semibold hover:bg-green-50 transition-colors shadow-lg border-2 border-green-200 hover:border-green-300 text-sm"
                 >
                   Peluang Investasi
                 </button>
@@ -426,9 +434,9 @@ export default function PotensiDesaPage() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-white">
+      <section className="py-12 bg-white">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 ">
             {statistikData.map((item, index) => (
               <StatCard
                 key={index}
@@ -446,12 +454,12 @@ export default function PotensiDesaPage() {
       <div id="potensi-section" className="min-h-screen bg-gray-50">
         {/* Header */}
         <div className="bg-white shadow-sm">
-          <div className="max-w-6xl mx-auto px-4 py-8">
+          <div className="max-w-6xl mx-auto px-4 py-6">
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-3">
                 Eksplorasi Potensi Desa
               </h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              <p className="text-base text-gray-600 max-w-2xl mx-auto">
                 Temukan berbagai sektor unggulan yang menjadi kekuatan ekonomi
                 dan daya tarik wisata Desa Sidomulyo.
               </p>
@@ -460,9 +468,9 @@ export default function PotensiDesaPage() {
         </div>
 
         {/* Category Tabs */}
-        <div className="bg-white py-6 border-b">
+        <div className="bg-white py-4 border-b">
           <div className="max-w-6xl mx-auto px-4">
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-wrap justify-center gap-2 lg:gap-3">
               {categories.map((category) => {
                 const isActive = activeTab === category;
                 const colorClasses = getCategoryTabColors(category, isActive);
@@ -471,7 +479,7 @@ export default function PotensiDesaPage() {
                   <button
                     key={category}
                     onClick={() => setActiveTab(category)}
-                    className={`px-6 py-2 rounded-full font-medium transition-colors ${colorClasses}`}
+                    className={`px-4 py-2 rounded-full font-medium transition-colors text-sm ${colorClasses}`}
                   >
                     {category}
                   </button>
@@ -486,20 +494,20 @@ export default function PotensiDesaPage() {
       </div>
 
       {/* Investment Section */}
-      <section id="investment-section" className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
+      <section id="investment-section" className="py-16 bg-white">
+        <div className="container mx-auto px-30">
+          <div className="text-center mb-10">
+            <h2 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-3">
               Peluang Investasi Desa
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <p className="text-gray-600 max-w-2xl mx-auto text-base">
               Temukan berbagai peluang investasi strategis yang ditawarkan oleh
               Desa Sidomulyo untuk pengembangan ekonomi berkelanjutan.
             </p>
           </div>
 
           {/* Investment Category Filter */}
-          <div className="flex flex-wrap justify-center gap-4 mb-8">
+          <div className="flex flex-wrap justify-center gap-2 lg:gap-3 mb-8">
             {investmentCategories.map((category) => {
               const isActive = activeInvestmentCategory === category;
               const colorClasses = getCategoryTabColors(category, isActive);
@@ -508,7 +516,7 @@ export default function PotensiDesaPage() {
                 <button
                   key={category}
                   onClick={() => setActiveInvestmentCategory(category)}
-                  className={`px-6 py-2 rounded-full font-medium transition-colors ${colorClasses}`}
+                  className={`px-4 py-2 rounded-full font-medium transition-colors text-sm ${colorClasses}`}
                 >
                   {category}
                 </button>
@@ -516,9 +524,9 @@ export default function PotensiDesaPage() {
             })}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredInvestments.map((investment) => (
-              <div key={investment.id} className="p-4 rounded-xl">
+              <div key={investment.id} className="p-3 rounded-xl">
                 <InvestmentCard
                   title={investment.title}
                   description={investment.description}
@@ -533,8 +541,8 @@ export default function PotensiDesaPage() {
           </div>
 
           {filteredInvestments.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-gray-500 text-lg">
+            <div className="text-center py-8">
+              <p className="text-gray-500 text-base">
                 Tidak ada investasi yang tersedia untuk kategori ini.
               </p>
             </div>
