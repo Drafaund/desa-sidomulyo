@@ -9,13 +9,13 @@ const Footer = () => {
     <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
       {/* Main Footer Content */}
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
           {/* About Section */}
           <div className="space-y-4">
             <div className="flex items-center space-x-3 mb-6">
               <Image
                 src="/logo_desa_sidomulyo_fix.png"
-                alt="Logo"
+                alt="Logo Desa Sidomulyo"
                 width={60}
                 height={60}
                 className="rounded-full"
@@ -51,7 +51,7 @@ const Footer = () => {
           </div>
 
           {/* Jelajahi */}
-          <div className="space-y-4">
+          <div className="space-y-4 ml-8">
             <h4 className="text-lg font-semibold mb-6 text-green-400">
               Jelajahi
             </h4>

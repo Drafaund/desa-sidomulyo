@@ -131,9 +131,9 @@ const carouselSlides = [
   {
     id: 2,
     image: "/sumber-mata-air-gangging.jpg",
-    title: "Inovasi Terdepan",
+    title: "Potensi Desa Sidomulyo",
     description:
-      "Kami menghadirkan teknologi terbaru untuk membantu mengembangkan bisnis Anda.",
+      "Jelajahi potensi alam, budaya, dan sumber daya yang kaya di Desa Sidomulyo.",
     buttonText: "Lihat Potensi Desa",
     buttonLink: "/PotensiDesa",
   },

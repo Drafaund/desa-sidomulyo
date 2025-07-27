@@ -4,10 +4,18 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import PotensiCard from "@/components/potential/PotentialCard";
-import { TreePine, Truck, Triangle, Users } from "lucide-react";
+import {
+  TreePine,
+  Truck,
+  Triangle,
+  Users,
+  MapPin,
+  ArrowRight,
+} from "lucide-react";
 import StatCard from "@/components/StatCard";
 import InvestmentCard from "@/components/investation/InvestmentCard";
 import { supabase } from "../../utils/supabase";
+import Image from "next/image";
 
 // Types
 interface Potential {
@@ -271,73 +279,153 @@ export default function PotensiDesaPage() {
 
   return (
     <>
-      <section className="py-20 bg-gray-100">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left Content */}
-            <div className="space-y-8">
-              <div>
-                <h2 className="text-4xl font-bold text-teal-700 mb-6">
-                  Kenapa Menggunakan DIGIDES?
-                </h2>
-              </div>
+      {/* Hero Section */}
+      <section className="relative bg-gradient-to-br from-green-50 via-blue-50 to-green-100 py-20 overflow-hidden">
+        {/* Background decorative elements */}
+        <div className="absolute inset-0 bg-white/40"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-green-200/30 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-200/30 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2"></div>
 
-              <div className="space-y-6">
-                {[
-                  "Mudah digunakan",
-                  "Terintegrasi antara Android dan Website",
-                  "Dapat berjalan secara online dan offline",
-                  "Mudah dalam memasukkan data",
-                  "Terintegrasi PRODESKEL, IDM, dan SDGs.",
-                ].map((feature, index) => (
-                  <div key={index} className="flex items-start space-x-4">
-                    <div className="flex-shrink-0 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center mt-1">
-                      <svg
-                        className="w-5 h-5 text-white"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left Column - Image */}
+            <div className="order-2 lg:order-1">
+              <div className="relative">
+                {/* Main Image */}
+                <div className="relative overflow-hidden rounded-2xl shadow-2xl transform hover:scale-105 transition-transform duration-300">
+                  <Image
+                    src="/macbook-mockup-resized.png"
+                    alt="Potensi Desa Sidomulyo"
+                    width={800}
+                    height={600}
+                    className="w-full h-auto object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                </div>
+
+                {/* Floating Stats Card */}
+                <div className="absolute -bottom-6 -right-6 bg-white rounded-xl shadow-lg p-4 border border-gray-100">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                      <TreePine className="w-6 h-6 text-green-600" />
                     </div>
-                    <p className="text-lg text-gray-700 font-medium">
-                      {feature}
-                    </p>
+                    <div>
+                      <p className="text-2xl font-bold text-gray-800">850+</p>
+                      <p className="text-sm text-gray-600">Hektar Lahan</p>
+                    </div>
                   </div>
-                ))}
+                </div>
+
+                {/* Small decorative dots */}
+                <div className="absolute top-4 left-4 w-3 h-3 bg-green-400 rounded-full"></div>
+                <div className="absolute top-12 left-8 w-2 h-2 bg-blue-400 rounded-full"></div>
+                <div className="absolute top-8 left-16 w-1 h-1 bg-yellow-400 rounded-full"></div>
               </div>
             </div>
 
-            {/* Right Content - Video */}
-            <div className="relative">
-              {/* Laptop Frame */}
-              <div className="relative">
-                {/* Screen */}
-                <div className="p-4 mb-4 ">
-                  <video autoPlay muted loop playsInline width={300}>
-                    <source src="/laptop-animation.mp4" type="video/mp4" />
-                    {/* Fallback jika video tidak bisa dimuat */}
-                    <div className="text-center text-white">
-                      <svg
-                        className="w-16 h-16 mx-auto mb-4"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
-                      </svg>
-                      <p className="text-lg font-semibold">DIGIDES Demo</p>
+            {/* Right Column - Content */}
+            <div className="order-1 lg:order-2 space-y-8">
+              {/* Badge */}
+              <div className="inline-flex items-center space-x-2 bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-medium">
+                <MapPin className="w-4 h-4" />
+                <span>Desa Sidomulyo, Magetan</span>
+              </div>
+
+              {/* Main Heading */}
+              <div className="space-y-4">
+                <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+                  Potensi Desa
+                  <span className="block text-green-600">Sidomulyo</span>
+                </h1>
+                <p className="text-xl text-gray-600 leading-relaxed">
+                  Jelajahi kekayaan alam dan berbagai potensi unggulan yang
+                  dimiliki desa kami. Dari pertanian yang subur, peternakan yang
+                  berkembang, hingga destinasi wisata yang memukau.
+                </p>
+              </div>
+
+              {/* Key Features */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-white/70 backdrop-blur-sm rounded-lg p-4 border border-white/50">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                      <TreePine className="w-5 h-5 text-green-600" />
                     </div>
-                  </video>
+                    <div>
+                      <p className="font-semibold text-gray-800">Pertanian</p>
+                      <p className="text-sm text-gray-600">Lahan subur</p>
+                    </div>
+                  </div>
                 </div>
+
+                <div className="bg-white/70 backdrop-blur-sm rounded-lg p-4 border border-white/50">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                      <Truck className="w-5 h-5 text-blue-600" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-800">Peternakan</p>
+                      <p className="text-sm text-gray-600">320+ ternak</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white/70 backdrop-blur-sm rounded-lg p-4 border border-white/50">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                      <Triangle className="w-5 h-5 text-orange-600" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-800">Wisata</p>
+                      <p className="text-sm text-gray-600">12 destinasi</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white/70 backdrop-blur-sm rounded-lg p-4 border border-white/50">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                      <Users className="w-5 h-5 text-purple-600" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-800">Komunitas</p>
+                      <p className="text-sm text-gray-600">2,450 penduduk</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* CTA Button */}
+              <div className="flex flex-col sm:flex-row gap-4">
+                <button
+                  onClick={() =>
+                    document
+                      .getElementById("potensi-section")
+                      ?.scrollIntoView({ behavior: "smooth" })
+                  }
+                  className="bg-green-600 text-white px-8 py-4 rounded-xl font-semibold hover:bg-green-700 transition-colors shadow-lg hover:shadow-xl flex items-center justify-center space-x-2 group"
+                >
+                  <span>Jelajahi Potensi</span>
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </button>
+
+                <button
+                  onClick={() =>
+                    document
+                      .getElementById("investment-section")
+                      ?.scrollIntoView({ behavior: "smooth" })
+                  }
+                  className="bg-white text-green-600 px-8 py-4 rounded-xl font-semibold hover:bg-green-50 transition-colors shadow-lg border-2 border-green-200 hover:border-green-300"
+                >
+                  Peluang Investasi
+                </button>
               </div>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Stats Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -354,24 +442,25 @@ export default function PotensiDesaPage() {
         </div>
       </section>
 
-      <div className="min-h-screen bg-gray-50">
+      {/* Main Content */}
+      <div id="potensi-section" className="min-h-screen bg-gray-50">
         {/* Header */}
         <div className="bg-white shadow-sm">
           <div className="max-w-6xl mx-auto px-4 py-8">
             <div className="text-center">
-              <h1 className="text-4xl font-bold text-gray-900 mb-4">
-                Potensi Desa
-              </h1>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                Jelajahi berbagai potensi yang dimiliki desa kami, mulai dari
-                pertanian, peternakan, hingga wisata alam yang menawan.
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                Eksplorasi Potensi Desa
+              </h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Temukan berbagai sektor unggulan yang menjadi kekuatan ekonomi
+                dan daya tarik wisata Desa Sidomulyo.
               </p>
             </div>
           </div>
         </div>
 
         {/* Category Tabs */}
-        <div className="bg-white py-6">
+        <div className="bg-white py-6 border-b">
           <div className="max-w-6xl mx-auto px-4">
             <div className="flex flex-wrap justify-center gap-4">
               {categories.map((category) => {
@@ -396,7 +485,8 @@ export default function PotensiDesaPage() {
         <PotensiCard potentials={filteredPotentials} />
       </div>
 
-      <section className="py-20 bg-white">
+      {/* Investment Section */}
+      <section id="investment-section" className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
