@@ -1,6 +1,6 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import React, { useState, useEffect, useRef } from "react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
@@ -8,15 +8,35 @@ import Image from "next/image";
 const NavbarRoot = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMobileDropdownOpen, setIsMobileDropdownOpen] = useState(false);
   const pathname = usePathname();
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const toggleMobileDropdown = () => {
+    setIsMobileDropdownOpen(!isMobileDropdownOpen);
+  };
+
   // Fungsi untuk memeriksa apakah link aktif
   const isActive = (path: string): boolean => {
     return pathname === path;
+  };
+
+  // Fungsi untuk scroll ke section
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+    setIsMobileDropdownOpen(false);
+    setIsMenuOpen(false);
   };
 
   // Effect untuk mendeteksi scroll
@@ -32,6 +52,12 @@ const NavbarRoot = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const dropdownItems = [
+    { label: "Sambutan Kepala Desa", id: "sambutan-kepala-desa" },
+    { label: "Sejarah Desa", id: "sejarah-desa" },
+    { label: "Visi & Misi", id: "visi-misi" },
+  ];
 
   return (
     <nav
@@ -90,6 +116,62 @@ const NavbarRoot = () => {
                 <span className="absolute bottom-[-8px] left-0 w-full h-1 bg-green-500 rounded-full"></span>
               )}
             </Link>
+
+            {/* Tentang Desa Dropdown */}
+            <div
+              className="relative"
+              ref={dropdownRef}
+              onMouseEnter={() => setIsDropdownOpen(true)}
+              onMouseLeave={() => setIsDropdownOpen(false)}
+            >
+              <Link
+                href="/TentangDesa"
+                className={`font-medium transition-colors relative flex items-center space-x-1 ${
+                  isActive("/TentangDesa")
+                    ? "text-green-500"
+                    : `${isScrolled ? "text-gray-800" : "text-white"} hover:text-green-600`
+                }`}
+              >
+                <span>Tentang Desa</span>
+                <ChevronDown
+                  size={16}
+                  className={`transition-transform duration-200 ${
+                    isDropdownOpen ? "rotate-180" : ""
+                  }`}
+                />
+                {isActive("/TentangDesa") && (
+                  <span className="absolute bottom-[-8px] left-0 w-full h-1 bg-green-500 rounded-full"></span>
+                )}
+              </Link>
+
+              {/* Dropdown Menu */}
+              {isDropdownOpen && (
+                <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-100 py-2 z-50">
+                  <Link
+                    href="/TentangDesa"
+                    className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-600 transition-colors"
+                  >
+                    Tentang Desa
+                  </Link>
+                  {dropdownItems.map((item, index) => (
+                    <button
+                      key={index}
+                      onClick={() => {
+                        // Navigasi ke halaman TentangDesa terlebih dahulu jika belum di halaman tersebut
+                        if (pathname !== "/TentangDesa") {
+                          window.location.href = `/TentangDesa#${item.id}`;
+                        } else {
+                          scrollToSection(item.id);
+                        }
+                      }}
+                      className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-600 transition-colors"
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
 
             <Link
               href="/PotensiDesa"
@@ -156,12 +238,75 @@ const NavbarRoot = () => {
                     ? "text-green-500"
                     : `${isScrolled ? "text-gray-800" : "text-white"} hover:text-green-600`
                 }`}
+                onClick={() => setIsMenuOpen(false)}
               >
                 Home
                 {isActive("/") && (
                   <span className="absolute left-0 bottom-0 w-16 h-0.5 bg-green-500"></span>
                 )}
               </Link>
+
+              {/* Mobile Tentang Desa Dropdown */}
+              <div>
+                <button
+                  onClick={toggleMobileDropdown}
+                  className={`font-medium py-2 relative flex items-center justify-between w-full ${
+                    isActive("/TentangDesa")
+                      ? "text-green-500"
+                      : `${isScrolled ? "text-gray-800" : "text-white"} hover:text-green-600`
+                  }`}
+                >
+                  <span>Tentang Desa</span>
+                  <ChevronDown
+                    size={16}
+                    className={`transition-transform duration-200 ${
+                      isMobileDropdownOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                  {isActive("/TentangDesa") && (
+                    <span className="absolute left-0 bottom-0 w-24 h-0.5 bg-green-500"></span>
+                  )}
+                </button>
+
+                {/* Mobile Dropdown Items */}
+                {isMobileDropdownOpen && (
+                  <div className="pl-4 mt-2 space-y-2">
+                    <Link
+                      href="/TentangDesa"
+                      className={`block py-2 transition-colors ${
+                        isScrolled
+                          ? "text-gray-600 hover:text-green-600"
+                          : "text-white/80 hover:text-green-400"
+                      }`}
+                      onClick={() => {
+                        setIsMenuOpen(false);
+                        setIsMobileDropdownOpen(false);
+                      }}
+                    >
+                      Tentang Desa
+                    </Link>
+                    {dropdownItems.map((item, index) => (
+                      <button
+                        key={index}
+                        onClick={() => {
+                          if (pathname !== "/TentangDesa") {
+                            window.location.href = `/TentangDesa#${item.id}`;
+                          } else {
+                            scrollToSection(item.id);
+                          }
+                        }}
+                        className={`block w-full text-left py-2 transition-colors ${
+                          isScrolled
+                            ? "text-gray-600 hover:text-green-600"
+                            : "text-white/80 hover:text-green-400"
+                        }`}
+                      >
+                        {item.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
 
               <Link
                 href="/PotensiDesa"
@@ -170,6 +315,7 @@ const NavbarRoot = () => {
                     ? "text-green-500"
                     : `${isScrolled ? "text-gray-800" : "text-white"} hover:text-green-600`
                 }`}
+                onClick={() => setIsMenuOpen(false)}
               >
                 Potensi Desa
                 {isActive("/PotensiDesa") && (
@@ -184,6 +330,7 @@ const NavbarRoot = () => {
                     ? "text-green-500"
                     : `${isScrolled ? "text-gray-800" : "text-white"} hover:text-green-600`
                 }`}
+                onClick={() => setIsMenuOpen(false)}
               >
                 Artikel
                 {isActive("/Artikel") && (
@@ -198,6 +345,7 @@ const NavbarRoot = () => {
                     ? "text-green-500"
                     : `${isScrolled ? "text-gray-800" : "text-white"} hover:text-green-600`
                 }`}
+                onClick={() => setIsMenuOpen(false)}
               >
                 Kontak
                 {isActive("/Contact") && (
