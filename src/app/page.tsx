@@ -343,7 +343,7 @@ export default function Home() {
             data-aos-delay="800"
           >
             <Link href="/Artikel">
-              <button className="bg-green-600 text-white px-6 sm:px-8 py-3 rounded-full font-semibold hover:bg-green-700 transition-all duration-300 inline-flex items-center gap-2 text-sm sm:text-base">
+              <button className="bg-gradient-to-r from-green-600 to-blue-600 text-white px-6 sm:px-8 py-3 rounded-full font-semibold hover:from-green-700 hover:to-blue-700 transition-all duration-300 inline-flex items-center gap-2 text-sm sm:text-base  hover:scale-105">
                 Lihat Semua Artikel
                 <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
               </button>
@@ -351,65 +351,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Contact Actions */}
-      <div className="bg-gradient-to-r from-green-600 to-blue-600 py-4 sm:py-6 w-full">
-        <div className="container mx-auto px-4">
-          <div
-            className="text-center mb-4 sm:mb-6"
-            data-aos="fade-up"
-            data-aos-delay="200"
-          >
-            <h3 className="text-lg sm:text-xl font-semibold mb-2 text-white">
-              Get in Touch
-            </h3>
-            <p className="text-green-100 text-sm sm:text-base px-4">
-              Ready to explore investment opportunities or plan your visit?
-            </p>
-          </div>
-
-          <div
-            className="flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-4 lg:space-x-6"
-            data-aos="fade-up"
-            data-aos-delay="400"
-          >
-            {/* WhatsApp Button */}
-            <a
-              href="https://wa.me/62351123456"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center space-x-2 bg-green-500 hover:bg-green-600 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-full font-medium transition-all duration-200 hover:shadow-lg transform hover:scale-105 text-sm sm:text-base w-full sm:w-auto justify-center max-w-xs"
-              data-aos="slide-right"
-              data-aos-delay="600"
-            >
-              <MessageCircle size={18} className="sm:w-5 sm:h-5" />
-              <span>Chat Now</span>
-            </a>
-
-            {/* Email Button */}
-            <a
-              href="/Contact"
-              className="flex items-center space-x-2 bg-blue-500 hover:bg-blue-600 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-full font-medium transition-all duration-200 hover:shadow-lg transform hover:scale-105 text-sm sm:text-base w-full sm:w-auto justify-center max-w-xs"
-              data-aos="slide-up"
-              data-aos-delay="700"
-            >
-              <Send size={18} className="sm:w-5 sm:h-5" />
-              <span>Send Email</span>
-            </a>
-
-            {/* Visit Button */}
-            <a
-              href="https://www.google.com/maps/dir//Balai+Desa+Sidomulyo,+Sidorejo,+Magetan,+Jawa+Timur/@-7.6545634,111.2624529,17z"
-              className="flex items-center space-x-2 bg-white hover:bg-gray-100 text-gray-800 px-4 sm:px-6 py-2.5 sm:py-3 rounded-full font-medium transition-all duration-200 hover:shadow-lg transform hover:scale-105 text-sm sm:text-base w-full sm:w-auto justify-center max-w-xs"
-              data-aos="slide-left"
-              data-aos-delay="800"
-            >
-              <MapPin size={18} className="sm:w-5 sm:h-5" />
-              <span>Dapatkan Lokasi</span>
-            </a>
-          </div>
-        </div>
-      </div>
     </main>
   );
 }
