@@ -123,10 +123,9 @@ const carouselSlides = [
     id: 1,
     image: "/desa-sidomulyo.jpg",
     title: "Selamat Datang di Website Desa Sidomulyo",
-    description:
-      "Temukan solusi terbaik untuk kebutuhan bisnis Anda dengan layanan profesional kami.",
+    description: "Temukan informasi terkini, potensi desa, dan berita terbaru.",
     buttonText: "Pelajari Lebih Lanjut",
-    buttonLink: "/",
+    buttonLink: "#profil-desa",
   },
   {
     id: 2,
@@ -141,17 +140,17 @@ const carouselSlides = [
     id: 3,
     image: "/peternakan-sapi-perah.jpg",
     title: "Tim Profesional",
-    description: "Tertarik untuk berinvestasi?",
-    buttonText: "Hubungi Kami",
-    buttonLink: "/Investasi",
+    description: "Update informasi dan berita Desa Sidomulyo",
+    buttonText: "Lihat Artikel",
+    buttonLink: "/Artikel",
   },
   {
     id: 4,
     image: "/perangkat-desa.jpg",
     title: "Tim Profesional",
-    description: "Update informasi dan berita Desa Sidomulyo",
-    buttonText: "Lihat Artikel",
-    buttonLink: "Artikel",
+    description: "Hubungi Kami untuk pertanyaan atau bantuan",
+    buttonText: "Kontak Kami",
+    buttonLink: "/Contact",
   },
 ];
 
@@ -191,7 +190,10 @@ export default function Home() {
       </section>
 
       {/* Village Profile Section */}
-      <section className="py-8 sm:py-12 lg:py-16 bg-white w-full">
+      <section
+        id="profil-desa"
+        className="py-8 sm:py-12 lg:py-16 bg-white w-full"
+      >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center">
             {/* Text Content - Left Side */}
