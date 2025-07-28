@@ -130,26 +130,26 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Enhanced Hero Section */}
-      <section className="relative py-20 bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 overflow-hidden">
+      <section className="relative py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 overflow-hidden lg:px-40">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-10 left-10 w-72 h-72 bg-green-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
-          <div className="absolute top-20 right-10 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-700"></div>
-          <div className="absolute bottom-10 left-1/2 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-1000"></div>
+          <div className="absolute top-4 sm:top-6 md:top-10 left-4 sm:left-6 md:left-10 w-32 sm:w-48 md:w-72 h-32 sm:h-48 md:h-72 bg-green-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
+          <div className="absolute top-8 sm:top-12 md:top-20 right-4 sm:right-6 md:right-10 w-32 sm:w-48 md:w-72 h-32 sm:h-48 md:h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-700"></div>
+          <div className="absolute bottom-4 sm:bottom-6 md:bottom-10 left-1/2 w-32 sm:w-48 md:w-72 h-32 sm:h-48 md:h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-1000"></div>
         </div>
 
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mx-40">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
             {/* Left Content */}
-            <div className="space-y-8 text-center lg:text-left">
+            <div className="space-y-6 sm:space-y-8 text-center lg:text-left order-2 lg:order-1">
               {/* Main Title */}
               <div className="space-y-4">
-                <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-green-100 to-blue-100 rounded-full text-sm font-medium text-green-700 mb-4">
-                  <Users className="w-4 h-4 mr-2" />
+                <div className="inline-flex items-center px-3 sm:px-4 py-2 bg-gradient-to-r from-green-100 to-blue-100 rounded-full text-xs sm:text-sm font-medium text-green-700 mb-4">
+                  <Users className="w-3 sm:w-4 h-3 sm:h-4 mr-1 sm:mr-2" />
                   Terhubung dengan Desa Sidomulyo
                 </div>
 
-                <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                   <span className="bg-gradient-to-r from-green-600 via-blue-600 to-purple-600 bg-clip-text text-transparent">
                     Mari Berkenalan
                   </span>
@@ -157,7 +157,7 @@ export default function ContactPage() {
                   <span className="text-gray-800">dengan Kami</span>
                 </h1>
 
-                <p className="text-xl text-gray-600 leading-relaxed max-w-lg">
+                <p className="text-base sm:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-lg mx-auto lg:mx-0">
                   Kami siap membantu Anda mengenal lebih dekat keindahan dan
                   potensi
                   <span className="font-semibold text-green-600">
@@ -169,39 +169,39 @@ export default function ContactPage() {
               </div>
 
               {/* Quick Contact Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 max-w-md mx-auto lg:mx-0">
                 <a
                   href="https://wa.me/1234567890"
-                  className="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold rounded-2xl hover:from-green-600 hover:to-green-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+                  className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold rounded-xl sm:rounded-2xl hover:from-green-600 hover:to-green-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
                 >
-                  <MessageCircle className="w-5 h-5 mr-2" />
+                  <MessageCircle className="w-4 sm:w-5 h-4 sm:h-5 mr-2" />
                   Chat WhatsApp
                 </a>
                 <a
                   href="tel:+1234567890"
-                  className="inline-flex items-center justify-center px-8 py-4 bg-white text-green-600 font-semibold rounded-2xl border-2 border-green-200 hover:border-green-300 hover:bg-green-50 transform hover:scale-105 transition-all duration-300 shadow-lg"
+                  className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-white text-green-600 font-semibold rounded-xl sm:rounded-2xl border-2 border-green-200 hover:border-green-300 hover:bg-green-50 transform hover:scale-105 transition-all duration-300 shadow-lg text-sm sm:text-base"
                 >
-                  <Phone className="w-5 h-5 mr-2" />
+                  <Phone className="w-4 sm:w-5 h-4 sm:h-5 mr-2" />
                   Telepon Kami
                 </a>
               </div>
             </div>
 
             {/* Right Content - Enhanced Visual */}
-            <div className="relative">
+            <div className="relative order-1 lg:order-2">
               {/* Main Image Container */}
-              <div className="relative bg-gradient-to-br from-white to-gray-50 p-8 rounded-3xl shadow-2xl">
+              <div className="relative bg-gradient-to-br from-white to-gray-50 p-4 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl shadow-2xl mx-4 sm:mx-0">
                 {/* Floating Elements */}
-                <div className="absolute -top-4 -right-4 w-10 h-10 bg-gradient-to-r from-green-400 to-blue-500 rounded-2xl flex items-center justify-center shadow-lg animate-bounce">
-                  <Mail className="w-8 h-8 text-white" />
+                <div className="absolute -top-2 sm:-top-4 -right-2 sm:-right-4 w-8 sm:w-10 h-8 sm:h-10 bg-gradient-to-r from-green-400 to-blue-500 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg animate-bounce">
+                  <Mail className="w-4 sm:w-6 h-4 sm:h-6 text-white" />
                 </div>
 
-                <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-r from-purple-400 to-pink-500 rounded-xl flex items-center justify-center shadow-lg animate-pulse">
-                  <MapPin className="w-6 h-6 text-white" />
+                <div className="absolute -bottom-2 sm:-bottom-4 -left-2 sm:-left-4 w-10 sm:w-16 h-10 sm:h-16 bg-gradient-to-r from-purple-400 to-pink-500 rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg animate-pulse">
+                  <MapPin className="w-4 sm:w-6 h-4 sm:h-6 text-white" />
                 </div>
 
                 {/* Main Image */}
-                <div className="relative overflow-hidden rounded-2xl">
+                <div className="relative overflow-hidden rounded-xl sm:rounded-2xl">
                   <Image
                     src="/billboard-kontak.png"
                     alt="Hubungi Desa Sidomulyo"
@@ -211,28 +211,30 @@ export default function ContactPage() {
                   />
 
                   {/* Overlay with Contact Info */}
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3 sm:p-4 lg:p-6">
                     <div className="text-white">
-                      <div className="flex items-center text-sm mb-2">
-                        <Clock className="w-4 h-4 mr-1" />
+                      <div className="flex items-center text-xs sm:text-sm mb-1 sm:mb-2">
+                        <Clock className="w-3 sm:w-4 h-3 sm:h-4 mr-1" />
                         Online 24/7
                       </div>
-                      <div className="font-semibold">Desa Sidomulyo</div>
-                      <div className="text-sm opacity-90">
+                      <div className="font-semibold text-sm sm:text-base">
+                        Desa Sidomulyo
+                      </div>
+                      <div className="text-xs sm:text-sm opacity-90">
                         Sidorejo, Magetan, Jawa Timur
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Decorative Elements */}
-                <div className="absolute top-1/2 -right-8 w-32 h-1 bg-gradient-to-r from-green-400 to-transparent rounded-full"></div>
-                <div className="absolute top-1/3 -left-8 w-24 h-1 bg-gradient-to-l from-blue-400 to-transparent rounded-full"></div>
+                {/* Decorative Elements - Hidden on mobile */}
+                <div className="hidden sm:block absolute top-1/2 -right-4 lg:-right-8 w-16 lg:w-32 h-1 bg-gradient-to-r from-green-400 to-transparent rounded-full"></div>
+                <div className="hidden sm:block absolute top-1/3 -left-4 lg:-left-8 w-12 lg:w-24 h-1 bg-gradient-to-l from-blue-400 to-transparent rounded-full"></div>
               </div>
 
-              {/* Background Decorative Circles */}
-              <div className="absolute -z-10 top-10 right-10 w-40 h-40 bg-gradient-to-r from-green-200 to-blue-200 rounded-full opacity-20 animate-pulse"></div>
-              <div className="absolute -z-10 bottom-10 left-10 w-32 h-32 bg-gradient-to-r from-purple-200 to-pink-200 rounded-full opacity-20 animate-pulse delay-1000"></div>
+              {/* Background Decorative Circles - Hidden on mobile */}
+              <div className="hidden sm:block absolute -z-10 top-6 lg:top-10 right-6 lg:right-10 w-24 lg:w-40 h-24 lg:h-40 bg-gradient-to-r from-green-200 to-blue-200 rounded-full opacity-20 animate-pulse"></div>
+              <div className="hidden sm:block absolute -z-10 bottom-6 lg:bottom-10 left-6 lg:left-10 w-20 lg:w-32 h-20 lg:h-32 bg-gradient-to-r from-purple-200 to-pink-200 rounded-full opacity-20 animate-pulse delay-1000"></div>
             </div>
           </div>
         </div>
@@ -242,7 +244,7 @@ export default function ContactPage() {
           <svg
             viewBox="0 0 1200 120"
             preserveAspectRatio="none"
-            className="w-full h-12 fill-white"
+            className="w-full h-8 sm:h-10 lg:h-12 fill-white"
           >
             <path
               d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
@@ -258,12 +260,12 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Section */}
-      <section className="py-20">
+      <section className="py-12 sm:py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12">
+          <div className="grid lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12">
             {/* Contact Methods */}
-            <div className="space-y-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">
+            <div className="space-y-6 sm:space-y-8">
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 text-center lg:text-left">
                 Cara Menghubungi
               </h3>
 
@@ -272,27 +274,27 @@ export default function ContactPage() {
                 return (
                   <div
                     key={index}
-                    className="group bg-gradient-to-r from-gray-50 to-white p-6 rounded-2xl border border-gray-100 hover:border-transparent hover:shadow-lg transition-all duration-300"
+                    className="group bg-gradient-to-r from-gray-50 to-white p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-gray-100 hover:border-transparent hover:shadow-lg transition-all duration-300"
                   >
-                    <div className="flex items-center space-x-4">
+                    <div className="flex items-start sm:items-center space-x-3 sm:space-x-4">
                       <div
-                        className={`flex-shrink-0 w-12 h-12 bg-gradient-to-r ${method.color} rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}
+                        className={`flex-shrink-0 w-10 sm:w-12 h-10 sm:h-12 bg-gradient-to-r ${method.color} rounded-lg sm:rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}
                       >
-                        <IconComponent className="h-6 w-6 text-white" />
+                        <IconComponent className="h-5 sm:h-6 w-5 sm:w-6 text-white" />
                       </div>
-                      <div className="flex-1">
-                        <h4 className="text-lg font-semibold text-gray-900 mb-1">
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-1">
                           {method.title}
                         </h4>
-                        <p className="text-gray-600 mb-3">
+                        <p className="text-sm sm:text-base text-gray-600 mb-2 sm:mb-3">
                           {method.description}
                         </p>
                         <a
                           href={method.href}
-                          className={`inline-flex items-center text-sm font-medium bg-gradient-to-r ${method.color} bg-clip-text text-transparent hover:underline`}
+                          className={`inline-flex items-center text-xs sm:text-sm font-medium bg-gradient-to-r ${method.color} bg-clip-text text-transparent hover:underline`}
                         >
                           {method.action}
-                          <Send className="ml-1 h-4 w-4" />
+                          <Send className="ml-1 h-3 sm:h-4 w-3 sm:w-4" />
                         </a>
                       </div>
                     </div>
@@ -302,12 +304,12 @@ export default function ContactPage() {
             </div>
 
             {/* Contact Form */}
-            <div className="bg-gradient-to-br from-green-50 to-blue-50 p-8 rounded-3xl">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">
+            <div className="bg-gradient-to-br from-green-50 to-blue-50 p-6 sm:p-8 rounded-2xl sm:rounded-3xl">
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 text-center lg:text-left">
                 Kirim Pesan
               </h3>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
                 <div>
                   <label
                     htmlFor="name"
@@ -321,7 +323,7 @@ export default function ContactPage() {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors"
+                    className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors text-sm sm:text-base"
                     placeholder="Nama lengkap Anda"
                     required
                   />
@@ -340,7 +342,7 @@ export default function ContactPage() {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors"
+                    className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors text-sm sm:text-base"
                     placeholder="email@contoh.com"
                     required
                   />
@@ -358,8 +360,8 @@ export default function ContactPage() {
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    rows={5}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors resize-none"
+                    rows={4}
+                    className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors resize-none text-sm sm:text-base"
                     placeholder="Ceritakan tentang ketertarikan Anda pada Desa Sidomulyo..."
                     required
                   ></textarea>
@@ -368,34 +370,34 @@ export default function ContactPage() {
                 {/* Status Message */}
                 {statusMessage && (
                   <div
-                    className={`p-4 rounded-xl text-sm flex items-center space-x-2 ${
+                    className={`p-3 sm:p-4 rounded-lg sm:rounded-xl text-sm flex items-start sm:items-center space-x-2 ${
                       isSuccess
                         ? "bg-green-100 text-green-800"
                         : "bg-red-100 text-red-800"
                     }`}
                   >
                     {isSuccess ? (
-                      <CheckCircle className="h-5 w-5 flex-shrink-0" />
+                      <CheckCircle className="h-4 sm:h-5 w-4 sm:w-5 flex-shrink-0 mt-0.5 sm:mt-0" />
                     ) : (
-                      <AlertCircle className="h-5 w-5 flex-shrink-0" />
+                      <AlertCircle className="h-4 sm:h-5 w-4 sm:w-5 flex-shrink-0 mt-0.5 sm:mt-0" />
                     )}
-                    <span>{statusMessage}</span>
+                    <span className="text-xs sm:text-sm">{statusMessage}</span>
                   </div>
                 )}
 
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full bg-gradient-to-r from-green-500 to-blue-500 text-white py-4 px-6 rounded-xl font-semibold hover:from-green-600 hover:to-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  className="w-full bg-gradient-to-r from-green-500 to-blue-500 text-white py-3 sm:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl font-semibold hover:from-green-600 hover:to-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none text-sm sm:text-base"
                 >
                   {isLoading ? (
                     <div className="flex items-center justify-center space-x-2">
-                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                      <div className="animate-spin rounded-full h-4 sm:h-5 w-4 sm:w-5 border-b-2 border-white"></div>
                       <span>Mengirim...</span>
                     </div>
                   ) : (
                     <div className="flex items-center justify-center space-x-2">
-                      <Send className="h-5 w-5" />
+                      <Send className="h-4 sm:h-5 w-4 sm:w-5" />
                       <span>Kirim Pesan</span>
                     </div>
                   )}

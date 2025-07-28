@@ -186,28 +186,28 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
       {/* Carousel Section */}
-      <section data-aos="fade-in">
+      <section data-aos="fade-in" className="w-full">
         <Carousel slides={carouselSlides} autoSlideInterval={5000} />
       </section>
 
       {/* Village Profile Section */}
-      <section className="py-16 bg-white w-full">
-        <div className="container mx-auto px-4 sm:px-10 lg:px-30">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <section className="py-8 sm:py-12 lg:py-16 bg-white w-full">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center">
             {/* Text Content - Left Side */}
             <div
-              className="space-y-6"
+              className="space-y-4 sm:space-y-6 order-2 lg:order-1"
               data-aos="fade-right"
               data-aos-delay="200"
             >
               <div>
-                <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
                   Profil Desa Sidomulyo
                 </h2>
-                <div className="w-20 h-1 bg-gradient-to-r from-green-600 to-blue-600 mb-6"></div>
+                <div className="w-16 sm:w-20 h-1 bg-gradient-to-r from-green-600 to-blue-600 mb-4 sm:mb-6"></div>
               </div>
 
-              <p className="text-lg text-gray-700 leading-relaxed text-justify">
+              <p className="text-base sm:text-lg text-gray-700 leading-relaxed text-justify">
                 Desa Sidomulyo merupakan desa yang terletak di kaki Gunung Lawu,
                 Kabupaten Magetan, Jawa Timur. Desa ini terbentuk dari
                 penggabungan dua wilayah, yaitu Kelurahan Gangging dan Kelurahan
@@ -215,7 +215,7 @@ export default function Home() {
                 alam yang unik.
               </p>
 
-              <p className="text-lg text-gray-700 leading-relaxed text-justify">
+              <p className="text-base sm:text-lg text-gray-700 leading-relaxed text-justify">
                 Dikenal dengan keindahan alamnya serta udara yang sejuk,
                 Sidomulyo memiliki potensi unggulan di bidang pertanian,
                 perkebunan seperti mawar, kopi, dan lemon, serta peternakan sapi
@@ -225,57 +225,63 @@ export default function Home() {
                 sekaligus nilai-nilai kearifan lokal.
               </p>
 
-              <div className="flex flex-wrap gap-4 pt-4">
+              <div className="flex flex-wrap gap-2 sm:gap-4 pt-2 sm:pt-4">
                 <div className="flex items-center text-green-700">
-                  <MapPin className="h-5 w-5 mr-2" />
-                  <span className="font-medium">Kaki Gunung Lawu, Magetan</span>
+                  <MapPin className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
+                  <span className="font-medium text-sm sm:text-base">
+                    Kaki Gunung Lawu, Magetan
+                  </span>
                 </div>
               </div>
 
               {/* Button */}
-              <div className="pt-6">
+              <div className="pt-4 sm:pt-6">
                 <Link href="/TentangDesa">
-                  <button className="group bg-gradient-to-r from-green-600 to-blue-600 text-white px-8 py-4 rounded-full font-semibold hover:from-green-700 hover:to-blue-700 transition-all duration-300 inline-flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105">
+                  <button className="group bg-gradient-to-r from-green-600 to-blue-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:from-green-700 hover:to-blue-700 transition-all duration-300 inline-flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105 text-sm sm:text-base">
                     Lihat Profil Desa
-                    <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform" />
                   </button>
                 </Link>
               </div>
             </div>
 
             {/* Image - Right Side */}
-            <div className="relative" data-aos="fade-left" data-aos-delay="400">
-              <div className="relative overflow-hidden rounded-2xl shadow-2xl">
+            <div
+              className="relative order-1 lg:order-2"
+              data-aos="fade-left"
+              data-aos-delay="400"
+            >
+              <div className="relative overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl">
                 <Image
                   src="/desa-sidomulyo.jpg"
                   alt="Profil Desa Sidomulyo"
-                  className="w-full h-96 lg:h-[500px] object-cover hover:scale-105 transition-transform duration-700"
+                  className="w-full h-64 sm:h-80 lg:h-96 xl:h-[500px] object-cover hover:scale-105 transition-transform duration-700"
                   width={500}
                   height={400}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
               </div>
 
-              {/* Decorative elements */}
-              <div className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-green-400 to-blue-500 rounded-full opacity-20 animate-pulse"></div>
-              <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-br from-blue-400 to-green-500 rounded-full opacity-30 animate-pulse delay-1000"></div>
+              {/* Decorative elements - Hidden on mobile for cleaner look */}
+              <div className="absolute -top-4 -right-4 w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-green-400 to-blue-500 rounded-full opacity-20 animate-pulse hidden sm:block"></div>
+              <div className="absolute -bottom-4 -left-4 w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-gradient-to-br from-blue-400 to-green-500 rounded-full opacity-30 animate-pulse delay-1000 hidden sm:block"></div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Latest Potensi Section */}
-      <section className="py-16 bg-gradient-to-b from-green-200 bg-opacity-60 w-full">
+      <section className="py-8 sm:py-12 lg:py-16 bg-gradient-to-b from-green-200 bg-opacity-60 w-full">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div
-            className="text-center mb-12"
+            className="text-center mb-8 sm:mb-10 lg:mb-12"
             data-aos="fade-up"
             data-aos-delay="200"
           >
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
               Potensi Desa Terbaru
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto px-4">
               Temukan berbagai potensi unggulan yang dimiliki oleh Desa
               Sidomulyo
             </p>
@@ -288,14 +294,14 @@ export default function Home() {
 
           {/* View All Button */}
           <div
-            className="text-center mt-12"
+            className="text-center mt-8 sm:mt-10 lg:mt-12"
             data-aos="zoom-in"
             data-aos-delay="600"
           >
             <Link href="/PotensiDesa">
-              <button className="group bg-gradient-to-r from-green-600 to-blue-600 text-white px-8 py-4 rounded-full font-semibold hover:from-green-700 hover:to-blue-700 transition-all duration-300 inline-flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105">
+              <button className="group bg-gradient-to-r from-green-600 to-blue-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:from-green-700 hover:to-blue-700 transition-all duration-300 inline-flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105 text-sm sm:text-base">
                 Lihat Semua Potensi
-                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform" />
               </button>
             </Link>
           </div>
@@ -303,22 +309,22 @@ export default function Home() {
       </section>
 
       {/* Latest Articles Section */}
-      <section className="py-16 bg-gray-50 w-full">
-        <div className="container mx-auto px-4 sm:px-10 lg:px-30">
+      <section className="py-8 sm:py-12 lg:py-16 bg-gray-50 w-full">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
           <div
-            className="text-center mb-12"
+            className="text-center mb-8 sm:mb-10 lg:mb-12"
             data-aos="fade-up"
             data-aos-delay="200"
           >
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
               Berita & Artikel Terbaru
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto px-4">
               Ikuti perkembangan dan cerita inspiratif dari Desa Sidomulyo
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {latestArticles.map((article, index) => (
               <div
                 key={article.id}
@@ -332,14 +338,14 @@ export default function Home() {
           </div>
 
           <div
-            className="text-center mt-12"
+            className="text-center mt-8 sm:mt-10 lg:mt-12"
             data-aos="zoom-in"
             data-aos-delay="800"
           >
             <Link href="/Artikel">
-              <button className="bg-green-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-green-700 transition-all duration-300 inline-flex items-center gap-2">
+              <button className="bg-green-600 text-white px-6 sm:px-8 py-3 rounded-full font-semibold hover:bg-green-700 transition-all duration-300 inline-flex items-center gap-2 text-sm sm:text-base">
                 Lihat Semua Artikel
-                <ArrowRight className="h-5 w-5" />
+                <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
               </button>
             </Link>
           </div>
@@ -347,23 +353,23 @@ export default function Home() {
       </section>
 
       {/* Contact Actions */}
-      <div className="bg-gradient-to-r from-green-600 to-blue-600 py-6 w-full">
+      <div className="bg-gradient-to-r from-green-600 to-blue-600 py-4 sm:py-6 w-full">
         <div className="container mx-auto px-4">
           <div
-            className="text-center mb-6"
+            className="text-center mb-4 sm:mb-6"
             data-aos="fade-up"
             data-aos-delay="200"
           >
-            <h3 className="text-xl font-semibold mb-2 text-white">
+            <h3 className="text-lg sm:text-xl font-semibold mb-2 text-white">
               Get in Touch
             </h3>
-            <p className="text-green-100">
+            <p className="text-green-100 text-sm sm:text-base px-4">
               Ready to explore investment opportunities or plan your visit?
             </p>
           </div>
 
           <div
-            className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6"
+            className="flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-4 lg:space-x-6"
             data-aos="fade-up"
             data-aos-delay="400"
           >
@@ -372,32 +378,32 @@ export default function Home() {
               href="https://wa.me/62351123456"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center space-x-2 bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full font-medium transition-all duration-200 hover:shadow-lg transform hover:scale-105"
+              className="flex items-center space-x-2 bg-green-500 hover:bg-green-600 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-full font-medium transition-all duration-200 hover:shadow-lg transform hover:scale-105 text-sm sm:text-base w-full sm:w-auto justify-center max-w-xs"
               data-aos="slide-right"
               data-aos-delay="600"
             >
-              <MessageCircle size={20} />
+              <MessageCircle size={18} className="sm:w-5 sm:h-5" />
               <span>Chat Now</span>
             </a>
 
             {/* Email Button */}
             <a
               href="mailto:info@sidomulyo-village.id"
-              className="flex items-center space-x-2 bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-full font-medium transition-all duration-200 hover:shadow-lg transform hover:scale-105"
+              className="flex items-center space-x-2 bg-blue-500 hover:bg-blue-600 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-full font-medium transition-all duration-200 hover:shadow-lg transform hover:scale-105 text-sm sm:text-base w-full sm:w-auto justify-center max-w-xs"
               data-aos="slide-up"
               data-aos-delay="700"
             >
-              <Send size={20} />
+              <Send size={18} className="sm:w-5 sm:h-5" />
               <span>Send Email</span>
             </a>
 
             {/* Visit Button */}
             <button
-              className="flex items-center space-x-2 bg-white hover:bg-gray-100 text-gray-800 px-6 py-3 rounded-full font-medium transition-all duration-200 hover:shadow-lg transform hover:scale-105"
+              className="flex items-center space-x-2 bg-white hover:bg-gray-100 text-gray-800 px-4 sm:px-6 py-2.5 sm:py-3 rounded-full font-medium transition-all duration-200 hover:shadow-lg transform hover:scale-105 text-sm sm:text-base w-full sm:w-auto justify-center max-w-xs"
               data-aos="slide-left"
               data-aos-delay="800"
             >
-              <MapPin size={20} />
+              <MapPin size={18} className="sm:w-5 sm:h-5" />
               <span>Get Directions</span>
             </button>
           </div>
