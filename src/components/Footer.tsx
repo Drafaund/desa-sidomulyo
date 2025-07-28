@@ -153,7 +153,7 @@ const Footer = () => {
       {/* Bottom Bar */}
       <div className="bg-gray-900 border-t border-gray-700 py-3 md:py-4">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col items-center text-center space-y-2 md:flex-row md:justify-center md:space-y-0 text-xs md:text-sm text-gray-400">
+          <div className="flex flex-col items-center text-center space-y-2 md:flex-row md:justify-center md:space-y-0 text-xs md:text-sm text-gray-400 space-x-0 md:space-x-4">
             <div className="flex items-center space-x-2 mb-2 md:mb-0">
               <Image
                 src="/logo-ugm.png"
