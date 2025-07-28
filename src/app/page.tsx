@@ -388,7 +388,7 @@ export default function Home() {
 
             {/* Email Button */}
             <a
-              href="mailto:info@sidomulyo-village.id"
+              href="/Contact"
               className="flex items-center space-x-2 bg-blue-500 hover:bg-blue-600 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-full font-medium transition-all duration-200 hover:shadow-lg transform hover:scale-105 text-sm sm:text-base w-full sm:w-auto justify-center max-w-xs"
               data-aos="slide-up"
               data-aos-delay="700"
@@ -398,14 +398,15 @@ export default function Home() {
             </a>
 
             {/* Visit Button */}
-            <button
+            <a
+              href="https://www.google.com/maps/dir//Balai+Desa+Sidomulyo,+Sidorejo,+Magetan,+Jawa+Timur/@-7.6545634,111.2624529,17z"
               className="flex items-center space-x-2 bg-white hover:bg-gray-100 text-gray-800 px-4 sm:px-6 py-2.5 sm:py-3 rounded-full font-medium transition-all duration-200 hover:shadow-lg transform hover:scale-105 text-sm sm:text-base w-full sm:w-auto justify-center max-w-xs"
               data-aos="slide-left"
               data-aos-delay="800"
             >
               <MapPin size={18} className="sm:w-5 sm:h-5" />
-              <span>Get Directions</span>
-            </button>
+              <span>Dapatkan Lokasi</span>
+            </a>
           </div>
         </div>
       </div>
