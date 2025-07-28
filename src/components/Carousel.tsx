@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface CarouselSlide {
   id: number;
@@ -151,24 +152,12 @@ const Carousel: React.FC<CarouselProps> = ({
         ))}
       </div>
 
-      {/* Touch/Swipe Indicators for Mobile - Optional visual hint */}
+      {/* Touch/Swipe Indicators for Mobile - Using Lucide React Icons */}
       <div className="absolute bottom-12 sm:bottom-16 left-1/2 transform -translate-x-1/2 sm:hidden">
         <div className="flex items-center space-x-2 text-white text-xs opacity-70">
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path
-              fillRule="evenodd"
-              d="M7.707 3.293a1 1 0 010 1.414L5.414 7H11a7 7 0 017 7v2a1 1 0 11-2 0v-2a5 5 0 00-5-5H5.414l2.293 2.293a1 1 0 11-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-              clipRule="evenodd"
-            />
-          </svg>
-          <span>Swipe</span>
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path
-              fillRule="evenodd"
-              d="M12.293 3.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 9H9a7 7 0 00-7 7v2a1 1 0 11-2 0v-2a5 5 0 015-5h5.586l-2.293-2.293a1 1 0 010-1.414z"
-              clipRule="evenodd"
-            />
-          </svg>
+          <ChevronLeft className="w-4 h-4" />
+          <span>Tap</span>
+          <ChevronRight className="w-4 h-4" />
         </div>
       </div>
 
