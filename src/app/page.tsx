@@ -139,7 +139,7 @@ const carouselSlides = [
   {
     id: 3,
     image: "/peternakan-sapi-perah.jpg",
-    title: "Tim Profesional",
+    title: "Informasi Terbaru",
     description: "Update informasi dan berita Desa Sidomulyo",
     buttonText: "Lihat Artikel",
     buttonLink: "/Artikel",
