@@ -3,7 +3,7 @@
 import { ArrowRight } from "lucide-react";
 import React, { useEffect } from "react";
 import ArticleCard from "@/components/article/ArticleCard";
-import { MessageCircle, Send, MapPin } from "lucide-react";
+import { MapPin } from "lucide-react";
 import Link from "next/link";
 import { supabase } from "../utils/supabase";
 import Carousel from "@/components/Carousel";
