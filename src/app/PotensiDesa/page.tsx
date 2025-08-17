@@ -91,7 +91,7 @@ export default function PotensiDesaPage() {
     },
     {
       icon: <Users className="w-5 sm:w-6 h-5 sm:h-6 text-purple-600" />,
-      jumlah: "2,450",
+      jumlah: "4.650",
       label: "Penduduk Aktif",
       color: "text-purple-600",
     },
@@ -296,13 +296,13 @@ export default function PotensiDesaPage() {
                 {/* Main Image */}
                 <div className="relative overflow-hidden rounded-lg sm:rounded-xl shadow-xl transform hover:scale-105 transition-transform duration-300">
                   <Image
-                    src="/macbook-mockup-resized.png"
+                    src="/peta-potensi-desa.png"
                     alt="Potensi Desa Sidomulyo"
                     width={700}
                     height={500}
                     className="w-full h-auto object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>
                 </div>
 
                 {/* Floating Stats Card - Responsive */}
@@ -401,7 +401,7 @@ export default function PotensiDesaPage() {
                       <p className="font-semibold text-gray-800 text-xs sm:text-sm">
                         Komunitas
                       </p>
-                      <p className="text-xs text-gray-600">2,450 penduduk</p>
+                      <p className="text-xs text-gray-600">4.650 penduduk</p>
                     </div>
                   </div>
                 </div>

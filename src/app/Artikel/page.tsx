@@ -8,7 +8,7 @@ import ArticleHero from "../../components/article/ArticleHero";
 import FeaturedArticle from "../../components/article/FeaturedArticle";
 import ArticleList from "../../components/article/ArticleList";
 import LoadMoreButton from "../../components/article/LoadMoreButton";
-import Newsletter from "../../components/article/NewsLetter";
+// import Newsletter from "../../components/article/NewsLetter";
 
 // Interface untuk article dari Supabase
 interface Article {
@@ -273,7 +273,7 @@ const DesaArticlePage = () => {
       </div>
 
       {/* Newsletter Section */}
-      <Newsletter />
+      {/* <Newsletter /> */}
     </div>
   );
 };

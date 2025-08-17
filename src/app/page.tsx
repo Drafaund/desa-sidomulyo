@@ -255,13 +255,13 @@ export default function Home() {
             >
               <div className="relative overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl">
                 <Image
-                  src="/desa-sidomulyo.jpg"
+                  src="/peta-batas-dusun.png"
                   alt="Profil Desa Sidomulyo"
-                  className="w-full h-64 sm:h-80 lg:h-96 xl:h-[500px] object-cover hover:scale-105 transition-transform duration-700"
+                  className="w-full h-64 sm:h-80 lg:h-96 xl:h-[500px]  hover:scale-105 transition-transform duration-700"
                   width={500}
-                  height={400}
+                  height={200}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                {/* <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div> */}
               </div>
 
               {/* Decorative elements - Hidden on mobile for cleaner look */}
@@ -273,7 +273,7 @@ export default function Home() {
       </section>
 
       {/* Latest Potensi Section */}
-      <section className="py-8 sm:py-12 lg:py-16 bg-gradient-to-b from-green-200 bg-opacity-60 w-full">
+      <section className="py-8 sm:py-12 lg:py-16 bg-gray-50 bg-opacity-60 w-full">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div
             className="text-center mb-8 sm:mb-10 lg:mb-12"
@@ -311,7 +311,7 @@ export default function Home() {
       </section>
 
       {/* Latest Articles Section */}
-      <section className="py-8 sm:py-12 lg:py-16 bg-gray-50 w-full">
+      <section className="py-8 sm:py-12 lg:py-16 bg-white w-full">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
           <div
             className="text-center mb-8 sm:mb-10 lg:mb-12"
