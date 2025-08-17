@@ -497,15 +497,15 @@ export default function ContactPage() {
                 </div>
                 <div className="space-y-2 text-sm sm:text-base text-gray-700">
                   <div className="flex justify-between">
-                    <span>Senin - Jumat</span>
-                    <span className="font-medium">08:00 - 16:00</span>
+                    <span>Senin - Kamis</span>
+                    <span className="font-medium">07:30 - 13:00</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Sabtu</span>
-                    <span className="font-medium">08:00 - 12:00</span>
+                    <span>{`Jum'at`}</span>
+                    <span className="font-medium">07:30 - 11:00</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Minggu</span>
+                    <span>Sabtu - Minggu</span>
                     <span className="text-red-500 font-medium">Tutup</span>
                   </div>
                 </div>

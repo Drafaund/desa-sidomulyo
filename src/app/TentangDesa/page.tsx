@@ -144,7 +144,7 @@ const TentangDesaPage: React.FC = () => {
                   </div>
                   <div className="mt-6 sm:mt-8 p-3 sm:p-4 bg-green-50 rounded-lg border-l-4 border-green-500">
                     <p className="font-semibold text-green-800 text-sm sm:text-base">
-                      Bapak Suryanto, S.Pd
+                      Siswo Pranoto
                     </p>
                     <p className="text-green-600 text-sm sm:text-base">
                       Kepala Desa Sidomulyo
@@ -563,10 +563,10 @@ const TentangDesaPage: React.FC = () => {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
             {[
-              { icon: "👥", value: "2,847", label: "Total Penduduk" },
-              { icon: "🏠", value: "742", label: "Kepala Keluarga" },
-              { icon: "📏", value: "15.6", label: "Luas Desa (km²)" },
-              { icon: "🏘️", value: "8", label: "Dusun" },
+              { icon: "👥", value: "4.650", label: "Total Penduduk" },
+              { icon: "🏠", value: "1.513", label: "Kepala Keluarga" },
+              { icon: "📏", value: "480 ha", label: "Luas Desa (hektare)" },
+              { icon: "🏘️", value: "5", label: "Dusun" },
             ].map((stat, index) => (
               <div
                 key={index}
